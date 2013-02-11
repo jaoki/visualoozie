@@ -21,7 +21,6 @@
 	<script type="text/javascript" src="<s:url value="/js/WindowNotification.js"/>" > </script>
 
     <script type="text/javascript" >
-		var me = <s:property value="me" escape="false"/>;
 		var allFriends;
 		var friendLists;
 		var listMembers;
@@ -115,7 +114,11 @@
 	</div>
 
 	<div>
-		 <input type="file"/>
+		<form name="input" action="api/upload_xml" enctype="multipart/form-data" method="post">
+			<input name="xmlfile" type="file"/>
+			<input type="submit" value="Submit"/>
+		</form>
+		
 	</div>
 
 	<!--------------- Main Panel ------------------------>
