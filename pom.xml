@@ -3,8 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>visualoozie</groupId>
+    <artifactId>visualoozie</artifactId>
+	<version>0.0.0.1</version>
+    <packaging>war</packaging>
+    <name>Visual Oozie</name>
+
     <properties>
-        <list_organizer.version>0.4.01.01</list_organizer.version>
         <struts2.version>2.2.3</struts2.version>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <maven.compiler.target>1.6</maven.compiler.target>
@@ -12,13 +17,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
-
-    <groupId>net.junaoki</groupId>
-    <artifactId>list_organizer</artifactId>
-	<version>${list_organizer.version}</version>
-    <packaging>war</packaging>
-    <name>Facebook Friend List Organizer</name>
-
     <dependencies>
 
         <dependency>
