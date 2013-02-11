@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/lpbw</property>
+        <property name="hibernate.connection.username">lpbw_user</property>
+        <property name="hibernate.connection.password">1234</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="show_sql">true</property>
+		<!--
+		  <property name="format_sql">true</property>
+		  -->
+
+		<property name="hibernate.c3p0.acquire_increment">1</property>
+		<property name="hibernate.c3p0.idle_test_period">60</property>
+		<property name="hibernate.c3p0.timeout">1800</property>
+		<property name="hibernate.c3p0.max_size">25</property>
+		<property name="hibernate.c3p0.max_statements">50</property>
+		<property name="hibernate.c3p0.min_size">5</property>
+		<property name="hibernate.c3p0.validate">false</property>
+		<property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		
+
+        <mapping resource="net/junaoki/lpbw/hibernate/EventPlan.hbm.xml"></mapping>
+        <mapping resource="net/junaoki/lpbw/hibernate/EventPlanDate.hbm.xml"></mapping>
+        <mapping resource="net/junaoki/lpbw/hibernate/EventPlanPlace.hbm.xml"></mapping>
+        <mapping resource="net/junaoki/lpbw/hibernate/EventPlanPlanner.hbm.xml"></mapping>
+
+    </session-factory>
+</hibernate-configuration>
+

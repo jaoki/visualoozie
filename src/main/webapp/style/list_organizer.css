@@ -1,0 +1,320 @@
+/* Basic HTML Elements -------------------------------------- */
+body { 
+	background-color: white;
+	font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+	font-size: 11px;
+	margin: 0;
+} 
+
+.ui-widget{
+	font-size: 10px;
+}
+
+table.layout{
+	border-style: solid;
+	border-collapse: collapse;
+
+	/* uncomment this for debug layout 
+	border-color: gray;
+	*/
+
+	border-width: 0px;
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+td.layout{
+	border-style: solid;
+	border-collapse: collapse;
+
+	/* uncomment this for debug layout 
+	border-color: gray;
+	*/
+
+	border-width: 0px;
+	padding: 0px;
+	margin: 0px;
+}
+
+/* Appliation Title -------------------------------------- */
+.blueBar{
+	color: #D8DFEA;
+	background-color: #3B5998; 
+	border-bottom: 1px solid #133783;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.52);
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 44px;
+	z-index: 2;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.appTitle1{
+	color: #FFFFFF;
+	font-family: Impact;
+    font-size: 15px;
+    font-weight: normal;
+
+}
+
+.appTitle1 a:link,
+.appTitle1 a:visited,
+.appTitle1 a:active {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.appTitle1 a:hover{
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+
+.profileName{
+	margin-right: 10px;
+	line-height: 29px;
+	font-weight: bold;
+	float: left;
+}
+
+.profileName a:link,
+.profileName a:visited,
+.profileName a:active {
+	color: #D8DFEA;
+	text-decoration: none;
+}
+
+.profileName a:hover{
+	color: #D8DFEA;
+	text-decoration: underline;
+}
+
+.appTitle2{
+	color: #FFFFFF;
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.alphaversion{
+	background-color: #D8DFEA;
+	color: red;
+	padding-left: 5px;
+	padding-right: 5px;
+	font-size: 9px;
+	font-weight: bold;
+	border-radius: 4px;
+}
+
+.searchbox{
+	background-color: white;
+	color: black;
+}
+
+.searchbox_nocriteria{
+	background-color: white;
+	color: gray;
+}
+
+.searchbox_notfound{
+	background-color: crimson;
+	color: white;
+}
+
+/* Main Area -------------------------------------- */
+.main_area{
+	width: 100%;
+	position: relative;
+	top: 46px;
+}
+
+/* Ads -------------------------------------- */
+.ads_area{
+	position: fixed;
+	top: 46px;
+	right: 0;
+	width: 120px;
+	z-index: 2;
+}
+
+
+/* Panels -------------------------------------- */
+.main_panel{
+	background: #F2F2F2;
+	float: left;
+	border: 1px solid;
+}
+
+.main_panel_content{
+	overflow: auto; /* TODO when auto, there is a undesiable vertical scrollbar .... but when make it visible, then dragging icons is not working. What to do? */
+	width: 100%;
+	height: 100%;
+}
+
+.panel_div{
+	float: left;
+	margin: 3px;
+	border-bottom-right-radius: 5px;
+}
+
+.panel_content_div {
+	overflow: auto;
+	padding: 3px;
+}
+
+.panelContentDivDroppable.dragging{
+	background: Beige;
+}
+
+.panel_title_div{
+	white-space: nowrap;
+	overflow: hidden;
+	font-weight: bolder;
+/*	float: left; */
+}
+
+.panelDeleteIconDiv{
+	float: right;
+}
+
+.panel_div_css0{
+	background: -moz-linear-gradient(top, #C2F0C2, #99E699 );
+	background: -webkit-gradient(linear, left top, left bottom, from(#C2F0C2), to(#99E699));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#C2F0C2', endColorstr='#99E699'); /* for IE */
+	border: 1px solid #99E699;
+}
+
+.panel_title_css0{
+	background-color: #99E699;
+}
+
+.panel_div_css1{
+	background: -moz-linear-gradient(top, #33CCFF, #0099FF);
+	background: -webkit-gradient(linear, left top, left bottom, from(#33CCFF), to(#0099FF));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#33CCFF', endColorstr='#0099FF'); /* for IE */
+	border: 1px solid #0099FF;
+}
+
+.panel_title_css1{
+	background-color: #0099FF;
+}
+
+.panel_div_css2{
+	background: -moz-linear-gradient(top, #FFDDFF, #FFB2FF);
+	background: -webkit-gradient(linear, left top, left bottom, from(#FFDDFF), to(#FFB2FF));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFDDFF', endColorstr='#FFB2FF'); /* for IE */
+	border: 1px solid #FFB2FF;
+}
+
+.panel_title_css2{
+	background-color: #FFB2FF;
+}
+
+.panel_div_css3{
+	background: -moz-linear-gradient(top, #FFFFCC, #FFCC99);
+	background: -webkit-gradient(linear, left top, left bottom, from(#FFFFCC), to(#FFCC99));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFCC', endColorstr='#FFCC99'); /* for IE */
+	border: 1px solid #FFCC99;
+}
+
+.panel_title_css3{
+	background-color: #FFCC99;
+}
+
+.panel_div_css4{
+	background: -moz-linear-gradient(top, #D6E0FF, #ADC2FF);
+	background: -webkit-gradient(linear, left top, left bottom, from(#D6E0FF), to(#ADC2FF));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D6E0FF', endColorstr='#ADC2FF'); /* for IE */
+	border: 1px solid #ADC2FF;
+}
+
+.panel_title_css4{
+	background-color: #ADC2FF;
+}
+
+.panel_div_css5{
+	background: -moz-linear-gradient(top, #FFCACA, #FFA8A8);
+	background: -webkit-gradient(linear, left top, left bottom, from(#FFCACA), to(#FFA8A8));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFCACA', endColorstr='#FFA8A8'); /* for IE */
+	border: 1px solid #FFA8A8;
+}
+
+.panel_title_css5{
+	background-color: #FFA8A8;
+}
+
+.panel_div_css6{
+	background: -moz-linear-gradient(top, #99FFCC, #99CC99);
+	background: -webkit-gradient(linear, left top, left bottom, from(#99FFCC), to(#99CC99));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#99FFCC', endColorstr='#99CC99'); /* for IE */
+	border: 1px solid #99CC99;
+}
+
+.panel_title_css6{
+	background-color: #99CC99;
+}
+
+.panel_div_css7{
+	background: -moz-linear-gradient(top, #E0CCFF, #C299FF);
+	background: -webkit-gradient(linear, left top, left bottom, from(#E0CCFF), to(#C299FF));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#E0CCFF', endColorstr='#C299FF'); /* for IE */
+	border: 1px solid #C299FF;
+}
+
+.panel_title_css7{
+	background-color: #C299FF;
+}
+
+.panel_div_css8{
+	background: -moz-linear-gradient(top, #CCFFFF, #99FFFF);
+	background: -webkit-gradient(linear, left top, left bottom, from(#CCFFFF), to(#99FFFF));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#CCFFFF', endColorstr='#99FFFF'); /* for IE */
+	border: 1px solid #99FFFF;
+}
+
+.panel_title_css8{
+	background-color: #99FFFF;
+}
+
+/* Member Photo -------------------------------------- */
+.friend_photo {
+	height: 50px;
+	width: 50px;
+}
+
+.friend_photo_div {
+	overflow: hidden;
+	position: relative;
+}
+
+.friend_photo_name_div {
+	background-color: white;
+	color: black;
+	font-size: 9px;
+	overflow: hidden;
+	position: absolute;
+	bottom: 0px;
+	width: 200px;
+	opacity: 0.6;
+}
+
+.friend_photo_draggable_div {
+	float: left;
+	border: 1px solid white;
+	position: relative;
+	margin: 1px;
+	padding: 2px;
+	width: 50px;
+	height: 50px;
+	overflow: hidden;
+}
+
+.friend_photo_draggable_div_mouse_over{
+	border: 3px solid;
+	border-color: red;
+	padding: 0px;
+}
+

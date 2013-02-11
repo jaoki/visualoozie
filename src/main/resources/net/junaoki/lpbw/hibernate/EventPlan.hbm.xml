@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ 
+<hibernate-mapping>
+    <class name="net.junaoki.lpbw.hibernate.EventPlan" table="event_plan" catalog="lpbw">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+
+        <property name="ownerId" type="string">
+            <column name="OWNER_ID" length="17" not-null="true" unique="false" />
+        </property>
+
+        <property name="name" type="string">
+            <column name="NAME" length="100" not-null="true" unique="false" />
+        </property>
+
+        <property name="description" type="string">
+            <column name="DESCRIPTION" length="300" not-null="false" unique="false" />
+        </property>
+
+        <property name="published" type="boolean">
+            <column name="PUBLISHED" not-null="true" unique="false" />
+        </property>
+
+		<list name="dates" inverse="true" cascade="all">
+			<key column="EVENT_PLAN_ID" />
+			<list-index column="ID"/>
+			<one-to-many class="net.junaoki.lpbw.hibernate.EventPlanDate" />
+		</list>
+
+		<list name="places" inverse="true" cascade="all">
+			<key column="EVENT_PLAN_ID" />
+			<list-index column="ID"/>
+			<one-to-many class="net.junaoki.lpbw.hibernate.EventPlanPlace" />
+		</list>
+
+        <property name="created" type="timestamp">
+            <column name="CREATED" not-null="true" unique="false" />
+        </property>
+
+    </class>
+</hibernate-mapping>
+
+

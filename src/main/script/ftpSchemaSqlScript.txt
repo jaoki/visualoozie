@@ -1,0 +1,24 @@
+# Automatically answer all prompts negatively not to stall
+# the script on errors
+option batch on
+
+# Disable overwrite confirmations that conflict with the previous
+option confirm off
+
+# Force binary mode transfer
+option transfer ascii
+
+
+# Connect using a password
+# open user:password@example.com
+# Connect
+open jun:%PASSWORD%@junaoki.net:32123
+
+put %TARGET_FILE%
+
+# Disconnect
+close
+
+# Exit WinSCP
+exit
+

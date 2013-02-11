@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ 
+<hibernate-mapping>
+    <class name="net.junaoki.lpbw.hibernate.EventPlanDate" table="event_plan_date" catalog="lpbw">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+
+		<many-to-one name="eventPlanId" column="EVENT_PLAN_ID" class="net.junaoki.lpbw.hibernate.EventPlan" not-null="true" cascade="none"/>
+		<!--
+        <property name="eventPlanId" type="java.lang.Integer">
+            <column name="EVENT_PLAN_ID" not-null="true" unique="false" />
+        </property>
+		-->
+
+        <property name="date" type="string">
+            <column name="DATE" length="10" not-null="true" unique="false" />
+        </property>
+
+    </class>
+</hibernate-mapping>
+
+
+
