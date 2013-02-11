@@ -156,19 +156,21 @@
 
 					<connectors>
 						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-							<port>8080</port>
+							<port>80</port>
 							<maxIdleTime>60000</maxIdleTime>
 						</connector>
+						<!--
+						-->
+							<!-- this points to target/jetty.keystore
 						<connector implementation="org.mortbay.jetty.security.SslSocketConnector">
 							<port>8443</port>
 							<maxIdleTime>60000</maxIdleTime>
-							<!-- this points to target/jetty.keystore
 							<keystore>${project.build.directory}/jetty.keystore</keystore>
-							-->
 							<keystore>jetty.keystore</keystore>
 							<password>jettyp</password>
 							<keyPassword>jettyp</keyPassword>
 						</connector>
+							-->
 					</connectors>
 
                 </configuration>
