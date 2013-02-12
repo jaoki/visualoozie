@@ -51,10 +51,10 @@ function drawDiagram(res){
 
 	var yPos = 50;
 
+	var nodes = [];
 	var cStart = fsa.State.create({ position: {x: 200, y: yPos}, label: "Start" });
-	var circles = [];
+	nodes.push(cStart);
 
-	var all = [];
 	for(var i = 0; i < res.decisionOrForkOrJoin.length; i++){
 		yPos += 100;
 		var circle;
@@ -63,23 +63,18 @@ function drawDiagram(res){
 //			var java = res.decisionOrForkOrJoin[i].java;
 //		}
 
-		all.push(circle);
-		circles.push(circle);
+		nodes.push(circle);
 	}
 
 	yPos += 100;
 
 	var cEnd = fsa.State.create({ position: {x: 200, y: yPos}, label: "End" });
-	all.push(cStart);
-	all.push(cEnd);
+	nodes.push(cEnd);
 	
-	cStart.joint(circles[0], fsa.arrow).registerForever(all);
 
-	for(var i = 0; i < circles.length - 1; i++){
-		circles[i].joint(circles[i + 1], fsa.arrow).registerForever(all);
+	for(var i = 0; i < nodes.length - 1; i++){
+		nodes[i].joint(nodes[i + 1], fsa.arrow).registerForever(nodes);
 	}
-
-	circles[circles.length - 1].joint(cEnd, fsa.arrow).registerForever(all);
 
 }
 
