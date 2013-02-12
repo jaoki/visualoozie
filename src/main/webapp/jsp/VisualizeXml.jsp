@@ -7,17 +7,18 @@
     <title>Friend List Panels</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	<!--
-	<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/redmond/jquery-ui.css" />
-	-->
 
 	<script type="text/javascript" src="js/joint.all.min.js" ></script>
-	<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
 
 	<!--
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/raphael.js" ></script>
+	<script type="text/javascript" src="js/joint.js" ></script>
+	<script type="text/javascript" src="js/joint.dia.js" ></script>
+	<script type="text/javascript" src="js/joint.dia.fsa.js" ></script>
 	-->
+
+	<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+
 
 	<link rel="stylesheet" type="text/css" href="<s:url value="/style/list_organizer.css"/>" />
 		
