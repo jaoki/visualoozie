@@ -52,8 +52,10 @@ function drawDiagram(res){
 	var yPos = 50;
 
 	var nodes = [];
+	var nodes2 = {};
 	var cStart = fsa.State.create({ position: {x: 200, y: yPos}, label: "Start" });
 	nodes.push(cStart);
+	nodes2["start"] = { node: cStart, to : [ res.start.to] };
 
 	for(var i = 0; i < res.decisionOrForkOrJoin.length; i++){
 		yPos += 100;
@@ -64,13 +66,32 @@ function drawDiagram(res){
 //		}
 
 		nodes.push(circle);
+
+
+		// TODO fix this
+		if(res.decisionOrForkOrJoin[i].name != "fail"){
+			nodes2[res.decisionOrForkOrJoin[i].name] = {node: circle, to : [ res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to]};
+		}
+
+
+
 	}
 
 	yPos += 100;
 
 	var cEnd = fsa.State.create({ position: {x: 200, y: yPos}, label: "End" });
 	nodes.push(cEnd);
-	
+	nodes2[res.end.name] = {node: cEnd, to:[] };
+
+//	var i = 0;
+//
+//	var current = node2["start"];
+//	while(i < 5){	
+//		current.
+//		current.joint(nodes[i + 1], fsa.arrow).registerForever(nodes);
+//
+//		i++;
+//	}
 
 	for(var i = 0; i < nodes.length - 1; i++){
 		nodes[i].joint(nodes[i + 1], fsa.arrow).registerForever(nodes);

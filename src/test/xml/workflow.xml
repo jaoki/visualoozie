@@ -14,7 +14,7 @@
             <arg>Hello</arg>
             <arg>Oozie!</arg>
         </java>
-        <ok to="end"/>
+        <ok to="mr-node"/>
         <error to="fail"/>
     </action>
 
