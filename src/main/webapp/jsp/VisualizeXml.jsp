@@ -54,7 +54,7 @@ function drawDiagram(res){
 
 	var yPos = 50;
 
-	var nodes = [];
+	var allNodes = [];
 	var nodes2 = {};
 	var cStart = fsa.State.create({ 
 		position: {x: 200, y: yPos}
@@ -66,7 +66,7 @@ function drawDiagram(res){
 			id: "aaa"
 		  }
 	});
-	nodes.push(cStart);
+	allNodes.push(cStart);
 	nodes2["start"] = { node: cStart, to : [ res.start.to] };
 
 	for(var i = 0; i < res.decisionOrForkOrJoin.length; i++){
@@ -76,7 +76,7 @@ function drawDiagram(res){
 //			var java = res.decisionOrForkOrJoin[i].java;
 //		}
 
-		nodes.push(circle);
+		allNodes.push(circle);
 
 		// kill does not have ok and error
 		if(res.decisionOrForkOrJoin[i].ok === undefined && res.decisionOrForkOrJoin[i].error === undefined){
@@ -90,14 +90,14 @@ function drawDiagram(res){
 	yPos += 100;
 
 	var cEnd = fsa.State.create({ position: {x: 200, y: yPos}, label: "End" });
-	nodes.push(cEnd);
+	allNodes.push(cEnd);
 	nodes2[res.end.name] = {node: cEnd, to:[] };
 
 	for(var prop in nodes2){	
 		var current = nodes2[prop];
 
 		for(var i = 0; i < current.to.length; i++){
-			current.node.joint(nodes2[current.to[i]].node, fsa.arrow).registerForever(nodes);
+			current.node.joint(nodes2[current.to[i]].node, fsa.arrow).registerForever(allNodes);
 		}
 
 	}
@@ -105,6 +105,7 @@ function drawDiagram(res){
 }
 
 // return if any to is found
+/*
 function knot(current){
 	traverse_counter++;
 	if(current.to.length == 0 || traverse_counter > 100){
@@ -117,6 +118,7 @@ function knot(current){
 	}
 	return true;
 }
+*/
 
 $(function() {
 
