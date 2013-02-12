@@ -45,6 +45,8 @@ var submitButtonClicked = function(){
     });
 };
 
+var traverse_counter = 0;
+
 function drawDiagram(res){
 	Joint.paper("myfsa1", 500, 2000);
 	var fsa = Joint.dia.fsa;
@@ -67,13 +69,12 @@ function drawDiagram(res){
 
 		nodes.push(circle);
 
-
-		// TODO fix this
-		if(res.decisionOrForkOrJoin[i].name != "fail"){
+		// kill does not have ok and error
+		if(res.decisionOrForkOrJoin[i].ok === undefined && res.decisionOrForkOrJoin[i].error === undefined){
+			nodes2[res.decisionOrForkOrJoin[i].name] = {node: circle, to : []};
+		}else{
 			nodes2[res.decisionOrForkOrJoin[i].name] = {node: circle, to : [ res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to]};
 		}
-
-
 
 	}
 
@@ -83,20 +84,54 @@ function drawDiagram(res){
 	nodes.push(cEnd);
 	nodes2[res.end.name] = {node: cEnd, to:[] };
 
-//	var i = 0;
+//	var current = nodes2["start"];
+//	while(true){	
+//		traverse_counter++;
 //
-//	var current = node2["start"];
-//	while(i < 5){	
-//		current.
-//		current.joint(nodes[i + 1], fsa.arrow).registerForever(nodes);
+//		if(current.to.length == 0 || traverse_counter > 100){
+//			break;
+//		}
 //
-//		i++;
+//		for(var i = 0; i < current.to.length; i++){
+//			current.node.joint(nodes2[current.to[i]].node, fsa.arrow).registerForever(nodes);
+//		}
+//
+//		// TODO fix this
+//		current = nodes2[current.to[0]];
+//
 //	}
 
-	for(var i = 0; i < nodes.length - 1; i++){
-		nodes[i].joint(nodes[i + 1], fsa.arrow).registerForever(nodes);
+//	var current = nodes2["start"];
+	for(var prop in nodes2){	
+		var current = nodes2[prop];
+
+		for(var i = 0; i < current.to.length; i++){
+			current.node.joint(nodes2[current.to[i]].node, fsa.arrow).registerForever(nodes);
+		}
+
 	}
 
+
+
+
+//	for(var i = 0; i < nodes.length - 1; i++){
+//		nodes[i].joint(nodes[i + 1], fsa.arrow).registerForever(nodes);
+//	}
+
+}
+
+// return if any to is found
+function knot(current){
+	traverse_counter++;
+	if(current.to.length == 0 || traverse_counter > 100){
+		return false;
+	}
+
+	for(var i = 0; i < current.to.length; i++){
+		current.node.joint(nodes2[current.to[i]].node, fsa.arrow).registerForever(nodes);
+		knot(current);
+	}
+	return true;
 }
 
 $(function() {
