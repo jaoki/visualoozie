@@ -55,14 +55,22 @@ function drawDiagram(res){
 
 	var nodes = [];
 	var nodes2 = {};
-	var cStart = fsa.State.create({ position: {x: 200, y: yPos}, label: "Start" });
+	var cStart = fsa.State.create({ 
+		position: {x: 200, y: yPos}
+		, label: "Start" 
+		, radius: 15
+		, attrs: {
+			stroke: "blue",
+			fill: "yellow",
+			id: "aaa"
+		  }
+	});
 	nodes.push(cStart);
 	nodes2["start"] = { node: cStart, to : [ res.start.to] };
 
 	for(var i = 0; i < res.decisionOrForkOrJoin.length; i++){
 		yPos += 100;
-		var circle;
-			circle = fsa.State.create({ position: {x: 200, y: yPos}, label: res.decisionOrForkOrJoin[i].name });
+		var circle = fsa.State.create({ position: {x: 200, y: yPos}, label: res.decisionOrForkOrJoin[i].name });
 //		if(res.decisionOrForkOrJoin[i].java !=null){
 //			var java = res.decisionOrForkOrJoin[i].java;
 //		}
@@ -84,24 +92,6 @@ function drawDiagram(res){
 	nodes.push(cEnd);
 	nodes2[res.end.name] = {node: cEnd, to:[] };
 
-//	var current = nodes2["start"];
-//	while(true){	
-//		traverse_counter++;
-//
-//		if(current.to.length == 0 || traverse_counter > 100){
-//			break;
-//		}
-//
-//		for(var i = 0; i < current.to.length; i++){
-//			current.node.joint(nodes2[current.to[i]].node, fsa.arrow).registerForever(nodes);
-//		}
-//
-//		// TODO fix this
-//		current = nodes2[current.to[0]];
-//
-//	}
-
-//	var current = nodes2["start"];
 	for(var prop in nodes2){	
 		var current = nodes2[prop];
 
@@ -110,13 +100,6 @@ function drawDiagram(res){
 		}
 
 	}
-
-
-
-
-//	for(var i = 0; i < nodes.length - 1; i++){
-//		nodes[i].joint(nodes[i + 1], fsa.arrow).registerForever(nodes);
-//	}
 
 }
 
