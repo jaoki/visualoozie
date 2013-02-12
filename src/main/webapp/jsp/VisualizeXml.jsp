@@ -8,9 +8,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 	<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/redmond/jquery-ui.css" />
-	<!--
-	<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/redmond/jquery.ui.button.css" />
-	-->
+
+	<script type="text/javascript" src="js/joint.all.min.js" ></script>
+
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 
@@ -28,78 +28,23 @@
 		var userConfig;
 
 
-		// jQuery Initialization
-		$(function() {
+$(function() {
+	Joint.paper("myfsa", 1000, 200);
+	var fsa = Joint.dia.fsa;
+	var s0 = fsa.StartState.create({ position: {x: 50, y: 50} });
+	var se = fsa.EndState.create({ position: {x: 450, y: 150} });
+	var s1 = fsa.State.create({ position: {x: 120, y: 120}, label: "state 1" });
+	var s2 = fsa.State.create({ position: {x: 300, y: 50}, label: "state 2" });
+
+	var all = [s0, s1, s2, se];
+	s0.joint(s1, fsa.arrow).registerForever(all);
+	s1.joint(s2, fsa.arrow).registerForever(all);
+	s2.joint(se, fsa.arrow).registerForever(all);
 
 
-		}); // End of JQuery Initialization
 
-		var FRIEND_SEARCH_TEXT_MESSAGE = "Type your friend name to search";
+}); // End of JQuery Initialization
 
-		function friendSearchText_change(e){
-			if($("#friendSearchText").val() == ""){
-				$("#friendSearchText")
-						.val(FRIEND_SEARCH_TEXT_MESSAGE)
-						.addClass("searchbox_nocriteria")
-						.removeClass("searchbox_notfound")
-						.removeClass("searchbox");
-			}
-		}
-
-		function friendSearchText_keyup(e){
-
-			if($("#friendSearchText").val() == FRIEND_SEARCH_TEXT_MESSAGE)
-				return;
-
-			if(// e.keyCode == 8  // backspace
-					e.keyCode == 9  // tab
-					|| (112 <= e.keyCode && e.keyCode <= 123)  // Functional keys
-					|| e.keyCode == 192  // Alt Tab
-					|| e.keyCode == 17  // Shift
-					|| e.keyCode == 18  // alt
-					|| e.keyCode == 13  // enter
-					|| (37 <= e.keyCode && e.keyCode <= 40)  // Arrow key
-					|| (e.keyCode == 65 && e.ctrlKey == true) // Ctrl+A
-					){
-				return;
-			}
-
-			var searchValue = $("#friendSearchText").val().toLowerCase();
-
-			if(searchValue.length == 0){
-				for(var i = 0; i < allFriends.data.length; i++){
-					$("#friend_" + allFriends.data[i].id).show();
-				}
-				$("#friendSearchText")
-						.addClass("searchbox")
-						.removeClass("searchbox_notfound")
-						.removeClass("searchbox_nocriteria");
-				return;
-			}
-
-			var found = false;
-			for(var i = 0; i < allFriends.data.length; i++){
-
-				if(allFriends.data[i].name.toLowerCase().indexOf(searchValue) == -1){ // Does not match
-					$("#friend_" + allFriends.data[i].id).hide();
-				}else{ // Matches
-					found = true;
-					$("#friend_" + allFriends.data[i].id).show();
-				}
-			}
-
-			if(found){
-				$("#friendSearchText")
-						.addClass("searchbox")
-						.removeClass("searchbox_notfound")
-						.removeClass("searchbox_nocriteria");
-			}else{
-				$("#friendSearchText")
-						.addClass("searchbox_notfound")
-						.removeClass("searchbox")
-						.removeClass("searchbox_nocriteria");
-			}
-		}
 
     </script>
 
@@ -121,16 +66,10 @@
 		
 	</div>
 
-	<!--------------- Main Panel ------------------------>
-	<input name="fbAccessToken" id="fbAccessToken" value="<s:property value="fbAccessToken" escape="false"/>" type="hidden"/>
+	<div id="myfsa"></div>
+    
+	
 
-	<div id="main_area" class="main_area">
-
-		<div id="main_panel" class="main_panel">
-			<div id="main_panel_content" class="main_panel_content"></div>
-		</div>
-
-	</div>
 
 </body>
 </html>

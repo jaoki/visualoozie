@@ -26,7 +26,7 @@ public class UploadXmlAction extends ActionSupport {
 
     private File xmlfile;
 
-    private String result;
+    private WORKFLOWAPP result;
     
     @Override
     @Action(value="upload_xml", results = {
@@ -40,15 +40,14 @@ public class UploadXmlAction extends ActionSupport {
             xml = FileUtils.readFileToString(xmlfile);
         }catch (IOException e){
             e.printStackTrace();
-            result = "some error";
+            result = null;
             return SUCCESS;
         }
 
         XmlLoader loader = new XmlLoader();
         try {
-        WORKFLOWAPP loadString;
-            loadString = loader.loadString(xml);
-        System.out.println(loadString.getEnd().getName());
+            result = loader.loadString(xml);
+            System.out.println(result.getEnd().getName());
         }
         catch (JAXBException e) {
             // TODO Auto-generated catch block
@@ -59,8 +58,8 @@ public class UploadXmlAction extends ActionSupport {
 
     }
 
-    public String getResult() { return result; }
-    public void setResult(String result) { this.result = result; }
+    public WORKFLOWAPP getResult() { return result; }
+    public void setResult(WORKFLOWAPP result) { this.result = result; }
 
     public File getXmlfile() { return xmlfile; }
     public void setXmlfile(File xmlfile) { this.xmlfile = xmlfile; }
