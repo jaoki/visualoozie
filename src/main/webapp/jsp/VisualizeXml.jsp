@@ -36,7 +36,40 @@ var submitButtonClicked = function(){
         , data: formData
 		, complete: function(jqXHR, textStatus){
 			var res = $.parseJSON(jqXHR.responseText);
-			res.start;
+
+
+	Joint.paper("myfsa1", 1000, 200);
+	var fsa = Joint.dia.fsa;
+
+	var cStart = fsa.State.create({ position: {x: 120, y: 120}, label: "Start" });
+	var cEnd = fsa.State.create({ position: {x: 500, y: 120}, label: "End" });
+	var circles = [];
+	var xPos = 300;
+
+	var all = [cStart, cEnd];
+	for(var i = 0; i < res.decisionOrForkOrJoin.length; i++){
+		var circle;
+			circle = fsa.State.create({ position: {x: xPos, y: 50}, label: res.decisionOrForkOrJoin[i].name });
+//		if(res.decisionOrForkOrJoin[i].java !=null){
+//			var java = res.decisionOrForkOrJoin[i].java;
+//		}
+
+		all.push(circle);
+		circles.push(circle);
+		xPos += 100;
+	}
+//	var s2 = fsa.State.create({ position: {x: 300, y: 50}, label: "state 2" });
+
+	
+	cStart.joint(circles[0], fsa.arrow).registerForever(all);
+
+	for(var i = 0; i < circles.length - 1; i++){
+		circles[i].joint(circles[i + 1], fsa.arrow).registerForever(all);
+	}
+
+	circles[circles.length - 1].joint(cEnd, fsa.arrow).registerForever(all);
+
+
 		}
         , cache: false
         , contentType: false
@@ -60,38 +93,7 @@ $(function() {
 	s1.joint(s2, fsa.arrow).registerForever(all);
 	s2.joint(se, fsa.arrow).registerForever(all);
 
-	var json = {"any":null,"credentials":null,"decisionOrForkOrJoin":[{"anyUnderChoice":null,"anyUnderSequence":null,"cred":null,"error":{"to":"fail"},"fs":null,"java":{"archive":[],"arg":["Hello","Oozie!"],"captureOutput":null,"configuration":{"property":[{"description":null,"name":"mapred.job.queue.name","value":"${queueName}"}]},"file":[],"javaOpt":[],"javaOpts":null,"jobTracker":"${jobTracker}","jobXml":[],"mainClass":"org.apache.oozie.example.DemoJavaMain","nameNode":"${nameNode}","prepare":null},"mapReduce":null,"name":"java-node","ok":{"to":"end"},"pig":null,"retryInterval":null,"retryMax":null,"subWorkflow":null},{"message":"Java failed, error","name":"fail"}],"end":{"name":"end"},"global":null,"name":"java-main-wf","parameters":null,"start":{"to":"java-node"}};
-
-	Joint.paper("myfsa1", 1000, 200);
-	var fsa = Joint.dia.fsa;
-
-	var cStart = fsa.State.create({ position: {x: 120, y: 120}, label: "Start" });
-	var cEnd = fsa.State.create({ position: {x: 500, y: 120}, label: "End" });
-	var circles = [];
-	var xPos = 300;
-
-	var all = [cStart, cEnd];
-	for(var i = 0; i < json.decisionOrForkOrJoin.length; i++){
-		var circle;
-			circle = fsa.State.create({ position: {x: xPos, y: 50}, label: json.decisionOrForkOrJoin[i].name });
-//		if(json.decisionOrForkOrJoin[i].java !=null){
-//			var java = json.decisionOrForkOrJoin[i].java;
-//		}
-
-		all.push(circle);
-		circles.push(circle);
-		xPos += 100;
-	}
-//	var s2 = fsa.State.create({ position: {x: 300, y: 50}, label: "state 2" });
-
-	
-	cStart.joint(circles[0], fsa.arrow).registerForever(all);
-
-	for(var i = 0; i < circles.length - 1; i++){
-		circles[i].joint(circles[i + 1], fsa.arrow).registerForever(all);
-	}
-
-	circles[circles.length - 1].joint(cEnd, fsa.arrow).registerForever(all);
+//	var json = {"any":null,"credentials":null,"decisionOrForkOrJoin":[{"anyUnderChoice":null,"anyUnderSequence":null,"cred":null,"error":{"to":"fail"},"fs":null,"java":{"archive":[],"arg":["Hello","Oozie!"],"captureOutput":null,"configuration":{"property":[{"description":null,"name":"mapred.job.queue.name","value":"${queueName}"}]},"file":[],"javaOpt":[],"javaOpts":null,"jobTracker":"${jobTracker}","jobXml":[],"mainClass":"org.apache.oozie.example.DemoJavaMain","nameNode":"${nameNode}","prepare":null},"mapReduce":null,"name":"java-node","ok":{"to":"end"},"pig":null,"retryInterval":null,"retryMax":null,"subWorkflow":null},{"message":"Java failed, error","name":"fail"}],"end":{"name":"end"},"global":null,"name":"java-main-wf","parameters":null,"start":{"to":"java-node"}};
 
 }); // End of JQuery Initialization
 
