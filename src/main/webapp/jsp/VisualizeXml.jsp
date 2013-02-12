@@ -80,21 +80,18 @@ $(function() {
 
 		all.push(circle);
 		circles.push(circle);
-		xPos += 50;
+		xPos += 100;
 	}
 //	var s2 = fsa.State.create({ position: {x: 300, y: 50}, label: "state 2" });
 
 	
-	for(var i = 0; i < circles.length; i++){
-		if(i == 0){
-			cStart.joint(circles[0], fsa.arrow).registerForever(all);
-		}
+	cStart.joint(circles[0], fsa.arrow).registerForever(all);
 
-		if(i == circles.length - 1){
-			circles[i].joint(cEnd, fsa.arrow).registerForever(all);
-		}
+	for(var i = 0; i < circles.length - 1; i++){
+		circles[i].joint(circles[i + 1], fsa.arrow).registerForever(all);
 	}
 
+	circles[circles.length - 1].joint(cEnd, fsa.arrow).registerForever(all);
 
 }); // End of JQuery Initialization
 
