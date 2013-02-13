@@ -37,6 +37,7 @@ var submitButtonClicked = function(){
         , data: formData
 		, complete: function(jqXHR, textStatus){
 			var res = $.parseJSON(jqXHR.responseText);
+			$("#xml_textare").val(res.xml);
 			drawDiagram(res);
 
 		}
@@ -51,28 +52,29 @@ var weightedNodes = {};
 var PAPER_WITH = 500;
 
 function drawDiagram(res){
+	var json = res.xmldoc;
 	Joint.paper("myfsa1", PAPER_WITH, 1000);
 	var fsa = Joint.dia.fsa;
 
-	weightedNodes["start"] = { to : [ res.start.to], type: "start" };
+	weightedNodes["start"] = { to : [ json.start.to], type: "start" };
 
-	for(var i = 0; i < res.decisionOrForkOrJoin.length; i++){
-//		var circle = fsa.State.create({ position: {x: 200, y: yPos}, label: res.decisionOrForkOrJoin[i].name });
-//		if(res.decisionOrForkOrJoin[i].java !=null){
-//			var java = res.decisionOrForkOrJoin[i].java;
+	for(var i = 0; i < json.decisionOrForkOrJoin.length; i++){
+//		var circle = fsa.State.create({ position: {x: 200, y: yPos}, label: json.decisionOrForkOrJoin[i].name });
+//		if(json.decisionOrForkOrJoin[i].java !=null){
+//			var java = json.decisionOrForkOrJoin[i].java;
 //		}
 
 		// kill does not have ok and error
-		if(res.decisionOrForkOrJoin[i].ok === undefined && res.decisionOrForkOrJoin[i].error === undefined){
-			weightedNodes[res.decisionOrForkOrJoin[i].name] = { to : [], type: "kill" };
+		if(json.decisionOrForkOrJoin[i].ok === undefined && json.decisionOrForkOrJoin[i].error === undefined){
+			weightedNodes[json.decisionOrForkOrJoin[i].name] = { to : [], type: "kill" };
 		}else{
-			weightedNodes[res.decisionOrForkOrJoin[i].name] = { to : [res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to] , type: "normal" };
+			weightedNodes[json.decisionOrForkOrJoin[i].name] = { to : [json.decisionOrForkOrJoin[i].ok.to, json.decisionOrForkOrJoin[i].error.to] , type: "normal" };
 		}
 
 	}
 
 
-	weightedNodes[res.end.name] = { to : [] , type: "end" };
+	weightedNodes[json.end.name] = { to : [] , type: "end" };
 
 	addSortOrderToWeightedNodes("start", 0);
 
@@ -174,9 +176,13 @@ $(function() {
 	<div>
 		<form id="fileform" name="input" action="api/upload_xml" enctype="multipart/form-data" method="post">
 			<input name="xmlfile" type="file"/>
-			<input id="submitButton" type="button" value="Submit"/>
+			<input id="submitButton" type="button" value="Submit File"/>
 		</form>
 		
+	</div>
+	<div>
+		<textarea id="xml_textare">
+		</textarea>
 	</div>
 
 	<div id="myfsa1"></div>
