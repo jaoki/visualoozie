@@ -47,6 +47,7 @@ var submitButtonClicked = function(){
 };
 
 var traverse_counter = 0;
+var indexedNodes = {};
 
 function drawDiagram(res){
 	Joint.paper("myfsa1", 500, 2000);
@@ -68,6 +69,7 @@ function drawDiagram(res){
 	});
 	allNodes.push(cStart);
 	nodes2["start"] = { node: cStart, to : [ res.start.to] };
+	indexedNodes["start"] = { to : [ res.start.to] };
 
 	for(var i = 0; i < res.decisionOrForkOrJoin.length; i++){
 		yPos += 100;
@@ -81,8 +83,10 @@ function drawDiagram(res){
 		// kill does not have ok and error
 		if(res.decisionOrForkOrJoin[i].ok === undefined && res.decisionOrForkOrJoin[i].error === undefined){
 			nodes2[res.decisionOrForkOrJoin[i].name] = {node: circle, to : []};
+			indexedNodes[res.decisionOrForkOrJoin[i].name] = { to : [] };
 		}else{
 			nodes2[res.decisionOrForkOrJoin[i].name] = {node: circle, to : [ res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to]};
+			indexedNodes[res.decisionOrForkOrJoin[i].name] = { to : [res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to] };
 		}
 
 	}
@@ -92,6 +96,21 @@ function drawDiagram(res){
 	var cEnd = fsa.State.create({ position: {x: 200, y: yPos}, label: "End" });
 	allNodes.push(cEnd);
 	nodes2[res.end.name] = {node: cEnd, to:[] };
+	indexedNodes[res.end.name] = { to : [] };
+
+	// var sortOrder = 1;
+	var currentKey = "start"; ;
+	// indexedNodes[currentKey].sortOrder = sortOrder;
+	addSortOrder(currentKey, 0);
+//	while(true){
+//		traverse_counter++;
+//		if(traverse_counter > 100){
+//			break;
+//		}
+//
+//	}
+
+
 
 	for(var prop in nodes2){	
 		var current = nodes2[prop];
@@ -102,6 +121,15 @@ function drawDiagram(res){
 
 	}
 
+}
+
+function addSortOrder(currentKey, parentSortOrder){
+	if(indexedNodes[currentKey].sortOrder === undefined){
+		indexedNodes[currentKey].sortOrder = (parentSortOrder + 1);
+	}
+	for(var i = 0; i < indexedNodes[currentKey].to.length; i++){
+		addSortOrder(indexedNodes[currentKey].to[i], parentSortOrder + 1);
+	}
 }
 
 // return if any to is found
