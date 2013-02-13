@@ -47,7 +47,7 @@ var submitButtonClicked = function(){
 };
 
 var traverse_counter = 0;
-var indexedNodes = {};
+var weightedNodes = {};
 
 function drawDiagram(res){
 	Joint.paper("myfsa1", 500, 2000);
@@ -55,6 +55,7 @@ function drawDiagram(res){
 
 	var yPos = 50;
 
+	var keyLength = 0;
 	var allNodes = [];
 	var nodes2 = {};
 	var cStart = fsa.State.create({ 
@@ -69,7 +70,9 @@ function drawDiagram(res){
 	});
 	allNodes.push(cStart);
 	nodes2["start"] = { node: cStart, to : [ res.start.to] };
-	indexedNodes["start"] = { to : [ res.start.to] };
+	weightedNodes["start"] = { to : [ res.start.to] };
+	keyLength++;
+
 
 	for(var i = 0; i < res.decisionOrForkOrJoin.length; i++){
 		yPos += 100;
@@ -83,11 +86,12 @@ function drawDiagram(res){
 		// kill does not have ok and error
 		if(res.decisionOrForkOrJoin[i].ok === undefined && res.decisionOrForkOrJoin[i].error === undefined){
 			nodes2[res.decisionOrForkOrJoin[i].name] = {node: circle, to : []};
-			indexedNodes[res.decisionOrForkOrJoin[i].name] = { to : [] };
+			weightedNodes[res.decisionOrForkOrJoin[i].name] = { to : [] };
 		}else{
 			nodes2[res.decisionOrForkOrJoin[i].name] = {node: circle, to : [ res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to]};
-			indexedNodes[res.decisionOrForkOrJoin[i].name] = { to : [res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to] };
+			weightedNodes[res.decisionOrForkOrJoin[i].name] = { to : [res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to] };
 		}
+		keyLength++;
 
 	}
 
@@ -96,39 +100,50 @@ function drawDiagram(res){
 	var cEnd = fsa.State.create({ position: {x: 200, y: yPos}, label: "End" });
 	allNodes.push(cEnd);
 	nodes2[res.end.name] = {node: cEnd, to:[] };
-	indexedNodes[res.end.name] = { to : [] };
+	weightedNodes[res.end.name] = { to : [] };
+	keyLength++;
 
 	// var sortOrder = 1;
 	var currentKey = "start"; ;
-	// indexedNodes[currentKey].sortOrder = sortOrder;
+	// weightedNodes[currentKey].sortOrder = sortOrder;
 	addSortOrder(currentKey, 0);
-//	while(true){
-//		traverse_counter++;
-//		if(traverse_counter > 100){
-//			break;
+
+	// Invert the index TODO pretty bad logic.
+	var sortedNodeNames = [];
+	for(var key in weightedNodes){
+		 
+		var notAdded = true;
+		for(var i = 0; i < sortedNodeNames.length; i++){
+			if(weightedNodes[key].sortOrder < sortedNodeNames[i].sortOrder){
+				sortedNodeNames.splice(i, 0, {name: key, sortedOrder: weightedNodes[key].sortOrder});
+				notAdded = false;
+				break;
+			}
+		}
+
+		if(notAdded){
+			sortedNodeNames.push({name: key, sortOrder: weightedNodes[key].sortOrder});
+		}
+	}
+
+
+//	for(var prop in nodes2){	
+//		var current = nodes2[prop];
+//
+//		for(var i = 0; i < current.to.length; i++){
+//			current.node.joint(nodes2[current.to[i]].node, fsa.arrow).registerForever(allNodes);
 //		}
 //
 //	}
 
-
-
-	for(var prop in nodes2){	
-		var current = nodes2[prop];
-
-		for(var i = 0; i < current.to.length; i++){
-			current.node.joint(nodes2[current.to[i]].node, fsa.arrow).registerForever(allNodes);
-		}
-
-	}
-
 }
 
 function addSortOrder(currentKey, parentSortOrder){
-	if(indexedNodes[currentKey].sortOrder === undefined){
-		indexedNodes[currentKey].sortOrder = (parentSortOrder + 1);
+	if(weightedNodes[currentKey].sortOrder === undefined){
+		weightedNodes[currentKey].sortOrder = (parentSortOrder + 1);
 	}
-	for(var i = 0; i < indexedNodes[currentKey].to.length; i++){
-		addSortOrder(indexedNodes[currentKey].to[i], parentSortOrder + 1);
+	for(var i = 0; i < weightedNodes[currentKey].to.length; i++){
+		addSortOrder(weightedNodes[currentKey].to[i], parentSortOrder + 1);
 	}
 }
 
