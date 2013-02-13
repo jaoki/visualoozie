@@ -54,7 +54,7 @@ function drawDiagram(res){
 	Joint.paper("myfsa1", PAPER_WITH, 1000);
 	var fsa = Joint.dia.fsa;
 
-	weightedNodes["start"] = { to : [ res.start.to] };
+	weightedNodes["start"] = { to : [ res.start.to], type: "start" };
 
 	for(var i = 0; i < res.decisionOrForkOrJoin.length; i++){
 //		var circle = fsa.State.create({ position: {x: 200, y: yPos}, label: res.decisionOrForkOrJoin[i].name });
@@ -64,15 +64,15 @@ function drawDiagram(res){
 
 		// kill does not have ok and error
 		if(res.decisionOrForkOrJoin[i].ok === undefined && res.decisionOrForkOrJoin[i].error === undefined){
-			weightedNodes[res.decisionOrForkOrJoin[i].name] = { to : [] };
+			weightedNodes[res.decisionOrForkOrJoin[i].name] = { to : [], type: "kill" };
 		}else{
-			weightedNodes[res.decisionOrForkOrJoin[i].name] = { to : [res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to] };
+			weightedNodes[res.decisionOrForkOrJoin[i].name] = { to : [res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to] , type: "normal" };
 		}
 
 	}
 
 
-	weightedNodes[res.end.name] = { to : [] };
+	weightedNodes[res.end.name] = { to : [] , type: "end" };
 
 	addSortOrderToWeightedNodes("start", 0);
 
@@ -106,9 +106,18 @@ function drawDiagram(res){
 		}
 
 		for(var j = 0; j < sameSortCount; j++){
+			var attrs;
+			if(weightedNodes[sortedNodeNames[i + j].name].type == "kill"){
+				attrs= { fill : "red" };
+			}else if(weightedNodes[sortedNodeNames[i + j].name].type == "start" || weightedNodes[sortedNodeNames[i + j].name].type == "end"){
+				attrs= { fill : "grey" };
+			}else{
+				attrs= {};
+			}
 			var circle = fsa.State.create({
 						position: {x: (PAPER_WITH/(sameSortCount + 1) * (j+1)), y: yPos}
 						, label: sortedNodeNames[i + j].name
+						, attrs : attrs
 					});
 			allNodeArray.push(circle);
 			weightedNodes[sortedNodeNames[i + j].name].circle = circle;
