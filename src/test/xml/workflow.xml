@@ -34,10 +34,28 @@
                 </property>
             </configuration>
         </map-reduce>
-        <ok to="end"/>
-        <error to="fail"/>
+        <ok to="java-node2"/>
+        <error to="fail1"/>
     </action>
 	
+    <action name="java-node2">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <main-class>org.apache.oozie.example.DemoJavaMain</main-class>
+            <arg>Hello</arg>
+            <arg>Oozie!</arg>
+        </java>
+        <ok to="end"/>
+        <error to="fail1"/>
+    </action>
+
     <action name="java-node">
         <java>
             <job-tracker>${jobTracker}</job-tracker>
@@ -53,10 +71,13 @@
             <arg>Oozie!</arg>
         </java>
         <ok to="mr-node"/>
-        <error to="fail"/>
+        <error to="fail2"/>
     </action>
 
-    <kill name="fail">
+    <kill name="fail1">
+        <message>Java failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <kill name="fail2">
         <message>Java failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
     </kill>
     <end name="end"/>

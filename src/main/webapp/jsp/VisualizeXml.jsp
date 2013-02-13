@@ -57,7 +57,7 @@ function drawDiagram(res){
 	var yPos = 50;
 
 	var keyLength = 0;
-	var allNodes = [];
+	var allNodeArray = [];
 	var nodes2 = {};
 //	var cStart = fsa.State.create({ 
 //		position: {x: 200, y: yPos}
@@ -69,7 +69,7 @@ function drawDiagram(res){
 //			id: "aaa"
 //		  }
 //	});
-//	allNodes.push(cStart);
+//	allNodeArray.push(cStart);
 //	nodes2["start"] = { node: cStart, to : [ res.start.to] };
 	weightedNodes["start"] = { to : [ res.start.to] };
 	keyLength++;
@@ -82,7 +82,7 @@ function drawDiagram(res){
 //			var java = res.decisionOrForkOrJoin[i].java;
 //		}
 
-//		allNodes.push(circle);
+//		allNodeArray.push(circle);
 
 		// kill does not have ok and error
 		if(res.decisionOrForkOrJoin[i].ok === undefined && res.decisionOrForkOrJoin[i].error === undefined){
@@ -99,7 +99,7 @@ function drawDiagram(res){
 	yPos += 100;
 
 //	var cEnd = fsa.State.create({ position: {x: 200, y: yPos}, label: "End" });
-//	allNodes.push(cEnd);
+//	allNodeArray.push(cEnd);
 //	nodes2[res.end.name] = {node: cEnd, to:[] };
 	weightedNodes[res.end.name] = { to : [] };
 	keyLength++;
@@ -114,7 +114,7 @@ function drawDiagram(res){
 		var notAdded = true;
 		for(var i = 0; i < sortedNodeNames.length; i++){
 			if(weightedNodes[key].sortOrder < sortedNodeNames[i].sortOrder){
-				sortedNodeNames.splice(i, 0, {name: key, sortedOrder: weightedNodes[key].sortOrder});
+				sortedNodeNames.splice(i, 0, {name: key, sortOrder: weightedNodes[key].sortOrder});
 				notAdded = false;
 				break;
 			}
@@ -136,12 +136,15 @@ function drawDiagram(res){
 			}
 		}
 
-		if(i + sameSortCount <= sortedNodeNames.length ){
-			break;
-		}
-
 		for(var j = 0; j < sameSortCount; j++){
-			var circle = fsa.State.create({ position: {x: (PAPER_WITH/(sameSortCount + 1) * (j+1)), y: yPos}, label: sortedNodeNames[i + j].name });
+			var circle = fsa.State.create({
+						position: {x: (PAPER_WITH/(sameSortCount + 1) * (j+1)), y: yPos}
+						, label: sortedNodeNames[i + j].name 
+					});
+			allNodeArray.push(circle);
+			if(j > 0){
+				i++;
+			}
 		}
 
 		yPos += 80;
@@ -153,7 +156,7 @@ function drawDiagram(res){
 //		var current = nodes2[prop];
 //
 //		for(var i = 0; i < current.to.length; i++){
-//			current.node.joint(nodes2[current.to[i]].node, fsa.arrow).registerForever(allNodes);
+//			current.node.joint(nodes2[current.to[i]].node, fsa.arrow).registerForever(allNodeArray);
 //		}
 //
 //	}
