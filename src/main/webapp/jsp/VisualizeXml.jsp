@@ -139,9 +139,11 @@ function drawDiagram(res){
 		for(var j = 0; j < sameSortCount; j++){
 			var circle = fsa.State.create({
 						position: {x: (PAPER_WITH/(sameSortCount + 1) * (j+1)), y: yPos}
-						, label: sortedNodeNames[i + j].name 
+						, label: sortedNodeNames[i + j].name
 					});
 			allNodeArray.push(circle);
+			weightedNodes[sortedNodeNames[i + j].name].circle = circle;
+
 			if(j > 0){
 				i++;
 			}
@@ -152,14 +154,15 @@ function drawDiagram(res){
 	}
 
 
-//	for(var prop in nodes2){	
-//		var current = nodes2[prop];
-//
-//		for(var i = 0; i < current.to.length; i++){
-//			current.node.joint(nodes2[current.to[i]].node, fsa.arrow).registerForever(allNodeArray);
-//		}
-//
-//	}
+	// Add lines
+	for(var key in weightedNodes){	
+		var node = weightedNodes[key];
+
+		for(var i = 0; i < node.to.length; i++){
+			node.circle.joint(weightedNodes[node.to[i]].circle, fsa.arrow).registerForever(allNodeArray);
+		}
+
+	}
 
 }
 
