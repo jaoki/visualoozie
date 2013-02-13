@@ -46,10 +46,10 @@ var submitButtonClicked = function(){
     });
 };
 
-var traverse_counter = 0;
 var weightedNodes = {};
 
 var PAPER_WITH = 500;
+
 function drawDiagram(res){
 	Joint.paper("myfsa1", PAPER_WITH, 1000);
 	var fsa = Joint.dia.fsa;
