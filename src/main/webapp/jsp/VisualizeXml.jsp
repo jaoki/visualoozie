@@ -49,8 +49,9 @@ var submitButtonClicked = function(){
 var traverse_counter = 0;
 var weightedNodes = {};
 
+var PAPER_WITH = 500;
 function drawDiagram(res){
-	Joint.paper("myfsa1", 500, 2000);
+	Joint.paper("myfsa1", PAPER_WITH, 1000);
 	var fsa = Joint.dia.fsa;
 
 	var yPos = 50;
@@ -58,37 +59,37 @@ function drawDiagram(res){
 	var keyLength = 0;
 	var allNodes = [];
 	var nodes2 = {};
-	var cStart = fsa.State.create({ 
-		position: {x: 200, y: yPos}
-		, label: "Start" 
-		, radius: 15
-		, attrs: {
-			stroke: "blue",
-			fill: "yellow",
-			id: "aaa"
-		  }
-	});
-	allNodes.push(cStart);
-	nodes2["start"] = { node: cStart, to : [ res.start.to] };
+//	var cStart = fsa.State.create({ 
+//		position: {x: 200, y: yPos}
+//		, label: "Start" 
+//		, radius: 15
+//		, attrs: {
+//			stroke: "blue",
+//			fill: "yellow",
+//			id: "aaa"
+//		  }
+//	});
+//	allNodes.push(cStart);
+//	nodes2["start"] = { node: cStart, to : [ res.start.to] };
 	weightedNodes["start"] = { to : [ res.start.to] };
 	keyLength++;
 
 
 	for(var i = 0; i < res.decisionOrForkOrJoin.length; i++){
 		yPos += 100;
-		var circle = fsa.State.create({ position: {x: 200, y: yPos}, label: res.decisionOrForkOrJoin[i].name });
+//		var circle = fsa.State.create({ position: {x: 200, y: yPos}, label: res.decisionOrForkOrJoin[i].name });
 //		if(res.decisionOrForkOrJoin[i].java !=null){
 //			var java = res.decisionOrForkOrJoin[i].java;
 //		}
 
-		allNodes.push(circle);
+//		allNodes.push(circle);
 
 		// kill does not have ok and error
 		if(res.decisionOrForkOrJoin[i].ok === undefined && res.decisionOrForkOrJoin[i].error === undefined){
-			nodes2[res.decisionOrForkOrJoin[i].name] = {node: circle, to : []};
+//			nodes2[res.decisionOrForkOrJoin[i].name] = {node: circle, to : []};
 			weightedNodes[res.decisionOrForkOrJoin[i].name] = { to : [] };
 		}else{
-			nodes2[res.decisionOrForkOrJoin[i].name] = {node: circle, to : [ res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to]};
+//			nodes2[res.decisionOrForkOrJoin[i].name] = {node: circle, to : [ res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to]};
 			weightedNodes[res.decisionOrForkOrJoin[i].name] = { to : [res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to] };
 		}
 		keyLength++;
@@ -97,15 +98,13 @@ function drawDiagram(res){
 
 	yPos += 100;
 
-	var cEnd = fsa.State.create({ position: {x: 200, y: yPos}, label: "End" });
-	allNodes.push(cEnd);
-	nodes2[res.end.name] = {node: cEnd, to:[] };
+//	var cEnd = fsa.State.create({ position: {x: 200, y: yPos}, label: "End" });
+//	allNodes.push(cEnd);
+//	nodes2[res.end.name] = {node: cEnd, to:[] };
 	weightedNodes[res.end.name] = { to : [] };
 	keyLength++;
 
-	// var sortOrder = 1;
 	var currentKey = "start"; ;
-	// weightedNodes[currentKey].sortOrder = sortOrder;
 	addSortOrder(currentKey, 0);
 
 	// Invert the index TODO pretty bad logic.
@@ -124,6 +123,29 @@ function drawDiagram(res){
 		if(notAdded){
 			sortedNodeNames.push({name: key, sortOrder: weightedNodes[key].sortOrder});
 		}
+	}
+
+	var currentSortOrder = 0;
+	var yPos = 40;
+	for(var i = 0; i < sortedNodeNames.length; i++){
+		// how many same sort order there are?
+		var sameSortCount = 1
+		for(; i + sameSortCount < sortedNodeNames.length ;sameSortCount++){
+			if(sortedNodeNames[i].sortOrder != sortedNodeNames[i + sameSortCount].sortOrder){
+				break;
+			}
+		}
+
+		if(i + sameSortCount <= sortedNodeNames.length ){
+			break;
+		}
+
+		for(var j = 0; j < sameSortCount; j++){
+			var circle = fsa.State.create({ position: {x: (PAPER_WITH/(sameSortCount + 1) * (j+1)), y: yPos}, label: sortedNodeNames[i + j].name });
+		}
+
+		yPos += 80;
+
 	}
 
 
@@ -146,22 +168,6 @@ function addSortOrder(currentKey, parentSortOrder){
 		addSortOrder(weightedNodes[currentKey].to[i], parentSortOrder + 1);
 	}
 }
-
-// return if any to is found
-/*
-function knot(current){
-	traverse_counter++;
-	if(current.to.length == 0 || traverse_counter > 100){
-		return false;
-	}
-
-	for(var i = 0; i < current.to.length; i++){
-		current.node.joint(nodes2[current.to[i]].node, fsa.arrow).registerForever(nodes);
-		knot(current);
-	}
-	return true;
-}
-*/
 
 $(function() {
 
