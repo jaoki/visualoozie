@@ -4,7 +4,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
-    <title>Friend List Panels</title>
+    <title>VisualOozie</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 
@@ -20,7 +20,7 @@
 	<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
 
 
-	<link rel="stylesheet" type="text/css" href="<s:url value="/style/list_organizer.css"/>" />
+	<link rel="stylesheet" type="text/css" href="<s:url value="/style/visualoozie.css"/>" />
 		
 
 	<script type="text/javascript" src="<s:url value="/js/list_organizer.js"/>" > </script>
@@ -170,6 +170,7 @@ $(function() {
 
 	<!--------------- Top Menu ------------------------>
 	<div class="blueBar">
+		<span class="appTitle1">VisualOozie</span>
 
 	</div>
 
