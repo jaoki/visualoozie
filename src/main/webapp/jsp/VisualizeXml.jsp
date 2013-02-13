@@ -54,58 +54,27 @@ function drawDiagram(res){
 	Joint.paper("myfsa1", PAPER_WITH, 1000);
 	var fsa = Joint.dia.fsa;
 
-	var yPos = 50;
-
-	var keyLength = 0;
-	var allNodeArray = [];
-	var nodes2 = {};
-//	var cStart = fsa.State.create({ 
-//		position: {x: 200, y: yPos}
-//		, label: "Start" 
-//		, radius: 15
-//		, attrs: {
-//			stroke: "blue",
-//			fill: "yellow",
-//			id: "aaa"
-//		  }
-//	});
-//	allNodeArray.push(cStart);
-//	nodes2["start"] = { node: cStart, to : [ res.start.to] };
 	weightedNodes["start"] = { to : [ res.start.to] };
-	keyLength++;
-
 
 	for(var i = 0; i < res.decisionOrForkOrJoin.length; i++){
-		yPos += 100;
 //		var circle = fsa.State.create({ position: {x: 200, y: yPos}, label: res.decisionOrForkOrJoin[i].name });
 //		if(res.decisionOrForkOrJoin[i].java !=null){
 //			var java = res.decisionOrForkOrJoin[i].java;
 //		}
 
-//		allNodeArray.push(circle);
-
 		// kill does not have ok and error
 		if(res.decisionOrForkOrJoin[i].ok === undefined && res.decisionOrForkOrJoin[i].error === undefined){
-//			nodes2[res.decisionOrForkOrJoin[i].name] = {node: circle, to : []};
 			weightedNodes[res.decisionOrForkOrJoin[i].name] = { to : [] };
 		}else{
-//			nodes2[res.decisionOrForkOrJoin[i].name] = {node: circle, to : [ res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to]};
 			weightedNodes[res.decisionOrForkOrJoin[i].name] = { to : [res.decisionOrForkOrJoin[i].ok.to, res.decisionOrForkOrJoin[i].error.to] };
 		}
-		keyLength++;
 
 	}
 
-	yPos += 100;
 
-//	var cEnd = fsa.State.create({ position: {x: 200, y: yPos}, label: "End" });
-//	allNodeArray.push(cEnd);
-//	nodes2[res.end.name] = {node: cEnd, to:[] };
 	weightedNodes[res.end.name] = { to : [] };
-	keyLength++;
 
-	var currentKey = "start"; ;
-	addSortOrder(currentKey, 0);
+	addSortOrderToWeightedNodes("start", 0);
 
 	// Invert the index TODO pretty bad logic.
 	var sortedNodeNames = [];
@@ -125,7 +94,7 @@ function drawDiagram(res){
 		}
 	}
 
-	var currentSortOrder = 0;
+	var allNodeArray = [];
 	var yPos = 40;
 	for(var i = 0; i < sortedNodeNames.length; i++){
 		// how many same sort order there are?
@@ -153,7 +122,6 @@ function drawDiagram(res){
 
 	}
 
-
 	// Add lines
 	for(var key in weightedNodes){	
 		var node = weightedNodes[key];
@@ -166,12 +134,12 @@ function drawDiagram(res){
 
 }
 
-function addSortOrder(currentKey, parentSortOrder){
+function addSortOrderToWeightedNodes(currentKey, parentSortOrder){
 	if(weightedNodes[currentKey].sortOrder === undefined){
 		weightedNodes[currentKey].sortOrder = (parentSortOrder + 1);
 	}
 	for(var i = 0; i < weightedNodes[currentKey].to.length; i++){
-		addSortOrder(weightedNodes[currentKey].to[i], parentSortOrder + 1);
+		addSortOrderToWeightedNodes(weightedNodes[currentKey].to[i], parentSortOrder + 1);
 	}
 }
 
