@@ -7,6 +7,9 @@
     <title>VisualOozie</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
+	<link rel="stylesheet" type="text/css" href="<s:url value="/style/visualoozie.css"/>" />
+	<link rel="stylesheet" type="text/css" href="<s:url value="/style/shCore.css"/>" />
+	<link rel="stylesheet" type="text/css" href="<s:url value="/style/shThemeDefault.css"/>" />
 
 	<script type="text/javascript" src="js/joint.all.min.js" ></script>
 
@@ -18,21 +21,24 @@
 	-->
 
 	<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="js/shCore.js" ></script>
+	<script type="text/javascript" src="js/shAutoloader.js" ></script>
+<!--
+	<script type="text/javascript" src="js/shBrushXml.js" ></script>
+-->
 
 
-	<link rel="stylesheet" type="text/css" href="<s:url value="/style/visualoozie.css"/>" />
 		
 
-	<script type="text/javascript" src="<s:url value="/js/list_organizer.js"/>" > </script>
-	<script type="text/javascript" src="<s:url value="/js/WindowNotification.js"/>" > </script>
 
     <script type="text/javascript" >
 
 $(function() {
+//				SyntaxHighlighter.all();
 
 	var submitButtonClicked = function(){
 		$("#workflow_diagram").html("");
-		$("#xml_editor_div").html("");
+		$("#xml_editor_pre").html("");
 		$("#errorMessage").html("");
 
 		var formData = new FormData($("#fileform")[0]);
@@ -42,7 +48,9 @@ $(function() {
 			, data: formData
 			, complete: function(jqXHR, textStatus){
 				var res = $.parseJSON(jqXHR.responseText);
-				drawXmlEditor(res.escapedXml);
+				$("#xml_editor_pre").html(res.escapedXml);
+				SyntaxHighlighter.autoloader( 'xml js/shBrushXml.js'); // This needs to be loaded at this point.
+				SyntaxHighlighter.all();
 
 				if(!res.succeeded){
 					$("#errorMessage").html(res.errorMessage);
@@ -62,7 +70,7 @@ $(function() {
 	var PAPER_WITH = 500;
 
 	function drawDiagram(res){
-		Joint.paper("workflow_diagram", PAPER_WITH, 1000);
+		Joint.paper("workflow_diagram", PAPER_WITH, 500);
 		var fsa = Joint.dia.fsa;
 		var unsortedNodes = res.nodes;
 
@@ -149,6 +157,7 @@ $(function() {
 		}
 	}
 
+	/*
 	function drawXmlEditor(xmlArray){
 		var editor = "<table>";
 		editor += "<tr>";
@@ -165,6 +174,7 @@ $(function() {
 		editor += "</table>";
 		$("#xml_editor_div").html(editor);
 	}
+	*/
 
 	$("#submitButton").click(submitButtonClicked);
 
@@ -195,7 +205,10 @@ $(function() {
 
 	<div class="colstart">
 		<div id="workflow_diagram" class="col1"></div>
-		<div id="xml_editor_div" class="col1"></div>
+		<div id="xml_editor_div" class="col1">
+			<pre class="brush: xml;" id="xml_editor_pre">
+			</pre>
+		</div>
 	</div>
 
 </body>
