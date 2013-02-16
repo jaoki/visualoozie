@@ -7,26 +7,26 @@
     <title>VisualOozie</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	<link rel="stylesheet" type="text/css" href="<s:url value="/style/visualoozie.css"/>" />
+	<link rel="stylesheet" type="text/css" href='<s:url value="/style/visualoozie.css"/>' />
 <!--
 	<link rel="stylesheet" type="text/css" href="<s:url value="/style/shCore.css"/>" />
 	<link rel="stylesheet" type="text/css" href="<s:url value="/style/shThemeDefault.css"/>" />
 -->
 
-	<script type="text/javascript" src="js/joint.all.min.js" ></script>
+	<script type="text/javascript" src='<s:url value="/js/joint.all.min.js"/>' ></script>
 
 	<!--
-	<script type="text/javascript" src="js/raphael.js" ></script>
-	<script type="text/javascript" src="js/joint.js" ></script>
-	<script type="text/javascript" src="js/joint.dia.js" ></script>
-	<script type="text/javascript" src="js/joint.dia.fsa.js" ></script>
+	<script type="text/javascript" src="/js/raphael.js" ></script>
+	<script type="text/javascript" src="/js/joint.js" ></script>
+	<script type="text/javascript" src="/js/joint.dia.js" ></script>
+	<script type="text/javascript" src="/js/joint.dia.fsa.js" ></script>
 	-->
 
-	<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src='<s:url value="/js/jquery-1.9.1.min.js"/>' ></script>
 <!--
-	<script type="text/javascript" src="js/shCore.js" ></script>
-	<script type="text/javascript" src="js/shAutoloader.js" ></script>
-	<script type="text/javascript" src="js/shBrushXml.js" ></script>
+	<script type="text/javascript" src="/js/shCore.js" ></script>
+	<script type="text/javascript" src="/js/shAutoloader.js" ></script>
+	<script type="text/javascript" src="/js/shBrushXml.js" ></script>
 -->
 
 
@@ -45,7 +45,7 @@ $(function() {
 
 		var formData = new FormData($("#fileform")[0]);
 		$.ajax({
-			url: 'api/upload_xml'
+			url: '<s:url value="/api/upload_xml"/>'
 			, type: 'POST'
 			, data: formData
 			, complete: function(jqXHR, textStatus){
