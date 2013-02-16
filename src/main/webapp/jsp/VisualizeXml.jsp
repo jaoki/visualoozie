@@ -33,6 +33,7 @@ $(function() {
 	var submitButtonClicked = function(){
 		$("#myfsa1").html("");
 		$("#xml_textare").val("");
+		$("#errorMessage").html("");
 
 		var formData = new FormData($("#fileform")[0]);
 		$.ajax({
