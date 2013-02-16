@@ -7,18 +7,18 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import visualoozie.page.action.PathConstants;
-import visualoozie.util.XmlLoader;
-import visualoozie.xsd.ACTION;
-import visualoozie.xsd.KILL;
-import visualoozie.xsd.WORKFLOWAPP;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-//import org.hibernate.exception.ConstraintViolationException;
+import org.xml.sax.SAXParseException;
+
+import visualoozie.page.action.PathConstants;
+import visualoozie.util.XmlLoader;
+import visualoozie.xsd.ACTION;
+import visualoozie.xsd.KILL;
+import visualoozie.xsd.WORKFLOWAPP;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -56,7 +56,17 @@ public class UploadXmlAction extends ActionSupport {
             xmldoc = loader.loadString(xml);
         }catch (JAXBException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            result.succeeded = false;
+            if(e.getLinkedException() instanceof SAXParseException){
+                SAXParseException e2 = (SAXParseException) e.getLinkedException();
+                result.lineNumber = e2.getLineNumber();
+                result.columnNumber = e2.getColumnNumber();
+                result.errorMessage = e2.getMessage();
+
+            }else{
+                e.printStackTrace();
+                result.errorMessage = e.getMessage();
+            }
             return SUCCESS;
         }
 
@@ -93,6 +103,7 @@ public class UploadXmlAction extends ActionSupport {
         node.setTo(new String[]{});
         nodes.add(node);
         result.setNodes(nodes);
+        result.succeeded = true;
 
         return SUCCESS;
 
@@ -105,8 +116,25 @@ public class UploadXmlAction extends ActionSupport {
     public void setXmlfile(File xmlfile) { this.xmlfile = xmlfile; }
 
     public class UploadXmlResult{
+        private boolean succeeded;
+        private String errorMessage;
+        private Integer lineNumber;
+        private Integer columnNumber;
+
         private List<WorkflowNode> nodes;
         private String xml;
+
+        public boolean isSucceeded() { return succeeded; }
+        public void setSucceeded(boolean succeeded) { this.succeeded = succeeded; }
+
+        public String getErrorMessage() { return errorMessage; }
+        public void setErrorMessage(String errorMessage) { this.errorMessage = errorMessage; }
+
+        public Integer getLineNumber() { return lineNumber; }
+        public void setLineNumber(Integer lineNumber) { this.lineNumber = lineNumber; }
+
+        public Integer getColumnNumber() { return columnNumber; }
+        public void setColumnNumber(Integer columnNumber) { this.columnNumber = columnNumber; }
 
         public List<WorkflowNode> getNodes() { return nodes; }
         public void setNodes(List<WorkflowNode> nodes) { this.nodes = nodes; }

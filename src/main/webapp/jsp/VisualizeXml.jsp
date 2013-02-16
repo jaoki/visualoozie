@@ -31,6 +31,7 @@
 $(function() {
 
 	var submitButtonClicked = function(){
+		$("#myfsa1").html("");
 		var formData = new FormData($("#fileform")[0]);
 		$.ajax({
 			url: 'api/upload_xml'
@@ -38,6 +39,10 @@ $(function() {
 			, data: formData
 			, complete: function(jqXHR, textStatus){
 				var res = $.parseJSON(jqXHR.responseText);
+				if(!res.succeeded){
+					$("#errorMessage").html(res.errorMessage);
+					return;
+				}
 				$("#xml_textare").val(res.xml);
 				drawDiagram(res);
 
@@ -155,7 +160,6 @@ $(function() {
 	<!--------------- Top Menu ------------------------>
 	<div class="blueBar">
 		<span class="appTitle1">VisualOozie</span>
-
 	</div>
 
 	<div>
@@ -163,15 +167,16 @@ $(function() {
 			<input name="xmlfile" type="file"/>
 			<input id="submitButton" type="button" value="Submit File"/>
 		</form>
-		
 	</div>
 	<div>
-		<textarea id="xml_textare">
-		</textarea>
+		<span id="errorMessage" class="red"></span>
+	</div>
+
+	<div>
+		<textarea id="xml_textare"></textarea>
 	</div>
 
 	<div id="myfsa1"></div>
-
 
 
 </body>
