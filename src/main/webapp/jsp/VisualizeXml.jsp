@@ -23,6 +23,8 @@
 	-->
 
 	<script type="text/javascript" src='<s:url value="/js/jquery-1.9.1.min.js"/>' ></script>
+	<script type="text/javascript" src='<s:url value="/js/visualoozie.js"/>' ></script>
+
 <!--
 	<script type="text/javascript" src="/js/shCore.js" ></script>
 	<script type="text/javascript" src="/js/shAutoloader.js" ></script>
@@ -36,7 +38,7 @@
     <script type="text/javascript" >
 
 $(function() {
-//				SyntaxHighlighter.all();
+	vo.tokenizer("abc");
 
 	var submitButtonClicked = function(){
 		$("#workflow_diagram").html("");
@@ -179,7 +181,7 @@ $(function() {
 			editor += "</tr>";
 		}
 		editor += "</table>";
-		$("#xml_editor_div").html(editor);
+		$("#xml_editor_div code").html(editor);
 	}
 
 	$("#submitButton").click(submitButtonClicked);
@@ -212,10 +214,8 @@ $(function() {
 	<div class="colstart">
 		<div id="workflow_diagram" class="col1"></div>
 		<div id="xml_editor_div" class="col1" style="border: 1px solid;">
-<!--
-			<pre class="brush: xml;" id="xml_editor_pre">
-			</pre>
-			-->
+			<code>
+			</code>
 		</div>
 	</div>
 
