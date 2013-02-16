@@ -55,18 +55,12 @@ $(function() {
 	function drawDiagram(res){
 		Joint.paper("myfsa1", PAPER_WITH, 1000);
 		var fsa = Joint.dia.fsa;
+		var unsortedNodes = res.nodes;
 
-		var nodes = res.nodes;
-		for(var nodeIndex = 0; nodeIndex < nodes.length; nodeIndex++){
-			var node = nodes[nodeIndex];
-			var toArray = [];
-			if(node.to != null){
-				for(var toIndex = 0; toIndex < node.to.length; toIndex++ ){
-					toArray.push(node.to[toIndex]);
-				}
-			}
-			weightedNodes[node.name] = { to : toArray , type: node.type };
-
+		// Set weightedNodes wihtout sortOrder
+		for(var nodeIndex = 0; nodeIndex < unsortedNodes.length; nodeIndex++){
+			var node = unsortedNodes[nodeIndex];
+			weightedNodes[node.name] = { to : node.to , type: node.type };
 		}
 
 		addSortOrderToWeightedNodes("start", 0);
@@ -89,8 +83,9 @@ $(function() {
 			}
 		}
 
-		var allNodeArray = [];
+		var allCircles = [];
 		var yPos = 40;
+		// Generates svg circles
 		for(var i = 0; i < sortedNodeNames.length; i++){
 			// how many same sort order there are?
 			var sameSortCount = 1
@@ -114,7 +109,7 @@ $(function() {
 							, label: sortedNodeNames[i + j].name
 							, attrs : attrs
 						});
-				allNodeArray.push(circle);
+				allCircles.push(circle);
 				weightedNodes[sortedNodeNames[i + j].name].circle = circle;
 
 				if(j > 0){
@@ -126,14 +121,12 @@ $(function() {
 
 		}
 
-		// Add lines
+		// Add svg lines
 		for(var key in weightedNodes){	
 			var node = weightedNodes[key];
-
 			for(var i = 0; i < node.to.length; i++){
-				node.circle.joint(weightedNodes[node.to[i]].circle, fsa.arrow).registerForever(allNodeArray);
+				node.circle.joint(weightedNodes[node.to[i]].circle, fsa.arrow).registerForever(allCircles);
 			}
-
 		}
 
 	}

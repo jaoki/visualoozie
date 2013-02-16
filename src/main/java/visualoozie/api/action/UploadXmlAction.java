@@ -90,7 +90,7 @@ public class UploadXmlAction extends ActionSupport {
         node = new WorkflowNode();
         node.setName(xmldoc.getEnd().getName());
         node.setType(WorkflowNode.NodeType.END);
-        node.setTo(null);
+        node.setTo(new String[]{});
         nodes.add(node);
         result.setNodes(nodes);
 
