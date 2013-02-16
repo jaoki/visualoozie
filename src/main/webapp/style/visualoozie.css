@@ -19,9 +19,19 @@ body {
 }
 
 
+div.colstart{
+	clear:both;
+}
 
 
-/* TODO REMOVE THE FOLLOWING?? ?? ?  */
+div.col1{
+	float: left;
+}
+
+
+
+
+/* ---------------------------- TODO REMOVE THE FOLLOWING?? ?? ?  */
 
 
 table.layout{

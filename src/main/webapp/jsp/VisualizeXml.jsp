@@ -31,8 +31,8 @@
 $(function() {
 
 	var submitButtonClicked = function(){
-		$("#myfsa1").html("");
-		$("#xml_textare").val("");
+		$("#workflow_diagram").html("");
+		$("#xml_editor_div").html("");
 		$("#errorMessage").html("");
 
 		var formData = new FormData($("#fileform")[0]);
@@ -42,7 +42,7 @@ $(function() {
 			, data: formData
 			, complete: function(jqXHR, textStatus){
 				var res = $.parseJSON(jqXHR.responseText);
-				$("#xml_textare").val(res.xml);
+				drawXmlEditor(res.escapedXml);
 
 				if(!res.succeeded){
 					$("#errorMessage").html(res.errorMessage);
@@ -62,7 +62,7 @@ $(function() {
 	var PAPER_WITH = 500;
 
 	function drawDiagram(res){
-		Joint.paper("myfsa1", PAPER_WITH, 1000);
+		Joint.paper("workflow_diagram", PAPER_WITH, 1000);
 		var fsa = Joint.dia.fsa;
 		var unsortedNodes = res.nodes;
 
@@ -149,6 +149,23 @@ $(function() {
 		}
 	}
 
+	function drawXmlEditor(xmlArray){
+		var editor = "<table>";
+		editor += "<tr>";
+		editor += "<td>#</td>";
+		editor += "<td>Content</td>";
+		editor += "</tr>";
+		for(var i = 0; i <  xmlArray.length; i++){
+			var line = xmlArray[i];
+			editor += "<tr>";
+			editor += "<td>" + i + "</td>";
+			editor += "<td>" + line + "</td>";
+			editor += "</tr>";
+		}
+		editor += "</table>";
+		$("#xml_editor_div").html(editor);
+	}
+
 	$("#submitButton").click(submitButtonClicked);
 
 }); // End of JQuery Initialization
@@ -176,12 +193,10 @@ $(function() {
 		<span id="errorMessage" class="red"></span>
 	</div>
 
-	<div>
-		<textarea id="xml_textare"></textarea>
+	<div class="colstart">
+		<div id="workflow_diagram" class="col1"></div>
+		<div id="xml_editor_div" class="col1"></div>
 	</div>
-
-	<div id="myfsa1"></div>
-
 
 </body>
 </html>

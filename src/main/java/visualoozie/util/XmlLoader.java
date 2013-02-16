@@ -2,7 +2,6 @@ package visualoozie.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -14,7 +13,6 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-//import org.apache.oozie.tools.workflowgenerator.xsd04.WORKFLOWAPP;
 import org.xml.sax.SAXException;
 
 import visualoozie.xsd.WORKFLOWAPP;
@@ -32,7 +30,7 @@ public class XmlLoader {
 
         try {
             SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            ClassLoader classLoader = XmlLoader.class.getClassLoader();
+//            ClassLoader classLoader = XmlLoader.class.getClassLoader();
             URL url;
             try {
                 // TODO this should be from classloader
@@ -54,6 +52,15 @@ public class XmlLoader {
         @SuppressWarnings("unchecked")
         JAXBElement<WORKFLOWAPP> element = (JAXBElement<WORKFLOWAPP>)unmarshaller.unmarshal(input);
         return element.getValue();
+    }
+
+    public WORKFLOWAPP loadStringArray(String[] xml) throws JAXBException {
+        StringBuffer sb = new StringBuffer();
+        for(String part : xml){
+            sb.append(part);
+        }
+
+        return loadString(sb.toString());
     }
 
 }

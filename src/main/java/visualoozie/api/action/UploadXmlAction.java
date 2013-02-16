@@ -1,13 +1,16 @@
 package visualoozie.api.action;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.xml.bind.JAXBException;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -40,20 +43,31 @@ public class UploadXmlAction extends ActionSupport {
     )
     public String execute(){
         result = new UploadXmlResult();
-        String xml;
+
+        Scanner scanner;
         try {
-            xml = FileUtils.readFileToString(xmlfile);
-        }catch (IOException e){
+            scanner = new Scanner(xmlfile);
+        }catch(FileNotFoundException e) {
             e.printStackTrace();
-//            result = null;
+            result.succeeded = false;
+            result.errorMessage = e.getMessage();
             return SUCCESS;
         }
-        result.setXml(xml);
+        
+        
+        List<String> lines = new ArrayList<>();
+        StringBuffer xmlSB = new StringBuffer();
+        while (scanner.hasNextLine()){
+            String line = scanner.nextLine();
+            lines.add(StringEscapeUtils.escapeHtml(line));
+            xmlSB.append(line);
+        }
+        result.escapedXml = lines;
 
         XmlLoader loader = new XmlLoader();
         WORKFLOWAPP xmldoc;
         try {
-            xmldoc = loader.loadString(xml);
+            xmldoc = loader.loadString(xmlSB.toString());
         }catch (JAXBException e) {
             // TODO Auto-generated catch block
             result.succeeded = false;
@@ -122,7 +136,7 @@ public class UploadXmlAction extends ActionSupport {
         private Integer columnNumber;
 
         private List<WorkflowNode> nodes;
-        private String xml;
+        private List<String> escapedXml;
 
         public boolean isSucceeded() { return succeeded; }
         public void setSucceeded(boolean succeeded) { this.succeeded = succeeded; }
@@ -139,8 +153,8 @@ public class UploadXmlAction extends ActionSupport {
         public List<WorkflowNode> getNodes() { return nodes; }
         public void setNodes(List<WorkflowNode> nodes) { this.nodes = nodes; }
         
-        public String getXml() { return xml; }
-        public void setXml(String xml) { this.xml = xml; }
+        public List<String> getEscapedXml() { return escapedXml; }
+        public void setEscapedXml(List<String> escapedXml) { this.escapedXml = escapedXml; }
 
     }
 }
