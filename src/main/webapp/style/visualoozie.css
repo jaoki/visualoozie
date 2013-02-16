@@ -16,6 +16,11 @@ body {
 
 .red{
 	color: red;
+	font-weight: bold;
+}
+
+.num{
+	text-align: right;
 }
 
 

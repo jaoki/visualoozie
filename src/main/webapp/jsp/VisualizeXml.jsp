@@ -8,8 +8,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 	<link rel="stylesheet" type="text/css" href="<s:url value="/style/visualoozie.css"/>" />
+<!--
 	<link rel="stylesheet" type="text/css" href="<s:url value="/style/shCore.css"/>" />
 	<link rel="stylesheet" type="text/css" href="<s:url value="/style/shThemeDefault.css"/>" />
+-->
 
 	<script type="text/javascript" src="js/joint.all.min.js" ></script>
 
@@ -21,9 +23,9 @@
 	-->
 
 	<script type="text/javascript" src="js/jquery-1.9.1.min.js" ></script>
+<!--
 	<script type="text/javascript" src="js/shCore.js" ></script>
 	<script type="text/javascript" src="js/shAutoloader.js" ></script>
-<!--
 	<script type="text/javascript" src="js/shBrushXml.js" ></script>
 -->
 
@@ -48,9 +50,10 @@ $(function() {
 			, data: formData
 			, complete: function(jqXHR, textStatus){
 				var res = $.parseJSON(jqXHR.responseText);
-				$("#xml_editor_pre").html(res.escapedXml);
-				SyntaxHighlighter.autoloader( 'xml js/shBrushXml.js'); // This needs to be loaded at this point.
-				SyntaxHighlighter.all();
+//				$("#xml_editor_pre").html(res.escapedXml);
+				drawXmlEditor(res.escapedXml, res.lineNumber, res.columnNumber);
+//				SyntaxHighlighter.autoloader( 'xml js/shBrushXml.js'); // This needs to be loaded at this point.
+//				SyntaxHighlighter.all();
 
 				if(!res.succeeded){
 					$("#errorMessage").html(res.errorMessage);
@@ -157,24 +160,27 @@ $(function() {
 		}
 	}
 
-	/*
-	function drawXmlEditor(xmlArray){
+	function drawXmlEditor(xmlArray, lineNumber, columnNumber){
 		var editor = "<table>";
 		editor += "<tr>";
 		editor += "<td>#</td>";
 		editor += "<td>Content</td>";
 		editor += "</tr>";
 		for(var i = 0; i <  xmlArray.length; i++){
-			var line = xmlArray[i];
+			var line = xmlArray[i].replace(/ /g, "&nbsp;");
 			editor += "<tr>";
-			editor += "<td>" + i + "</td>";
-			editor += "<td>" + line + "</td>";
+			if(i == lineNumber - 1){
+				editor += "<td class='red num'>" + (i + 1) + "</td>";
+				editor += "<td class='red'>" + line + "</td>";
+			}else{
+				editor += "<td class='num'>" + (i + 1) + "</td>";
+				editor += "<td>" + line + "</td>";
+			}
 			editor += "</tr>";
 		}
 		editor += "</table>";
 		$("#xml_editor_div").html(editor);
 	}
-	*/
 
 	$("#submitButton").click(submitButtonClicked);
 
@@ -206,8 +212,10 @@ $(function() {
 	<div class="colstart">
 		<div id="workflow_diagram" class="col1"></div>
 		<div id="xml_editor_div" class="col1">
+<!--
 			<pre class="brush: xml;" id="xml_editor_pre">
 			</pre>
+			-->
 		</div>
 	</div>
 
