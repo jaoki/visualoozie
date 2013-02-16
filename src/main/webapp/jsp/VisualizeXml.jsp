@@ -28,133 +28,124 @@
 
     <script type="text/javascript" >
 
-
-var submitButtonClicked = function(){
-    var formData = new FormData($("#fileform")[0]);
-    $.ajax({
-		url: 'api/upload_xml'
-		, type: 'POST'
-        , data: formData
-		, complete: function(jqXHR, textStatus){
-			var res = $.parseJSON(jqXHR.responseText);
-			$("#xml_textare").val(res.xml);
-			drawDiagram(res);
-
-		}
-        , cache: false
-        , contentType: false
-        , processData: false
-    });
-};
-
-var weightedNodes = {};
-
-var PAPER_WITH = 500;
-
-function drawDiagram(res){
-	var json = res.xmldoc;
-	Joint.paper("myfsa1", PAPER_WITH, 1000);
-	var fsa = Joint.dia.fsa;
-
-	weightedNodes["start"] = { to : [ json.start.to], type: "start" };
-
-	for(var i = 0; i < json.decisionOrForkOrJoin.length; i++){
-//		var circle = fsa.State.create({ position: {x: 200, y: yPos}, label: json.decisionOrForkOrJoin[i].name });
-//		if(json.decisionOrForkOrJoin[i].java !=null){
-//			var java = json.decisionOrForkOrJoin[i].java;
-//		}
-
-		// kill does not have ok and error
-		if(json.decisionOrForkOrJoin[i].ok === undefined && json.decisionOrForkOrJoin[i].error === undefined){
-			weightedNodes[json.decisionOrForkOrJoin[i].name] = { to : [], type: "kill" };
-		}else{
-			weightedNodes[json.decisionOrForkOrJoin[i].name] = { to : [json.decisionOrForkOrJoin[i].ok.to, json.decisionOrForkOrJoin[i].error.to] , type: "normal" };
-		}
-
-	}
-
-
-	weightedNodes[json.end.name] = { to : [] , type: "end" };
-
-	addSortOrderToWeightedNodes("start", 0);
-
-	// Invert the index TODO pretty bad logic.
-	var sortedNodeNames = [];
-	for(var key in weightedNodes){
-		 
-		var notAdded = true;
-		for(var i = 0; i < sortedNodeNames.length; i++){
-			if(weightedNodes[key].sortOrder < sortedNodeNames[i].sortOrder){
-				sortedNodeNames.splice(i, 0, {name: key, sortOrder: weightedNodes[key].sortOrder});
-				notAdded = false;
-				break;
-			}
-		}
-
-		if(notAdded){
-			sortedNodeNames.push({name: key, sortOrder: weightedNodes[key].sortOrder});
-		}
-	}
-
-	var allNodeArray = [];
-	var yPos = 40;
-	for(var i = 0; i < sortedNodeNames.length; i++){
-		// how many same sort order there are?
-		var sameSortCount = 1
-		for(; i + sameSortCount < sortedNodeNames.length ;sameSortCount++){
-			if(sortedNodeNames[i].sortOrder != sortedNodeNames[i + sameSortCount].sortOrder){
-				break;
-			}
-		}
-
-		for(var j = 0; j < sameSortCount; j++){
-			var attrs;
-			if(weightedNodes[sortedNodeNames[i + j].name].type == "kill"){
-				attrs= { fill : "red" };
-			}else if(weightedNodes[sortedNodeNames[i + j].name].type == "start" || weightedNodes[sortedNodeNames[i + j].name].type == "end"){
-				attrs= { fill : "grey" };
-			}else{
-				attrs= {};
-			}
-			var circle = fsa.State.create({
-						position: {x: (PAPER_WITH/(sameSortCount + 1) * (j+1)), y: yPos}
-						, label: sortedNodeNames[i + j].name
-						, attrs : attrs
-					});
-			allNodeArray.push(circle);
-			weightedNodes[sortedNodeNames[i + j].name].circle = circle;
-
-			if(j > 0){
-				i++;
-			}
-		}
-
-		yPos += 80;
-
-	}
-
-	// Add lines
-	for(var key in weightedNodes){	
-		var node = weightedNodes[key];
-
-		for(var i = 0; i < node.to.length; i++){
-			node.circle.joint(weightedNodes[node.to[i]].circle, fsa.arrow).registerForever(allNodeArray);
-		}
-
-	}
-
-}
-
-function addSortOrderToWeightedNodes(currentKey, parentSortOrder){
-	if(weightedNodes[currentKey].sortOrder === undefined){
-		weightedNodes[currentKey].sortOrder = (parentSortOrder + 1);
-	}
-	for(var i = 0; i < weightedNodes[currentKey].to.length; i++){
-		addSortOrderToWeightedNodes(weightedNodes[currentKey].to[i], parentSortOrder + 1);
-	}
-}
-
 $(function() {
+
+	var submitButtonClicked = function(){
+		var formData = new FormData($("#fileform")[0]);
+		$.ajax({
+			url: 'api/upload_xml'
+			, type: 'POST'
+			, data: formData
+			, complete: function(jqXHR, textStatus){
+				var res = $.parseJSON(jqXHR.responseText);
+				$("#xml_textare").val(res.xml);
+				drawDiagram(res);
+
+			}
+			, cache: false
+			, contentType: false
+			, processData: false
+		});
+	};
+
+	var weightedNodes = {};
+
+	var PAPER_WITH = 500;
+
+	function drawDiagram(res){
+		Joint.paper("myfsa1", PAPER_WITH, 1000);
+		var fsa = Joint.dia.fsa;
+
+		var nodes = res.nodes;
+		for(var nodeIndex = 0; nodeIndex < nodes.length; nodeIndex++){
+			var node = nodes[nodeIndex];
+			var toArray = [];
+			if(node.to != null){
+				for(var toIndex = 0; toIndex < node.to.length; toIndex++ ){
+					toArray.push(node.to[toIndex]);
+				}
+			}
+			weightedNodes[node.name] = { to : toArray , type: node.type };
+
+		}
+
+		addSortOrderToWeightedNodes("start", 0);
+
+		// Invert the index TODO pretty bad logic.
+		var sortedNodeNames = [];
+		for(var key in weightedNodes){
+			 
+			var notAdded = true;
+			for(var i = 0; i < sortedNodeNames.length; i++){
+				if(weightedNodes[key].sortOrder < sortedNodeNames[i].sortOrder){
+					sortedNodeNames.splice(i, 0, {name: key, sortOrder: weightedNodes[key].sortOrder});
+					notAdded = false;
+					break;
+				}
+			}
+
+			if(notAdded){
+				sortedNodeNames.push({name: key, sortOrder: weightedNodes[key].sortOrder});
+			}
+		}
+
+		var allNodeArray = [];
+		var yPos = 40;
+		for(var i = 0; i < sortedNodeNames.length; i++){
+			// how many same sort order there are?
+			var sameSortCount = 1
+			for(; i + sameSortCount < sortedNodeNames.length ;sameSortCount++){
+				if(sortedNodeNames[i].sortOrder != sortedNodeNames[i + sameSortCount].sortOrder){
+					break;
+				}
+			}
+
+			for(var j = 0; j < sameSortCount; j++){
+				var attrs;
+				if(weightedNodes[sortedNodeNames[i + j].name].type == "KILL"){
+					attrs= { fill : "red" };
+				}else if(weightedNodes[sortedNodeNames[i + j].name].type == "START" || weightedNodes[sortedNodeNames[i + j].name].type == "END"){
+					attrs= { fill : "grey" };
+				}else{
+					attrs= {};
+				}
+				var circle = fsa.State.create({
+							position: {x: (PAPER_WITH/(sameSortCount + 1) * (j+1)), y: yPos}
+							, label: sortedNodeNames[i + j].name
+							, attrs : attrs
+						});
+				allNodeArray.push(circle);
+				weightedNodes[sortedNodeNames[i + j].name].circle = circle;
+
+				if(j > 0){
+					i++;
+				}
+			}
+
+			yPos += 80;
+
+		}
+
+		// Add lines
+		for(var key in weightedNodes){	
+			var node = weightedNodes[key];
+
+			for(var i = 0; i < node.to.length; i++){
+				node.circle.joint(weightedNodes[node.to[i]].circle, fsa.arrow).registerForever(allNodeArray);
+			}
+
+		}
+
+	}
+
+	function addSortOrderToWeightedNodes(currentKey, parentSortOrder){
+		if(weightedNodes[currentKey].sortOrder === undefined){
+			weightedNodes[currentKey].sortOrder = (parentSortOrder + 1);
+		}
+		for(var i = 0; i < weightedNodes[currentKey].to.length; i++){
+			addSortOrderToWeightedNodes(weightedNodes[currentKey].to[i], parentSortOrder + 1);
+		}
+	}
 
 	$("#submitButton").click(submitButtonClicked);
 

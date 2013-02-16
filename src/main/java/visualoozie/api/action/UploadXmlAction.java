@@ -2,11 +2,15 @@ package visualoozie.api.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
 import visualoozie.page.action.PathConstants;
 import visualoozie.util.XmlLoader;
+import visualoozie.xsd.ACTION;
+import visualoozie.xsd.KILL;
 import visualoozie.xsd.WORKFLOWAPP;
 
 import org.apache.commons.io.FileUtils;
@@ -47,13 +51,49 @@ public class UploadXmlAction extends ActionSupport {
         result.setXml(xml);
 
         XmlLoader loader = new XmlLoader();
+        WORKFLOWAPP xmldoc;
         try {
-            result.setXmldoc(loader.loadString(xml));
+            xmldoc = loader.loadString(xml);
         }catch (JAXBException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            return SUCCESS;
+        }
+
+        // Parse uri:oozie:workflow:0.4 to WorkflowNode
+        List<WorkflowNode> nodes = new ArrayList<>();
+        WorkflowNode node = new WorkflowNode();
+        node.setName("start");
+        node.setType(WorkflowNode.NodeType.START);
+        node.setTo(new String[]{xmldoc.getStart().getTo()});
+        nodes.add(node);
+
+        for(Object nodeXml : xmldoc.getDecisionOrForkOrJoin()){
+            if(nodeXml instanceof ACTION){
+                ACTION action = (ACTION)nodeXml;
+                node = new WorkflowNode();
+                node.setName(action.getName());
+                node.setType(WorkflowNode.NodeType.ACTION);
+                node.setTo(new String[]{action.getOk().getTo(), action.getError().getTo()});
+                nodes.add(node);
+            } else if(nodeXml instanceof KILL){
+                KILL kill = (KILL)nodeXml;
+                node = new WorkflowNode();
+                node.setName(kill.getName());
+                node.setType(WorkflowNode.NodeType.KILL);
+                node.setTo(new String[]{});
+                nodes.add(node);
+            }
+
         }
         
+        node = new WorkflowNode();
+        node.setName(xmldoc.getEnd().getName());
+        node.setType(WorkflowNode.NodeType.END);
+        node.setTo(null);
+        nodes.add(node);
+        result.setNodes(nodes);
+
         return SUCCESS;
 
     }
@@ -65,13 +105,14 @@ public class UploadXmlAction extends ActionSupport {
     public void setXmlfile(File xmlfile) { this.xmlfile = xmlfile; }
 
     public class UploadXmlResult{
-        private WORKFLOWAPP xmldoc;
+        private List<WorkflowNode> nodes;
         private String xml;
 
-        public WORKFLOWAPP getXmldoc() { return xmldoc; }
-        public void setXmldoc(WORKFLOWAPP xmldoc) { this.xmldoc = xmldoc; }
+        public List<WorkflowNode> getNodes() { return nodes; }
+        public void setNodes(List<WorkflowNode> nodes) { this.nodes = nodes; }
+        
         public String getXml() { return xml; }
         public void setXml(String xml) { this.xml = xml; }
-        
+
     }
 }
