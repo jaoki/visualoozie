@@ -32,6 +32,8 @@ $(function() {
 
 	var submitButtonClicked = function(){
 		$("#myfsa1").html("");
+		$("#xml_textare").val("");
+
 		var formData = new FormData($("#fileform")[0]);
 		$.ajax({
 			url: 'api/upload_xml'
@@ -39,11 +41,12 @@ $(function() {
 			, data: formData
 			, complete: function(jqXHR, textStatus){
 				var res = $.parseJSON(jqXHR.responseText);
+				$("#xml_textare").val(res.xml);
+
 				if(!res.succeeded){
 					$("#errorMessage").html(res.errorMessage);
 					return;
 				}
-				$("#xml_textare").val(res.xml);
 				drawDiagram(res);
 
 			}
