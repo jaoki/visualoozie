@@ -131,14 +131,14 @@ $(function() {
 		editor += "<td>Content</td>";
 		editor += "</tr>";
 		for(var i = 0; i <  xmlArray.length; i++){
-			var line = xmlArray[i].replace(/ /g, "&nbsp;");
+			var line = xmlArray[i].replace(/ /g, "&nbsp;").replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
 			editor += "<tr>";
 			if(i == lineNumber - 1){
-				editor += "<td class='red num'>" + (i + 1) + "</td>";
-				editor += "<td class='red'>" + line + "</td>";
+				editor += "<td><span class='red num'>" + (i + 1) + "</span></td>";
+				editor += "<td><span class='red'>" + line + "</span></td>";
 			}else{
-				editor += "<td class='num'>" + (i + 1) + "</td>";
-				editor += "<td>" + line + "</td>";
+				editor += "<td><span class='num'>" + (i + 1) + "</span></td>";
+				editor += "<td><span>" + line + "</span></td>";
 			}
 			editor += "</tr>";
 		}
