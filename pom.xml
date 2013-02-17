@@ -249,10 +249,11 @@
 					</execution>
 				</executions>
 				<configuration>
-					<!--
 					<schemaDirectory>src/main/resources/oozie</schemaDirectory>
-					-->
 					<schemaFiles>oozie-workflow-0.4.xsd</schemaFiles>
+					<!--
+					<bindingDirectory>src/main/resources/oozie</bindingDirectory>
+					-->
 					<bindingFiles>oozie-workflow-0.4.xjb</bindingFiles>
 					<packageName>visualoozie.xsd</packageName>
 				</configuration>

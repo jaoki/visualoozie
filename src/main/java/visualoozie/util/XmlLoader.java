@@ -30,16 +30,10 @@ public class XmlLoader {
 
         try {
             SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-//            ClassLoader classLoader = XmlLoader.class.getClassLoader();
-            URL url;
-            try {
-                // TODO this should be from classloader
-                url = new File("src/main/xsd/oozie-workflow-0.4.xsd").toURI().toURL();
-                Schema schema = sf.newSchema(url);
-                unmarshaller.setSchema(schema);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+            ClassLoader classLoader = XmlLoader.class.getClassLoader();
+            URL url = classLoader.getResource("oozie/oozie-workflow-0.4.xsd");
+            Schema schema = sf.newSchema(url);
+            unmarshaller.setSchema(schema);
         } catch (SAXException e) {
             e.printStackTrace();
         }

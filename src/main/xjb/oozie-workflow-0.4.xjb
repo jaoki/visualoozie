@@ -2,7 +2,7 @@
 		xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 		xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-	<jxb:bindings schemaLocation="../xsd/oozie-workflow-0.4.xsd" node="/xs:schema">
+	<jxb:bindings schemaLocation="../resources/oozie/oozie-workflow-0.4.xsd" node="/xs:schema">
 		<jxb:bindings node="//xs:complexType[@name='ACTION']">
 			<jxb:bindings node="./xs:sequence/xs:choice/xs:any">
 				<jxb:property name="anyUnderChoice"/>
