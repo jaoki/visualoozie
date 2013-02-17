@@ -144,6 +144,7 @@ $(function() {
 			}
 		}
 
+		// Make editor table
 		var editor = "<table>";
 		editor += "<tr>";
 		editor += "<td>#</td>";
@@ -152,18 +153,15 @@ $(function() {
 		var currentLineNum = 0;
 		var tokensIndex = 0;
 		while(tokensIndex < tokens.length){
-//			if(currentLineNum != tokens[tokensIndex].lineNum){
-				currentLineNum = tokens[tokensIndex].lineNum;
-				editor += "</tr>";
-				editor += "<tr>";
-				// Line Number
-				if(currentLineNum == lineNumber){
-					editor += "<td class='num'><span class='red'>" + (currentLineNum) + "</span></td>";
-				}else{
-					editor += "<td class='num'><span>" + (currentLineNum) + "</span></td>";
-				}
-
-//			}
+			currentLineNum = tokens[tokensIndex].lineNum;
+			editor += "</tr>";
+			editor += "<tr>";
+			// Line Number
+			if(currentLineNum == lineNumber){
+				editor += "<td class='num'><span class='red'>" + (currentLineNum) + "</span></td>";
+			}else{
+				editor += "<td class='num'><span>" + (currentLineNum) + "</span></td>";
+			}
 
 			// Line Content
 			editor += "<td>";
@@ -175,19 +173,6 @@ $(function() {
 
 		}
 		editor += "</tr>";
-
-//		for(var rawLineIndex = 0; rawLineIndex <  xmlArray.length; rawLineIndex++){
-//			var line = xmlArray[rawLineIndex].replace(/</g, "&lt;").replace(/ /g, "&nbsp;").replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
-//			editor += "<tr>";
-//			if(rawLineIndex == lineNumber - 1){
-//				editor += "<td><span class='red num'>" + (rawLineIndex + 1) + "</span></td>";
-//				editor += "<td><span class='red'>" + line + "</span></td>";
-//			}else{
-//				editor += "<td><span class='num'>" + (rawLineIndex + 1) + "</span></td>";
-//				editor += "<td><span>" + line + "</span></td>";
-//			}
-//			editor += "</tr>";
-//		}
 
 		editor += "</table>";
 		$("#xml_editor_div code").html(editor);
