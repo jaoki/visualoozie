@@ -35,9 +35,22 @@
             </configuration>
         </map-reduce>
         <ok to="java-node2"/>
-        <error to="fail1"/>
+        <error to="fail2"/>
     </action>
 	
+	<action name="shell-node">
+		<shell xmlns="uri:oozie:shell-action:0.3">
+			<job-tracker>${jobTracker}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<exec>script1.sh</exec>
+			<file>script1/file1#file1</file>
+			<argument>arg1</argument>
+			<argument>arg2=val2</argument>
+		</shell>
+		<ok to="end" />
+		<error to="fail2" />
+	</action>
+
     <action name="java-node2">
         <java>
             <job-tracker>${jobTracker}</job-tracker>
@@ -52,9 +65,10 @@
             <arg>Hello</arg>
             <arg>Oozie!</arg>
         </java>
-        <ok to="end"/>
-        <error to="fail1"/>
+        <ok to="shell-node"/>
+        <error to="fail2"/>
     </action>
+
 
     <action name="java-node">
         <java>
@@ -71,7 +85,7 @@
             <arg>Oozie!</arg>
         </java>
         <ok to="mr-node"/>
-        <error to="fail2"/>
+        <error to="fail1"/>
     </action>
 
     <kill name="fail1">

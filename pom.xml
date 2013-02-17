@@ -242,21 +242,46 @@
 				<version>1.5</version>
 				<executions>
 					<execution>
-						<id>xjc</id>
+						<id>shell03</id>
 						<goals>
 							<goal>xjc</goal>
 						</goals>
+						<configuration>
+							<schemaDirectory>src/main/resources/oozie</schemaDirectory>
+							<schemaFiles>shell-action-0.3.xsd</schemaFiles>
+							<bindingDirectory>/src/main/xjb/shell03</bindingDirectory>
+							<!--
+							<bindingFiles></bindingFiles>
+							-->
+							<packageName>visualoozie.xsd.shell03</packageName>
+							<!--
+							<outputDirectory>${project.build.directory}/generated-sources/jaxb/shell03</outputDirectory>
+							-->
+							<staleFile>${project.build.directory}/jaxb2/.xjcStaleFlagShell03</staleFile>
+							<clearOutputDir>true</clearOutputDir>
+						</configuration>
+					</execution>
+					<execution>
+						<id>workflow04</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>src/main/resources/oozie</schemaDirectory>
+							<schemaFiles>oozie-workflow-0.4.xsd</schemaFiles>
+							<!--
+							<bindingDirectory>src/main/resources/oozie</bindingDirectory>
+							-->
+							<bindingFiles>oozie-workflow-0.4.xjb</bindingFiles>
+							<packageName>visualoozie.xsd.workflow04</packageName>
+							<!--
+							<outputDirectory>${project.build.directory}/generated-sources/jaxb/workflow04</outputDirectory>
+							-->
+							<staleFile>${project.build.directory}/jaxb2/.xjcStaleFlagWorkflow04</staleFile>
+							<clearOutputDir>false</clearOutputDir>
+						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<schemaDirectory>src/main/resources/oozie</schemaDirectory>
-					<schemaFiles>oozie-workflow-0.4.xsd</schemaFiles>
-					<!--
-					<bindingDirectory>src/main/resources/oozie</bindingDirectory>
-					-->
-					<bindingFiles>oozie-workflow-0.4.xjb</bindingFiles>
-					<packageName>visualoozie.xsd</packageName>
-				</configuration>
 			</plugin>
 
 			<!--

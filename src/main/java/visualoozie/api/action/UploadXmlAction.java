@@ -19,9 +19,9 @@ import org.xml.sax.SAXParseException;
 
 import visualoozie.page.action.PathConstants;
 import visualoozie.util.XmlLoader;
-import visualoozie.xsd.ACTION;
-import visualoozie.xsd.KILL;
-import visualoozie.xsd.WORKFLOWAPP;
+import visualoozie.xsd.workflow04.ACTION;
+import visualoozie.xsd.workflow04.KILL;
+import visualoozie.xsd.workflow04.WORKFLOWAPP;
 
 import com.opensymphony.xwork2.ActionSupport;
 

@@ -13,14 +13,17 @@ import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
 
-import visualoozie.xsd.WORKFLOWAPP;
+import visualoozie.xsd.workflow04.WORKFLOWAPP;
 
 public class XmlLoader {
     private Unmarshaller unmarshaller = null;
 
     public XmlLoader(){
         try {
-            JAXBContext context = JAXBContext.newInstance("visualoozie.xsd");
+//            JAXBContext context = JAXBContext.newInstance("visualoozie.xsd");
+            JAXBContext context = JAXBContext.newInstance(
+        		WORKFLOWAPP.class
+    		);
             unmarshaller = context.createUnmarshaller();
         } catch (JAXBException e) {
             e.printStackTrace();
