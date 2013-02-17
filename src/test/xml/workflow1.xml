@@ -43,9 +43,9 @@
 			<job-tracker>${jobTracker}</job-tracker>
 			<name-node>${nameNode}</name-node>
 			<exec>script1.sh</exec>
-			<file>script1/file1#file1</file>
 			<argument>arg1</argument>
 			<argument>arg2=val2</argument>
+			<file>script1/file1#file1</file>
 		</shell>
 		<ok to="end" />
 		<error to="fail2" />
@@ -68,7 +68,6 @@
         <ok to="shell-node"/>
         <error to="fail2"/>
     </action>
-
 
     <action name="java-node">
         <java>
