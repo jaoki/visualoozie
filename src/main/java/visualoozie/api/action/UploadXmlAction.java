@@ -67,10 +67,12 @@ public class UploadXmlAction extends ActionSupport {
         StringBuffer xmlSB = new StringBuffer();
         while (scanner.hasNextLine()){
             String line = scanner.nextLine();
-            lines.add(StringEscapeUtils.escapeHtml(line));
+//            lines.add(StringEscapeUtils.escapeHtml(line));
+            lines.add(line);
             xmlSB.append(line);
         }
-        result.escapedXml = lines.toArray(new String[0]);
+//        result.escapedXml = lines.toArray(new String[0]);
+        result.xml = lines.toArray(new String[0]);
 
         XmlLoader loader = new XmlLoader();
         WORKFLOWAPP xmldoc;
@@ -144,7 +146,8 @@ public class UploadXmlAction extends ActionSupport {
         private Integer columnNumber;
 
         private List<WorkflowNode> nodes;
-        private String[] escapedXml;
+//        private String[] escapedXml;
+        private String[] xml;
 
         public boolean isSucceeded() { return succeeded; }
         public void setSucceeded(boolean succeeded) { this.succeeded = succeeded; }
@@ -160,9 +163,12 @@ public class UploadXmlAction extends ActionSupport {
 
         public List<WorkflowNode> getNodes() { return nodes; }
         public void setNodes(List<WorkflowNode> nodes) { this.nodes = nodes; }
+
+		public String[] getXml() { return xml; }
+		public void setXml(String[] xml) { this.xml = xml; }
         
-        public String[] getEscapedXml() { return escapedXml; }
-        public void setEscapedXml(String[] escapedXml) { this.escapedXml = escapedXml; }
+//        public String[] getEscapedXml() { return escapedXml; }
+//        public void setEscapedXml(String[] escapedXml) { this.escapedXml = escapedXml; }
 
     }
 }

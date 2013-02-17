@@ -23,7 +23,6 @@ public class XmlLoader {
 
     public XmlLoader(){
         try {
-//            JAXBContext context = JAXBContext.newInstance("visualoozie.xsd");
             JAXBContext context = JAXBContext.newInstance(
         		WORKFLOWAPP.class
         		, ACTION.class

@@ -8,10 +8,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 	<link rel="stylesheet" type="text/css" href='<s:url value="/style/visualoozie.css"/>' />
-<!--
-	<link rel="stylesheet" type="text/css" href="<s:url value="/style/shCore.css"/>" />
-	<link rel="stylesheet" type="text/css" href="<s:url value="/style/shThemeDefault.css"/>" />
--->
 
 	<script type="text/javascript" src='<s:url value="/js/joint.all.min.js"/>' ></script>
 

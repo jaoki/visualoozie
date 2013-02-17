@@ -33,6 +33,18 @@ div.col1{
 	float: left;
 }
 
+#xml_editor_div .tagstart{
+	color: green;
+}
+
+#xml_editor_div .tagend{
+	color: green;
+}
+
+#xml_editor_div .elementcontent{
+	color: purple;
+}
+
 
 
 
