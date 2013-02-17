@@ -1,8 +1,6 @@
 package visualoozie.util;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.xml.XMLConstants;
