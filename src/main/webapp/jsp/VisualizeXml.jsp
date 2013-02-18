@@ -49,8 +49,19 @@
 
 	<!--------------- Top Menu ------------------------>
 	<div class="blueBar">
-		<span class="appTitle1">VisualOozie</span>
-		<span class="appTitle2">to visualize Hadoop Oozie workflow</span>
+		<div style="width: 2em; float:left;">&nbsp;</div>
+		<div style="float:left;">
+			<span class="appTitle1">VisualOozie</span>
+			<span class="appTitle2">to visualize Hadoop Oozie workflow</span>
+			<span class="alphaversion">Alpha Version</span>
+		</div>
+		<div style="width: 2em; float:right;">&nbsp;</div>
+		<div style="float:right;">
+			<span class="appTitle1">&nbsp;</span>
+			<span class="appTitle2">
+				<a class="appTitle2" href="https://groups.google.com/forum/#!forum/visualoozie-user" target="_blank">Forum</a>
+			</span>
+		</div>
 	</div>
 
 	<div>
