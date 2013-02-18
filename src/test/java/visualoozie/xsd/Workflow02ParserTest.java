@@ -22,4 +22,13 @@ public class Workflow02ParserTest {
 		
 	}
 
+	@Test
+	public void hive() throws IOException, JAXBException{
+		String workflowXml = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("oozie/hive/workflow.xml"));
+		Workflow02Parser parser = new Workflow02Parser();
+		List<WorkflowNode> nodes = parser.parse(workflowXml);
+		Assert.assertEquals(nodes.get(0).getTo()[0], "hive-node");
+		
+	}
+
 }

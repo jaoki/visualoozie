@@ -22,11 +22,12 @@ public class XmlLoader {
     public XmlLoader(){
         try {
             JAXBContext context = JAXBContext.newInstance(
-        		visualoozie.xsd.workflow02.WORKFLOWAPP.class
+        		visualoozie.xsd.distcp01.ACTION.class
+        		, visualoozie.xsd.hive02.ACTION.class
+        		, visualoozie.xsd.workflow02.WORKFLOWAPP.class
         		, visualoozie.xsd.workflow03.WORKFLOWAPP.class
         		, visualoozie.xsd.workflow04.WORKFLOWAPP.class
         		, visualoozie.xsd.shell03.ACTION.class
-        		, visualoozie.xsd.distcp01.ACTION.class
     		);
             unmarshaller = context.createUnmarshaller();
         } catch (JAXBException e) {
@@ -38,6 +39,7 @@ public class XmlLoader {
         List<StreamSource> sources = new ArrayList<StreamSource>();
 
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/distcp-action-0.1.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/hive-action-0.2.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.2.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.3.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.4.xsd")));

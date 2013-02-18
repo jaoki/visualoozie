@@ -267,6 +267,21 @@
 					</execution>
 
 					<execution>
+						<id>hive02</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>src/main/resources/oozie</schemaDirectory>
+							<schemaFiles>hive-action-0.2.xsd</schemaFiles>
+							<bindingDirectory>/src/main/xjb/null</bindingDirectory>
+							<packageName>visualoozie.xsd.hive02</packageName>
+							<staleFile>${project.build.directory}/jaxb2/.xjcStaleFlagHive02</staleFile>
+							<clearOutputDir>false</clearOutputDir>
+						</configuration>
+					</execution>
+
+					<execution>
 						<id>shell03</id>
 						<goals>
 							<goal>xjc</goal>
