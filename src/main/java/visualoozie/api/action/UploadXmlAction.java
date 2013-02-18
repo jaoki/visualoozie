@@ -44,23 +44,6 @@ public class UploadXmlAction extends ActionSupport {
     public String execute(){
         result = new UploadXmlResult();
 
-        Scanner scanner;
-        try {
-            scanner = new Scanner(xmlfile);
-        }catch(FileNotFoundException e) {
-            e.printStackTrace();
-            result.succeeded = false;
-            result.errorMessage = e.getMessage();
-            return SUCCESS;
-        }
-
-        List<String> lines = new ArrayList<>();
-        while (scanner.hasNextLine()){
-            String line = scanner.nextLine();
-            lines.add(line);
-        }
-        result.xml = lines.toArray(new String[0]);
-
         String rawXml;
         try {
             rawXml = FileUtils.readFileToString(xmlfile);
@@ -70,6 +53,14 @@ public class UploadXmlAction extends ActionSupport {
             result.errorMessage = e.getMessage();
             return SUCCESS;
         }
+
+        Scanner scanner = new Scanner(rawXml);
+        List<String> lines = new ArrayList<>();
+        while (scanner.hasNextLine()){
+            String line = scanner.nextLine();
+            lines.add(line);
+        }
+        result.xml = lines.toArray(new String[0]);
 
         XmlLoader loader = new XmlLoader();
         WORKFLOWAPP xmldoc;
