@@ -27,6 +27,7 @@ public class XmlLoader {
         		, visualoozie.xsd.workflow02.WORKFLOWAPP.class
         		, visualoozie.xsd.workflow03.WORKFLOWAPP.class
         		, visualoozie.xsd.workflow04.WORKFLOWAPP.class
+        		, visualoozie.xsd.shell02.ACTION.class
         		, visualoozie.xsd.shell03.ACTION.class
     		);
             unmarshaller = context.createUnmarshaller();
@@ -43,6 +44,7 @@ public class XmlLoader {
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.2.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.3.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.4.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.2.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.3.xsd")));
 
         try {

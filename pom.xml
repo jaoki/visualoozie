@@ -282,6 +282,21 @@
 					</execution>
 
 					<execution>
+						<id>shell02</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>src/main/resources/oozie</schemaDirectory>
+							<schemaFiles>shell-action-0.2.xsd</schemaFiles>
+							<bindingDirectory>/src/main/xjb/null</bindingDirectory>
+							<packageName>visualoozie.xsd.shell02</packageName>
+							<staleFile>${project.build.directory}/jaxb2/.xjcStaleFlagShell02</staleFile>
+							<clearOutputDir>false</clearOutputDir>
+						</configuration>
+					</execution>
+
+					<execution>
 						<id>shell03</id>
 						<goals>
 							<goal>xjc</goal>
@@ -290,13 +305,7 @@
 							<schemaDirectory>src/main/resources/oozie</schemaDirectory>
 							<schemaFiles>shell-action-0.3.xsd</schemaFiles>
 							<bindingDirectory>/src/main/xjb/null</bindingDirectory>
-							<!--
-							<bindingFiles></bindingFiles>
-							-->
 							<packageName>visualoozie.xsd.shell03</packageName>
-							<!--
-							<outputDirectory>${project.build.directory}/generated-sources/jaxb/shell03</outputDirectory>
-							-->
 							<staleFile>${project.build.directory}/jaxb2/.xjcStaleFlagShell03</staleFile>
 							<clearOutputDir>false</clearOutputDir>
 						</configuration>
