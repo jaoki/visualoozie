@@ -66,7 +66,7 @@ public class UploadXmlAction extends ActionSupport {
         result.xml = lines.toArray(new String[0]);
         
         // find xmlns to identify a version for the oozie xsd
-        Pattern xmlnsPattern = Pattern.compile("workflow-app *xmlns *= *\"(.*?)\"");
+        Pattern xmlnsPattern = Pattern.compile("workflow-app *xmlns *= *['|\"](.*?)['|\"]");
         Matcher m = xmlnsPattern.matcher(rawXml);
         String xmlns = null;
         while(m.find()){
