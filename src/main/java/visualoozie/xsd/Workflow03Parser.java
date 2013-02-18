@@ -7,19 +7,19 @@ import javax.xml.bind.JAXBException;
 
 import visualoozie.api.action.WorkflowNode;
 import visualoozie.util.XmlLoader;
-import visualoozie.xsd.workflow04.FORK;
-import visualoozie.xsd.workflow04.FORKTRANSITION;
-import visualoozie.xsd.workflow04.JOIN;
-import visualoozie.xsd.workflow04.CASE;
-import visualoozie.xsd.workflow04.DECISION;
-import visualoozie.xsd.workflow04.ACTION;
-import visualoozie.xsd.workflow04.KILL;
-import visualoozie.xsd.workflow04.WORKFLOWAPP;
+import visualoozie.xsd.workflow03.ACTION;
+import visualoozie.xsd.workflow03.CASE;
+import visualoozie.xsd.workflow03.DECISION;
+import visualoozie.xsd.workflow03.FORK;
+import visualoozie.xsd.workflow03.FORKTRANSITION;
+import visualoozie.xsd.workflow03.JOIN;
+import visualoozie.xsd.workflow03.KILL;
+import visualoozie.xsd.workflow03.WORKFLOWAPP;
 
-public class Workflow04Parser {
+public class Workflow03Parser {
 	public List<WorkflowNode> parse(String rawXml) throws JAXBException {
         XmlLoader loader = new XmlLoader();
-        WORKFLOWAPP xmldoc = loader.loadWorkflow04(rawXml);
+        WORKFLOWAPP xmldoc = loader.loadWorkflow03(rawXml);
 		
 		List<WorkflowNode> nodes = new ArrayList<>();
         WorkflowNode node = new WorkflowNode();
@@ -35,7 +35,10 @@ public class Workflow04Parser {
                 node = new WorkflowNode();
                 node.setName(action.getName());
                 node.setType(WorkflowNode.NodeType.ACTION);
-                node.setTo(new String[]{action.getOk().getTo(), action.getError().getTo()});
+                node.setTo(new String[]{
+                		action.getOk().getTo()
+                		, action.getError().getTo()
+        		});
                 nodes.add(node);
             } else if(nodeXml instanceof KILL){
                 KILL kill = (KILL)nodeXml;

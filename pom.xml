@@ -12,8 +12,6 @@
     <properties>
         <struts2.version>2.2.3</struts2.version>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <maven.compiler.target>1.6</maven.compiler.target>
-        <maven.compiler.source>1.6</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -133,6 +131,7 @@
 			<plugin>  
                 <groupId>org.apache.maven.plugins</groupId>  
                 <artifactId>maven-compiler-plugin</artifactId>  
+				<version>3.0</version>
                 <configuration>  
                     <source>1.7</source>  
                     <target>1.7</target>  
@@ -183,6 +182,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
 				<configuration>
 					<webResources>
 						<resource>
@@ -197,6 +197,7 @@
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>yuicompressor-maven-plugin</artifactId>
+				<version>1.3.2</version>
 				<executions>
 					<execution>
 						<goals>
@@ -261,6 +262,7 @@
 							<clearOutputDir>true</clearOutputDir>
 						</configuration>
 					</execution>
+
 					<execution>
 						<id>workflow02</id>
 						<goals>
@@ -275,6 +277,22 @@
 							<clearOutputDir>false</clearOutputDir>
 						</configuration>
 					</execution>
+
+					<execution>
+						<id>workflow03</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>src/main/resources/oozie</schemaDirectory>
+							<schemaFiles>oozie-workflow-0.3.xsd</schemaFiles>
+							<bindingFiles>oozie-workflow-0.3.xjb</bindingFiles>
+							<packageName>visualoozie.xsd.workflow03</packageName>
+							<staleFile>${project.build.directory}/jaxb2/.xjcStaleFlagWorkflow03</staleFile>
+							<clearOutputDir>false</clearOutputDir>
+						</configuration>
+					</execution>
+
 					<execution>
 						<id>workflow04</id>
 						<goals>
