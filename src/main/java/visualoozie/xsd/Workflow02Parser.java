@@ -8,6 +8,8 @@ import javax.xml.bind.JAXBException;
 import visualoozie.api.action.WorkflowNode;
 import visualoozie.util.XmlLoader;
 import visualoozie.xsd.workflow02.ACTION;
+import visualoozie.xsd.workflow02.CASE;
+import visualoozie.xsd.workflow02.DECISION;
 import visualoozie.xsd.workflow02.KILL;
 import visualoozie.xsd.workflow02.WORKFLOWAPP;
 
@@ -30,7 +32,10 @@ public class Workflow02Parser {
                 node = new WorkflowNode();
                 node.setName(action.getName());
                 node.setType(WorkflowNode.NodeType.ACTION);
-                node.setTo(new String[]{action.getOk().getTo(), action.getError().getTo()});
+                node.setTo(new String[]{
+                		action.getOk().getTo()
+                		, action.getError().getTo()
+        		});
                 nodes.add(node);
             } else if(nodeXml instanceof KILL){
                 KILL kill = (KILL)nodeXml;
@@ -39,6 +44,20 @@ public class Workflow02Parser {
                 node.setType(WorkflowNode.NodeType.KILL);
                 node.setTo(new String[]{});
                 nodes.add(node);
+            } else if(nodeXml instanceof DECISION){
+                DECISION decision = (DECISION)nodeXml;
+                node = new WorkflowNode();
+                node.setName(decision.getName());
+                node.setType(WorkflowNode.NodeType.DECISION);
+                List<String> tos = new ArrayList<>();
+                tos.add(decision.getSwitch().getDefault().getTo());
+                for (CASE acase : decision.getSwitch().getCase()) {
+                	tos.add(acase.getTo());
+				}
+                node.setTo(tos.toArray(new String[0]));
+                nodes.add(node);
+            }else{
+            	throw new UnsupportedOperationException("Unspported node instance(" + nodeXml + ")");
             }
 
         }

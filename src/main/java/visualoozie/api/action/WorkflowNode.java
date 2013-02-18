@@ -4,6 +4,7 @@ public class WorkflowNode {
     public enum NodeType{
         START
         , KILL
+        , DECISION
         , END
         , ACTION
 
