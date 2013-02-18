@@ -50,6 +50,7 @@
 	<!--------------- Top Menu ------------------------>
 	<div class="blueBar">
 		<span class="appTitle1">VisualOozie</span>
+		<span class="appTitle2">to visualize Hadoop Oozie workflow</span>
 	</div>
 
 	<div>

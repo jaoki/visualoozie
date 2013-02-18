@@ -46,6 +46,33 @@ div.col1{
 }
 
 
+.blueBar{
+	color: #D8DFEA;
+	background-color: #3B5998; 
+	border-bottom: 1px solid #133783;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.52);
+	top: 0;
+	width: 100%;
+	height: 2.5em;
+	z-index: 2;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.appTitle1{
+	color: #FFFFFF;
+	font-family: Impact;
+    font-size: 2em;
+    font-weight: normal;
+}
+
+.appTitle2{
+	color: #FFFFFF;
+    font-family: Arial;
+    font-size: 1em;
+    font-weight: normal;
+}
+
 
 
 /* ---------------------------- TODO REMOVE THE FOLLOWING?? ?? ?  */
@@ -80,27 +107,6 @@ td.layout{
 }
 
 /* Appliation Title -------------------------------------- */
-.blueBar{
-	color: #D8DFEA;
-	background-color: #3B5998; 
-	border-bottom: 1px solid #133783;
-	box-shadow: 0 0 2px rgba(0, 0, 0, 0.52);
-	top: 0;
-	width: 100%;
-	height: 2.5em;
-	z-index: 2;
-	padding-left: 20px;
-	padding-right: 20px;
-}
-
-.appTitle1{
-	color: #FFFFFF;
-	font-family: Impact;
-    font-size: 2em;
-    font-weight: normal;
-
-}
-
 .appTitle1 a:link,
 .appTitle1 a:visited,
 .appTitle1 a:active {
@@ -111,32 +117,6 @@ td.layout{
 .appTitle1 a:hover{
 	color: #FFFFFF;
 	text-decoration: underline;
-}
-
-.profileName{
-	margin-right: 10px;
-	line-height: 29px;
-	font-weight: bold;
-	float: left;
-}
-
-.profileName a:link,
-.profileName a:visited,
-.profileName a:active {
-	color: #D8DFEA;
-	text-decoration: none;
-}
-
-.profileName a:hover{
-	color: #D8DFEA;
-	text-decoration: underline;
-}
-
-.appTitle2{
-	color: #FFFFFF;
-    font-family: Arial;
-    font-size: 16px;
-    font-weight: normal;
 }
 
 .alphaversion{
