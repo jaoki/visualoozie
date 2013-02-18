@@ -312,6 +312,21 @@
 					</execution>
 
 					<execution>
+						<id>sqoop02</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>src/main/resources/oozie</schemaDirectory>
+							<schemaFiles>sqoop-action-0.2.xsd</schemaFiles>
+							<bindingDirectory>/src/main/xjb/null</bindingDirectory>
+							<packageName>visualoozie.xsd.sqoop02</packageName>
+							<staleFile>${project.build.directory}/jaxb2/.xjcStaleFlagSqoop02</staleFile>
+							<clearOutputDir>false</clearOutputDir>
+						</configuration>
+					</execution>
+
+					<execution>
 						<id>workflow02</id>
 						<goals>
 							<goal>xjc</goal>

@@ -22,6 +22,7 @@ public class XmlLoader {
     public XmlLoader(){
         try {
             JAXBContext context = JAXBContext.newInstance(
+	        	// TODO do I need to list those classes??
         		visualoozie.xsd.distcp01.ACTION.class
         		, visualoozie.xsd.hive02.ACTION.class
         		, visualoozie.xsd.workflow02.WORKFLOWAPP.class
@@ -46,6 +47,7 @@ public class XmlLoader {
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.4.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.2.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.3.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/sqoop-action-0.2.xsd")));
 
         try {
         	Schema schema = sf.newSchema(sources.toArray(new StreamSource[0]));
