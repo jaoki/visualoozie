@@ -31,10 +31,9 @@ $(function() {
 
 	var weightedNodes = {};
 
-	var PAPER_WITH = 500;
-
 	function drawDiagram(res){
-		Joint.paper("workflow_diagram", PAPER_WITH, 500);
+		var paperWidth = $(document).width() / 2;
+		Joint.paper("workflow_diagram", paperWidth, 500);
 		var fsa = Joint.dia.fsa;
 		var unsortedNodes = res.nodes;
 
@@ -86,7 +85,7 @@ $(function() {
 					attrs= {};
 				}
 				var circle = fsa.State.create({
-							position: {x: (PAPER_WITH/(sameSortCount + 1) * (j+1)), y: yPos}
+							position: {x: (paperWidth/(sameSortCount + 1) * (j+1)), y: yPos}
 							, label: sortedNodeNames[i + j].name
 							, attrs : attrs
 						});

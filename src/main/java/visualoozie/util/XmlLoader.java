@@ -16,7 +16,6 @@ import javax.xml.validation.SchemaFactory;
 import org.xml.sax.SAXException;
 
 import visualoozie.xsd.shell03.ACTION;
-import visualoozie.xsd.workflow04.WORKFLOWAPP;
 
 public class XmlLoader {
     private Unmarshaller unmarshaller = null;
@@ -24,7 +23,8 @@ public class XmlLoader {
     public XmlLoader(){
         try {
             JAXBContext context = JAXBContext.newInstance(
-        		WORKFLOWAPP.class
+        		visualoozie.xsd.workflow02.WORKFLOWAPP.class
+        		, visualoozie.xsd.workflow04.WORKFLOWAPP.class
         		, ACTION.class
     		);
             unmarshaller = context.createUnmarshaller();
@@ -36,6 +36,7 @@ public class XmlLoader {
         ClassLoader classLoader = XmlLoader.class.getClassLoader();
         List<StreamSource> sources = new ArrayList<StreamSource>();
 
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.2.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.4.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.3.xsd")));
 
@@ -48,22 +49,30 @@ public class XmlLoader {
 
     }
 
-    public WORKFLOWAPP loadString(String xml) throws JAXBException {
+    public visualoozie.xsd.workflow04.WORKFLOWAPP loadWorkflow04(String xml) throws JAXBException {
         ByteArrayInputStream input = new ByteArrayInputStream(xml.getBytes());
 
         @SuppressWarnings("unchecked")
-        JAXBElement<WORKFLOWAPP> element = (JAXBElement<WORKFLOWAPP>)unmarshaller.unmarshal(input);
+        JAXBElement<visualoozie.xsd.workflow04.WORKFLOWAPP> element = (JAXBElement<visualoozie.xsd.workflow04.WORKFLOWAPP>)unmarshaller.unmarshal(input);
         return element.getValue();
     }
 
-    public WORKFLOWAPP loadStringArray(String[] xml) throws JAXBException {
-        StringBuffer sb = new StringBuffer();
-        for(String part : xml){
-            sb.append(part);
-        }
+    public visualoozie.xsd.workflow02.WORKFLOWAPP loadWorkflow02(String xml) throws JAXBException {
+        ByteArrayInputStream input = new ByteArrayInputStream(xml.getBytes());
 
-        return loadString(sb.toString());
+        @SuppressWarnings("unchecked")
+        JAXBElement<visualoozie.xsd.workflow02.WORKFLOWAPP> element = (JAXBElement<visualoozie.xsd.workflow02.WORKFLOWAPP>)unmarshaller.unmarshal(input);
+        return element.getValue();
     }
+
+//    public visualoozie.xsd.workflow04.WORKFLOWAPP loadStringArray(String[] xml) throws JAXBException {
+//        StringBuffer sb = new StringBuffer();
+//        for(String part : xml){
+//            sb.append(part);
+//        }
+//
+//        return loadString(sb.toString());
+//    }
 
 }
 

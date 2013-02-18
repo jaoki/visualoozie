@@ -262,6 +262,20 @@
 						</configuration>
 					</execution>
 					<execution>
+						<id>workflow02</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>src/main/resources/oozie</schemaDirectory>
+							<schemaFiles>oozie-workflow-0.2.xsd</schemaFiles>
+							<bindingFiles>oozie-workflow-0.2.xjb</bindingFiles>
+							<packageName>visualoozie.xsd.workflow02</packageName>
+							<staleFile>${project.build.directory}/jaxb2/.xjcStaleFlagWorkflow02</staleFile>
+							<clearOutputDir>false</clearOutputDir>
+						</configuration>
+					</execution>
+					<execution>
 						<id>workflow04</id>
 						<goals>
 							<goal>xjc</goal>

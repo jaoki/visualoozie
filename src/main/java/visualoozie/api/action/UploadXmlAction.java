@@ -53,31 +53,28 @@ public class UploadXmlAction extends ActionSupport {
             result.errorMessage = e.getMessage();
             return SUCCESS;
         }
-        
+
+        List<String> lines = new ArrayList<>();
+        while (scanner.hasNextLine()){
+            String line = scanner.nextLine();
+            lines.add(line);
+        }
+        result.xml = lines.toArray(new String[0]);
+
         String rawXml;
         try {
             rawXml = FileUtils.readFileToString(xmlfile);
         }catch (IOException e){
             e.printStackTrace();
+            result.succeeded = false;
+            result.errorMessage = e.getMessage();
             return SUCCESS;
         }
-//        result.setEscapedXml(StringEscapeUtils.escapeHtml(rawXml));
-        
-        List<String> lines = new ArrayList<>();
-        StringBuffer xmlSB = new StringBuffer();
-        while (scanner.hasNextLine()){
-            String line = scanner.nextLine();
-//            lines.add(StringEscapeUtils.escapeHtml(line));
-            lines.add(line);
-            xmlSB.append(line);
-        }
-//        result.escapedXml = lines.toArray(new String[0]);
-        result.xml = lines.toArray(new String[0]);
 
         XmlLoader loader = new XmlLoader();
         WORKFLOWAPP xmldoc;
         try {
-            xmldoc = loader.loadString(rawXml);
+            xmldoc = loader.loadWorkflow04(rawXml);
         }catch (JAXBException e) {
             // TODO Auto-generated catch block
             result.succeeded = false;
@@ -91,6 +88,11 @@ public class UploadXmlAction extends ActionSupport {
                 e.printStackTrace();
                 result.errorMessage = e.getMessage();
             }
+            return SUCCESS;
+        }catch (Exception e) {
+            e.printStackTrace();
+            result.succeeded = false;
+            result.errorMessage = e.getMessage();
             return SUCCESS;
         }
 

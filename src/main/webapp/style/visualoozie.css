@@ -82,6 +82,7 @@ div.col1{
 	border-bottom-width: 0px;
 	border-top-width: 0px;
 	font-family: monospace;
+	white-space: nowrap;
 }
 
 /* --- Title ----------------- */

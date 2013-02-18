@@ -75,8 +75,8 @@
 	</div>
 
 	<div class="colstart">
-		<div id="workflow_diagram" class="col1"></div>
-		<div id="xml_editor_div" class="col1" style="border: 1px solid;">
+		<div id="workflow_diagram" class="col1" style="width: 50%; height: 600px; overflow: auto;"></div>
+		<div id="xml_editor_div" class="col1" style="width: 50%; height: 600px; overflow: auto;">
 		</div>
 	</div>
 
