@@ -252,6 +252,21 @@
 				<version>1.5</version>
 				<executions>
 					<execution>
+						<id>distcp01</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>src/main/resources/oozie</schemaDirectory>
+							<schemaFiles>distcp-action-0.1.xsd</schemaFiles>
+							<bindingDirectory>/src/main/xjb/null</bindingDirectory>
+							<packageName>visualoozie.xsd.distcp01</packageName>
+							<staleFile>${project.build.directory}/jaxb2/.xjcStaleFlagDistcp01</staleFile>
+							<clearOutputDir>true</clearOutputDir>
+						</configuration>
+					</execution>
+
+					<execution>
 						<id>shell03</id>
 						<goals>
 							<goal>xjc</goal>
@@ -259,7 +274,7 @@
 						<configuration>
 							<schemaDirectory>src/main/resources/oozie</schemaDirectory>
 							<schemaFiles>shell-action-0.3.xsd</schemaFiles>
-							<bindingDirectory>/src/main/xjb/shell03</bindingDirectory>
+							<bindingDirectory>/src/main/xjb/null</bindingDirectory>
 							<!--
 							<bindingFiles></bindingFiles>
 							-->
@@ -268,7 +283,7 @@
 							<outputDirectory>${project.build.directory}/generated-sources/jaxb/shell03</outputDirectory>
 							-->
 							<staleFile>${project.build.directory}/jaxb2/.xjcStaleFlagShell03</staleFile>
-							<clearOutputDir>true</clearOutputDir>
+							<clearOutputDir>false</clearOutputDir>
 						</configuration>
 					</execution>
 

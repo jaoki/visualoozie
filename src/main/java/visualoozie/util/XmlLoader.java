@@ -15,7 +15,6 @@ import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
 
-import visualoozie.xsd.shell03.ACTION;
 
 public class XmlLoader {
     private Unmarshaller unmarshaller = null;
@@ -26,7 +25,8 @@ public class XmlLoader {
         		visualoozie.xsd.workflow02.WORKFLOWAPP.class
         		, visualoozie.xsd.workflow03.WORKFLOWAPP.class
         		, visualoozie.xsd.workflow04.WORKFLOWAPP.class
-        		, ACTION.class
+        		, visualoozie.xsd.shell03.ACTION.class
+        		, visualoozie.xsd.distcp01.ACTION.class
     		);
             unmarshaller = context.createUnmarshaller();
         } catch (JAXBException e) {
@@ -37,6 +37,7 @@ public class XmlLoader {
         ClassLoader classLoader = XmlLoader.class.getClassLoader();
         List<StreamSource> sources = new ArrayList<StreamSource>();
 
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/distcp-action-0.1.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.2.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.3.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.4.xsd")));

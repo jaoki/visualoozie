@@ -22,6 +22,7 @@ import org.xml.sax.SAXParseException;
 import visualoozie.page.action.PathConstants;
 import visualoozie.util.XmlLoader;
 import visualoozie.xsd.Workflow02Parser;
+import visualoozie.xsd.Workflow03Parser;
 import visualoozie.xsd.Workflow04Parser;
 import visualoozie.xsd.workflow04.ACTION;
 import visualoozie.xsd.workflow04.KILL;
@@ -78,6 +79,8 @@ public class UploadXmlAction extends ActionSupport {
         try {
         	if("uri:oozie:workflow:0.2".equals(xmlns)){
 		        nodes = new Workflow02Parser().parse(rawXml);
+        	}else if("uri:oozie:workflow:0.3".equals(xmlns)){
+		        nodes = new Workflow03Parser().parse(rawXml);
         	}else{
 		        nodes = new Workflow04Parser().parse(rawXml);
         	}
