@@ -10,6 +10,9 @@ import visualoozie.util.XmlLoader;
 import visualoozie.xsd.workflow02.ACTION;
 import visualoozie.xsd.workflow02.CASE;
 import visualoozie.xsd.workflow02.DECISION;
+import visualoozie.xsd.workflow02.FORK;
+import visualoozie.xsd.workflow02.FORKTRANSITION;
+import visualoozie.xsd.workflow02.JOIN;
 import visualoozie.xsd.workflow02.KILL;
 import visualoozie.xsd.workflow02.WORKFLOWAPP;
 
@@ -55,6 +58,24 @@ public class Workflow02Parser {
                 	tos.add(acase.getTo());
 				}
                 node.setTo(tos.toArray(new String[0]));
+                nodes.add(node);
+            } else if(nodeXml instanceof FORK){
+                FORK fork = (FORK)nodeXml;
+                node = new WorkflowNode();
+                node.setName(fork.getName());
+                node.setType(WorkflowNode.NodeType.FORK);
+                List<String> tos = new ArrayList<>();
+                for(FORKTRANSITION fork1 : fork.getPath()){
+                	tos.add(fork1.getStart());
+                }
+                node.setTo(tos.toArray(new String[0]));
+                nodes.add(node);
+            } else if(nodeXml instanceof JOIN){
+                JOIN join = (JOIN)nodeXml;
+                node = new WorkflowNode();
+                node.setName(join.getName());
+                node.setType(WorkflowNode.NodeType.JOIN);
+                node.setTo(new String[]{join.getTo()});
                 nodes.add(node);
             }else{
             	throw new UnsupportedOperationException("Unspported node instance(" + nodeXml + ")");

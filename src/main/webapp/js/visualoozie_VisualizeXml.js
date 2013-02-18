@@ -33,7 +33,7 @@ $(function() {
 
 	function drawDiagram(res){
 		var paperWidth = $(document).width() / 2;
-		Joint.paper("workflow_diagram", paperWidth, 500);
+		Joint.paper("workflow_diagram", paperWidth, 2000);
 		var fsa = Joint.dia.fsa;
 		var unsortedNodes = res.nodes;
 

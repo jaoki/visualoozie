@@ -5,6 +5,8 @@ public class WorkflowNode {
         START
         , KILL
         , DECISION
+        , FORK
+        , JOIN
         , END
         , ACTION
 
