@@ -88,7 +88,16 @@ public class UploadXmlAction extends ActionSupport {
         }
 
         // Parse uri:oozie:workflow:0.4 to WorkflowNode
-        List<WorkflowNode> nodes = new ArrayList<>();
+        List<WorkflowNode> nodes = parseWORKFLOWAPP(xmldoc);
+        result.setNodes(nodes);
+        result.succeeded = true;
+
+        return SUCCESS;
+
+    }
+
+	private List<WorkflowNode> parseWORKFLOWAPP(WORKFLOWAPP xmldoc) {
+		List<WorkflowNode> nodes = new ArrayList<>();
         WorkflowNode node = new WorkflowNode();
         node.setName("start");
         node.setType(WorkflowNode.NodeType.START);
@@ -119,12 +128,8 @@ public class UploadXmlAction extends ActionSupport {
         node.setType(WorkflowNode.NodeType.END);
         node.setTo(new String[]{});
         nodes.add(node);
-        result.setNodes(nodes);
-        result.succeeded = true;
-
-        return SUCCESS;
-
-    }
+		return nodes;
+	}
 
     public UploadXmlResult getResult() { return result; }
     public void setResult(UploadXmlResult result) { this.result = result; }
