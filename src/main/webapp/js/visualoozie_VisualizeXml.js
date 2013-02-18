@@ -8,13 +8,13 @@ $(function() {
 
 		var formData = new FormData($("#fileform")[0]);
 		$.ajax({
-//			url: '<s:url value="/api/upload_xml"/>'
 			url: vo.contextRoot + "api/upload_xml"
 			, type: 'POST'
 			, data: formData
 			, complete: function(jqXHR, textStatus){
 				var res = $.parseJSON(jqXHR.responseText);
 				drawXmlEditor(res.xml, res.lineNumber, res.columnNumber);
+				$("#span_identifiedNamespace").html(res.identifiedNamespace);
 
 				if(!res.succeeded){
 					$("#errorMessage").html(res.errorMessage);

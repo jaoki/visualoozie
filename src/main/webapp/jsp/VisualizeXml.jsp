@@ -71,6 +71,10 @@
 			<input id="submitButton" type="button" value="Validate Oozie Workflow XML File"/>
 		</form>
 	</div>
+
+	<hr/>
+	<div><span style="font-weight: bold;">Identified Namespace: </span> <span id="span_identifiedNamespace"></span> </div>
+
 	<div>
 		<span id="errorMessage" class="red"></span>
 	</div>

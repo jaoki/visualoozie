@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXBException;
 
@@ -19,9 +21,10 @@ import org.xml.sax.SAXParseException;
 
 import visualoozie.page.action.PathConstants;
 import visualoozie.util.XmlLoader;
+import visualoozie.xsd.Workflow02Parser;
+import visualoozie.xsd.Workflow04Parser;
 import visualoozie.xsd.workflow04.ACTION;
 import visualoozie.xsd.workflow04.KILL;
-import visualoozie.xsd.workflow04.WORKFLOWAPP;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -61,11 +64,23 @@ public class UploadXmlAction extends ActionSupport {
             lines.add(line);
         }
         result.xml = lines.toArray(new String[0]);
+        
+        // find xmlns to identify a version for the oozie xsd
+        Pattern xmlnsPattern = Pattern.compile("workflow-app *xmlns *= *\"(.*?)\"");
+        Matcher m = xmlnsPattern.matcher(rawXml);
+        String xmlns = null;
+        while(m.find()){
+        	xmlns = m.group(1);
+        }
 
-        XmlLoader loader = new XmlLoader();
-        WORKFLOWAPP xmldoc;
+		result.setIdentifiedNamespace(xmlns);
+        List<WorkflowNode> nodes;
         try {
-            xmldoc = loader.loadWorkflow04(rawXml);
+        	if("uri:oozie:workflow:0.2".equals(xmlns)){
+		        nodes = new Workflow02Parser().parse(rawXml);
+        	}else{
+		        nodes = new Workflow04Parser().parse(rawXml);
+        	}
         }catch (JAXBException e) {
             // TODO Auto-generated catch block
             result.succeeded = false;
@@ -87,8 +102,6 @@ public class UploadXmlAction extends ActionSupport {
             return SUCCESS;
         }
 
-        // Parse uri:oozie:workflow:0.4 to WorkflowNode
-        List<WorkflowNode> nodes = parseWorkflow04(xmldoc);
         result.setNodes(nodes);
         result.succeeded = true;
 
@@ -96,41 +109,6 @@ public class UploadXmlAction extends ActionSupport {
 
     }
 
-	private List<WorkflowNode> parseWorkflow04(WORKFLOWAPP xmldoc) {
-		List<WorkflowNode> nodes = new ArrayList<>();
-        WorkflowNode node = new WorkflowNode();
-        node.setName("start");
-        node.setType(WorkflowNode.NodeType.START);
-        node.setTo(new String[]{xmldoc.getStart().getTo()});
-        nodes.add(node);
-
-        for(Object nodeXml : xmldoc.getDecisionOrForkOrJoin()){
-        	// TODO add more handling here.
-            if(nodeXml instanceof ACTION){
-                ACTION action = (ACTION)nodeXml;
-                node = new WorkflowNode();
-                node.setName(action.getName());
-                node.setType(WorkflowNode.NodeType.ACTION);
-                node.setTo(new String[]{action.getOk().getTo(), action.getError().getTo()});
-                nodes.add(node);
-            } else if(nodeXml instanceof KILL){
-                KILL kill = (KILL)nodeXml;
-                node = new WorkflowNode();
-                node.setName(kill.getName());
-                node.setType(WorkflowNode.NodeType.KILL);
-                node.setTo(new String[]{});
-                nodes.add(node);
-            }
-
-        }
-        
-        node = new WorkflowNode();
-        node.setName(xmldoc.getEnd().getName());
-        node.setType(WorkflowNode.NodeType.END);
-        node.setTo(new String[]{});
-        nodes.add(node);
-		return nodes;
-	}
 
     public UploadXmlResult getResult() { return result; }
     public void setResult(UploadXmlResult result) { this.result = result; }
@@ -165,6 +143,9 @@ public class UploadXmlAction extends ActionSupport {
 
 		public String[] getXml() { return xml; }
 		public void setXml(String[] xml) { this.xml = xml; }
-        
+
+		public String getIdentifiedNamespace() { return identifiedNamespace; }
+		public void setIdentifiedNamespace(String identifiedNamespace) { this.identifiedNamespace = identifiedNamespace; }
+
     }
 }
