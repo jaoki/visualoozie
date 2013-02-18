@@ -88,7 +88,7 @@ public class UploadXmlAction extends ActionSupport {
         }
 
         // Parse uri:oozie:workflow:0.4 to WorkflowNode
-        List<WorkflowNode> nodes = parseWORKFLOWAPP(xmldoc);
+        List<WorkflowNode> nodes = parseWorkflow04(xmldoc);
         result.setNodes(nodes);
         result.succeeded = true;
 
@@ -96,7 +96,7 @@ public class UploadXmlAction extends ActionSupport {
 
     }
 
-	private List<WorkflowNode> parseWORKFLOWAPP(WORKFLOWAPP xmldoc) {
+	private List<WorkflowNode> parseWorkflow04(WORKFLOWAPP xmldoc) {
 		List<WorkflowNode> nodes = new ArrayList<>();
         WorkflowNode node = new WorkflowNode();
         node.setName("start");
@@ -105,6 +105,7 @@ public class UploadXmlAction extends ActionSupport {
         nodes.add(node);
 
         for(Object nodeXml : xmldoc.getDecisionOrForkOrJoin()){
+        	// TODO add more handling here.
             if(nodeXml instanceof ACTION){
                 ACTION action = (ACTION)nodeXml;
                 node = new WorkflowNode();
