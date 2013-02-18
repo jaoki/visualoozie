@@ -147,8 +147,7 @@ $(function() {
 		// Make editor table
 		var editor = "<table>";
 		editor += "<tr>";
-		editor += "<td>#</td>";
-		editor += "<td>Content</td>";
+		editor += "<td colspan='2'>Uploaded XML</td>";
 
 		var currentLineNum = 0;
 		var tokensIndex = 0;

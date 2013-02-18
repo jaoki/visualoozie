@@ -146,8 +146,8 @@ public class UploadXmlAction extends ActionSupport {
         private Integer columnNumber;
 
         private List<WorkflowNode> nodes;
-//        private String[] escapedXml;
         private String[] xml;
+        private String identifiedNamespace;
 
         public boolean isSucceeded() { return succeeded; }
         public void setSucceeded(boolean succeeded) { this.succeeded = succeeded; }
@@ -167,8 +167,5 @@ public class UploadXmlAction extends ActionSupport {
 		public String[] getXml() { return xml; }
 		public void setXml(String[] xml) { this.xml = xml; }
         
-//        public String[] getEscapedXml() { return escapedXml; }
-//        public void setEscapedXml(String[] escapedXml) { this.escapedXml = escapedXml; }
-
     }
 }

@@ -67,7 +67,7 @@
 	<div>
 		<form id="fileform" name="input" action="api/upload_xml" enctype="multipart/form-data" method="post">
 			<input name="xmlfile" type="file"/>
-			<input id="submitButton" type="button" value="Submit File"/>
+			<input id="submitButton" type="button" value="Validate Oozie Workflow XML File"/>
 		</form>
 	</div>
 	<div>
