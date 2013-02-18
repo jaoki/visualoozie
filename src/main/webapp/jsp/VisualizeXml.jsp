@@ -21,7 +21,8 @@
 	<script type="text/javascript" src='<s:url value="/js/jquery-1.9.1.min.js"/>' ></script>
 	<script type="text/javascript" src='<s:url value="/js/visualoozie.js"/>' ></script>
 	<script type="text/javascript">
-		vo.contextRoot = '<s:url value="/"/>';
+		var fromStruts = '<s:url value="/"/>';
+		vo.contextRoot = fromStruts.substring(0, fromStruts.lastIndexOf("/") + 1);
 
 	</script>
 
