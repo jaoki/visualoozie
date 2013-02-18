@@ -29,9 +29,10 @@ $(function() {
 		});
 	};
 
-	var weightedNodes = {};
+	var weightedNodes;
 
 	function drawDiagram(res){
+		weightedNodes = {};
 		var paperWidth = $(document).width() / 2;
 		Joint.paper("workflow_diagram", paperWidth, 2000);
 		var fsa = Joint.dia.fsa;
