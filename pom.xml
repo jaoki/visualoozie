@@ -327,6 +327,21 @@
 					</execution>
 
 					<execution>
+						<id>ssh01</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>src/main/resources/oozie</schemaDirectory>
+							<schemaFiles>ssh-action-0.1.xsd</schemaFiles>
+							<bindingDirectory>/src/main/xjb/null</bindingDirectory>
+							<packageName>visualoozie.xsd.ssh01</packageName>
+							<staleFile>${project.build.directory}/jaxb2/.xjcStaleFlagSsh01</staleFile>
+							<clearOutputDir>false</clearOutputDir>
+						</configuration>
+					</execution>
+
+					<execution>
 						<id>workflow02</id>
 						<goals>
 							<goal>xjc</goal>

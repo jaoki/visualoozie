@@ -19,6 +19,7 @@ import org.xml.sax.SAXException;
 public class XmlLoader {
     private Unmarshaller unmarshaller = null;
 
+    // TODO ThreadLocal
     public XmlLoader(){
         try {
             JAXBContext context = JAXBContext.newInstance(
@@ -48,6 +49,7 @@ public class XmlLoader {
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.2.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.3.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/sqoop-action-0.2.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/ssh-action-0.1.xsd")));
 
         try {
         	Schema schema = sf.newSchema(sources.toArray(new StreamSource[0]));
