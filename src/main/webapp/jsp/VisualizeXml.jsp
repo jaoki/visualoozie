@@ -77,8 +77,6 @@
 	<div class="colstart">
 		<div id="workflow_diagram" class="col1"></div>
 		<div id="xml_editor_div" class="col1" style="border: 1px solid;">
-			<code>
-			</code>
 		</div>
 	</div>
 

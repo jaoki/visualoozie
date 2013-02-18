@@ -1,4 +1,5 @@
-/* Basic HTML Elements -------------------------------------- */
+/* --- Initialize basic HTML tags ----------------- */
+
 *
 {
   margin: 0;
@@ -13,6 +14,23 @@ body {
 	margin: 0;
 } 
 
+table {
+	border-width: 1px;
+	border-spacing: 0px;
+	border-style: solid;
+	border-color: gray;
+	border-collapse: collapse;
+	background-color: white;
+}
+
+table th, table td {
+	border-width: 1px;
+	padding: 0px;
+	border-style: solid;
+	border-color: gray;
+	background-color: white;
+	-moz-border-radius: ;
+}
 
 .red{
 	color: red;
@@ -33,6 +51,7 @@ div.col1{
 	float: left;
 }
 
+/* --- XML Editor ----------------- */
 #xml_editor_div .tagstart{
 	color: green;
 }
@@ -45,9 +64,28 @@ div.col1{
 	color: purple;
 }
 
+#xml_editor_div .line_num_column{
+	background: #E0E0E0;
+	text-align: right;
+}
 
+#xml_editor_div .error{
+	background: pink;
+    font-weight: bold;
+}
+
+#xml_editor_div table{
+	border-width: 1px;
+}
+
+#xml_editor_div td{
+	border-bottom-width: 0px;
+	border-top-width: 0px;
+	font-family: monospace;
+}
+
+/* --- Title ----------------- */
 .blueBar{
-/*	color: #D8DFEA; */
 	background-color: #3B5998; 
 	border-bottom: 1px solid #133783;
 	box-shadow: 0 0 2px rgba(0, 0, 0, 0.52);
@@ -55,10 +93,6 @@ div.col1{
 	width: 100%;
 	height: 2.5em;
 	z-index: 2;
-	/*
-	padding-left: 20px;
-	padding-right: 20px;
-	*/
 }
 
 .appTitle1{
@@ -150,43 +184,4 @@ td.layout{
 	z-index: 2;
 }
 
-
-/* Panels -------------------------------------- */
-.main_panel{
-	background: #F2F2F2;
-	float: left;
-	border: 1px solid;
-}
-
-.main_panel_content{
-	overflow: auto; /* TODO when auto, there is a undesiable vertical scrollbar .... but when make it visible, then dragging icons is not working. What to do? */
-	width: 100%;
-	height: 100%;
-}
-
-.panel_div{
-	float: left;
-	margin: 3px;
-	border-bottom-right-radius: 5px;
-}
-
-.panel_content_div {
-	overflow: auto;
-	padding: 3px;
-}
-
-.panelContentDivDroppable.dragging{
-	background: Beige;
-}
-
-.panel_title_div{
-	white-space: nowrap;
-	overflow: hidden;
-	font-weight: bolder;
-/*	float: left; */
-}
-
-.panelDeleteIconDiv{
-	float: right;
-}
 

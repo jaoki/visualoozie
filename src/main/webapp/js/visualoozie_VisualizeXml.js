@@ -158,13 +158,14 @@ $(function() {
 			editor += "<tr>";
 			// Line Number
 			if(currentLineNum == lineNumber){
-				editor += "<td class='num'><span class='red'>" + (currentLineNum) + "</span></td>";
+				editor += "<td class='line_num_column error'><span>" + (currentLineNum) + "</span></td>";
+				editor += "<td class='error'>";
 			}else{
-				editor += "<td class='num'><span>" + (currentLineNum) + "</span></td>";
+				editor += "<td class='line_num_column'><span>" + (currentLineNum) + "</span></td>";
+				editor += "<td>";
 			}
 
 			// Line Content
-			editor += "<td>";
 			while(tokensIndex < tokens.length && currentLineNum == tokens[tokensIndex].lineNum){
 				editor += "<span class='" + tokens[tokensIndex].type + "'>" + tokens[tokensIndex].value + "</span>";
 				tokensIndex++;
@@ -175,7 +176,7 @@ $(function() {
 		editor += "</tr>";
 
 		editor += "</table>";
-		$("#xml_editor_div code").html(editor);
+		$("#xml_editor_div").html(editor);
 	}
 
 	$("#submitButton").click(submitButtonClicked);
