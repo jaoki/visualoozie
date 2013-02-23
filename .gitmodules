@@ -1,0 +1,3 @@
+[submodule "src/main/webapp/js/wfjs"]
+	path = src/main/webapp/js/wfjs
+	url = https://github.com/jaoki/wfjs
