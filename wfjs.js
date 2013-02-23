@@ -21,8 +21,6 @@ var DIAMOND_DEFAULT_ATTRIBUTES = {
 	stroke: "yellow",
 	"stroke-width": "2",
 	fill: "DarkSeaGreen",
-//	width : 60,
-//	height : 60,
 	filter: "url(#dropshadow1)",
 	style: "cursor: move;",
 };
