@@ -78,24 +78,26 @@ $(function() {
 			}
 
 			for(var j = 0; j < sameSortCount; j++){
-				var circle_attr;
+				var node;
+				var xPos = (paperWidth/(sameSortCount + 1) * (j+1));
 				if(weightedNodes[sortedNodeNames[i + j].name].type == "KILL"){
-					circle_attr = { stroke: "red", fill: "red" };
+					node = new wfjs.CircleNode(canvas1, xPos, yPos, sortedNodeNames[i + j].name, { stroke: "red", fill: "red" });
+				}else if(weightedNodes[sortedNodeNames[i + j].name].type == "DECISION"){
+					node = new wfjs.DiamondNode(canvas1, xPos, yPos, sortedNodeNames[i + j].name);
 				}else if(weightedNodes[sortedNodeNames[i + j].name].type == "START" || weightedNodes[sortedNodeNames[i + j].name].type == "END"){
-					circle_attr = { stroke: "grey", fill: "grey" };
+					node = new wfjs.CircleNode(canvas1, xPos, yPos, sortedNodeNames[i + j].name, { stroke: "grey", fill: "grey" });
 				}else{
-					circle_attr = { stroke: "blue", fill: "yellow" };
+					node = new wfjs.CircleNode(canvas1, xPos, yPos, sortedNodeNames[i + j].name, { stroke: "blue", fill: "yellow" });
 				}
 
-				var circle = new wfjs.CircleNode(
-						canvas1
-						, (paperWidth/(sameSortCount + 1) * (j+1))
-						, yPos
-						, sortedNodeNames[i + j].name
-						, circle_attr
-				);
-				circle.show();
-				weightedNodes[sortedNodeNames[i + j].name].circle = circle;
+
+				// TODO fix this
+				if(node.show !== undefined)
+					node.show();
+
+
+
+				weightedNodes[sortedNodeNames[i + j].name].node = node;
 
 				if(j > 0){
 					i++;
@@ -110,7 +112,7 @@ $(function() {
 		for(var key in weightedNodes){	
 			var node = weightedNodes[key];
 			for(var i = 0; i < node.to.length; i++){
-				node.circle.connectTo(weightedNodes[node.to[i]].circle);
+				node.node.connectTo(weightedNodes[node.to[i]].node);
 			}
 		}
 
