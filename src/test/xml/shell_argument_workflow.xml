@@ -1,0 +1,22 @@
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="java-main-wf">
+    <start to="shell-node"/>
+	
+	<action name="shell-node">
+		<shell xmlns="uri:oozie:shell-action:0.3">
+			<job-tracker>${jobTracker}</job-tracker>
+			<name-node>${nameNode}</name-node>
+			<exec>script1.sh</exec>
+			<file>script1/file1#file1</file>
+			<argument>arg1</argument>
+			<argument>arg2=val2</argument>
+		</shell>
+		<ok to="end" />
+		<error to="fail1" />
+	</action>
+
+    <kill name="fail1">
+        <message>Java failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
+
