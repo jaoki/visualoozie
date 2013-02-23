@@ -32,7 +32,7 @@ $(function() {
 	};
 
 	var onWindowResize = function(){
-		var editorHeight = window.innerHeight - $("#ope_area").height();
+		var editorHeight = window.innerHeight - $("#workflow_diagram").offset().top;
 		$("#xml_editor_div").height(editorHeight);
 		$("#workflow_diagram").height(editorHeight);
 	};
