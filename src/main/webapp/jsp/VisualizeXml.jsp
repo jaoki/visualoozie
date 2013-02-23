@@ -45,8 +45,6 @@
 
 
 	<!--------------- Top Menu ------------------------>
-
-
 	<div class="blueBar">
 		<div style="width: 2em; float:left;">&nbsp;</div>
 		<div style="float:left;">
