@@ -2,15 +2,20 @@ $(function() {
 	vo.tokenizer("abc");
 
 	var submitButtonClicked = function(){
+		$("#xml_editor_div").html("");
 		$("#workflow_diagram").html("");
 		$("#xml_editor_pre").html("");
 		$("#errorMessage").html("");
+		$("#waiting_image").show();
 
 		var formData = new FormData($("#fileform")[0]);
 		$.ajax({
 			url: vo.contextRoot + "api/upload_xml"
 			, type: 'POST'
 			, data: formData
+			, cache: false
+			, contentType: false
+			, processData: false
 			, complete: function(jqXHR, textStatus){
 				var res = $.parseJSON(jqXHR.responseText);
 				drawXmlEditor(res.xml, res.lineNumber, res.columnNumber);
@@ -20,12 +25,10 @@ $(function() {
 					$("#errorMessage").html(res.errorMessage);
 					return;
 				}
+				$("#waiting_image").hide();
 				drawDiagram(res);
 
 			}
-			, cache: false
-			, contentType: false
-			, processData: false
 		});
 	};
 
@@ -35,8 +38,6 @@ $(function() {
 		weightedNodes = {};
 		var paperWidth = $(document).width() / 2;
 		var canvas1 = new wfjs.Canvas("workflow_diagram", paperWidth, 2000);
-//		Joint.paper("workflow_diagram", paperWidth, 2000);
-//		var fsa = Joint.dia.fsa;
 		var unsortedNodes = res.nodes;
 
 		// Set weightedNodes wihtout sortOrder
@@ -65,7 +66,6 @@ $(function() {
 			}
 		}
 
-//		var allCircles = [];
 		var yPos = 40;
 		// Generates svg circles
 		for(var i = 0; i < sortedNodeNames.length; i++){
@@ -89,12 +89,6 @@ $(function() {
 
 				var circle = new wfjs.CircleNode(canvas1, (paperWidth/(sameSortCount + 1) * (j+1)), yPos, sortedNodeNames[i + j].name);
 				circle.show();
-//				var circle = fsa.State.create({
-//							position: {x: (paperWidth/(sameSortCount + 1) * (j+1)), y: yPos}
-//							, label: sortedNodeNames[i + j].name
-//							, attrs : attrs
-//						});
-//				allCircles.push(circle);
 				weightedNodes[sortedNodeNames[i + j].name].circle = circle;
 
 				if(j > 0){
@@ -111,7 +105,6 @@ $(function() {
 			var node = weightedNodes[key];
 			for(var i = 0; i < node.to.length; i++){
 				node.circle.connectTo(weightedNodes[node.to[i]].circle);
-//				node.circle.joint(weightedNodes[node.to[i]].circle, fsa.arrow).registerForever(allCircles);
 			}
 		}
 

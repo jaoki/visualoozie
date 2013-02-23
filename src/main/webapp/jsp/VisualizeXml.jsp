@@ -75,6 +75,8 @@
 		<span id="errorMessage" class="red"></span>
 	</div>
 
+	<div><img id="waiting_image" src="<s:url value="/img/wait.gif"/>" style="display: none;" /></div>
+
 	<div class="colstart">
 		<div id="workflow_diagram" class="col1" style="width: 50%; height: 600px; overflow: auto;"></div>
 		<div id="xml_editor_div" class="col1" style="width: 50%; height: 600px; overflow: auto;">
