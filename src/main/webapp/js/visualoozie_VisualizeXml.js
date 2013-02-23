@@ -78,16 +78,22 @@ $(function() {
 			}
 
 			for(var j = 0; j < sameSortCount; j++){
-				var attrs;
+				var circle_attr;
 				if(weightedNodes[sortedNodeNames[i + j].name].type == "KILL"){
-					attrs= { fill : "red" };
+					circle_attr = { stroke: "red", fill: "red" };
 				}else if(weightedNodes[sortedNodeNames[i + j].name].type == "START" || weightedNodes[sortedNodeNames[i + j].name].type == "END"){
-					attrs= { fill : "grey" };
+					circle_attr = { stroke: "grey", fill: "grey" };
 				}else{
-					attrs= {};
+					circle_attr = { stroke: "blue", fill: "yellow" };
 				}
 
-				var circle = new wfjs.CircleNode(canvas1, (paperWidth/(sameSortCount + 1) * (j+1)), yPos, sortedNodeNames[i + j].name);
+				var circle = new wfjs.CircleNode(
+						canvas1
+						, (paperWidth/(sameSortCount + 1) * (j+1))
+						, yPos
+						, sortedNodeNames[i + j].name
+						, circle_attr
+				);
 				circle.show();
 				weightedNodes[sortedNodeNames[i + j].name].circle = circle;
 
