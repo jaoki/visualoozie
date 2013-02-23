@@ -1,5 +1,4 @@
 $(function() {
-	vo.tokenizer("abc");
 
 	var submitButtonClicked = function(){
 		$("#xml_editor_div").html("");
@@ -32,12 +31,19 @@ $(function() {
 		});
 	};
 
+	var onWindowResize = function(){
+		var editorHeight = window.innerHeight - $("#ope_area").height();
+		$("#xml_editor_div").height(editorHeight);
+		$("#workflow_diagram").height(editorHeight);
+	};
+
 	var weightedNodes;
 
 	function drawDiagram(res){
 		weightedNodes = {};
-		var paperWidth = $(document).width() / 2;
-		var canvas1 = new wfjs.Canvas("workflow_diagram", paperWidth, 2000);
+		var editorWidth = $(document).width() / 2;
+		onWindowResize();
+		var canvas1 = new wfjs.Canvas("workflow_diagram", editorWidth, 2000);
 		var unsortedNodes = res.nodes;
 
 		// Set weightedNodes wihtout sortOrder
@@ -79,7 +85,7 @@ $(function() {
 
 			for(var j = 0; j < sameSortCount; j++){
 				var node;
-				var xPos = (paperWidth/(sameSortCount + 1) * (j+1));
+				var xPos = (editorWidth/(sameSortCount + 1) * (j+1));
 				if(weightedNodes[sortedNodeNames[i + j].name].type == "KILL"){
 					node = new wfjs.CircleNode(canvas1, xPos, yPos, sortedNodeNames[i + j].name, { stroke: "red", fill: "red" });
 				}else if(weightedNodes[sortedNodeNames[i + j].name].type == "DECISION"){
@@ -107,6 +113,10 @@ $(function() {
 			yPos += 80;
 
 		}
+
+
+// TODO resize svg
+
 
 		// Add svg lines
 		for(var key in weightedNodes){	
@@ -185,6 +195,7 @@ $(function() {
 	}
 
 	$("#submitButton").click(submitButtonClicked);
+	$(window).resize(onWindowResize);
 
 }); // End of JQuery Initialization
 

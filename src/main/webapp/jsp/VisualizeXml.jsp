@@ -45,31 +45,36 @@
 
 
 	<!--------------- Top Menu ------------------------>
-	<div class="blueBar">
-		<div style="width: 2em; float:left;">&nbsp;</div>
-		<div style="float:left;">
-			<span class="appTitle1">VisualOozie</span>
-			<span class="appTitle2">to visualize Hadoop Oozie workflow</span>
-			<span class="alphaversion">Alpha Version</span>
-		</div>
-		<div style="width: 2em; float:right;">&nbsp;</div>
-		<div style="float:right;">
-			<span class="appTitle1">&nbsp;</span>
-			<span class="appTitle2">
-				<a class="appTitle2" href="https://groups.google.com/forum/#!forum/visualoozie-user" target="_blank">Forum</a>
-			</span>
-		</div>
-	</div>
 
-	<div>
-		<form id="fileform" name="input" action="api/upload_xml" enctype="multipart/form-data" method="post">
-			<input name="xmlfile" type="file"/>
-			<input id="submitButton" type="button" value="Validate Oozie Workflow XML File"/>
-		</form>
-	</div>
 
-	<hr/>
-	<div><span style="font-weight: bold;">Identified Namespace: </span> <span id="span_identifiedNamespace"></span> </div>
+<!-- TODO instead of adding ope_area, calc the start of #colstart -->
+	<div id="ope_area">
+		<div class="blueBar">
+			<div style="width: 2em; float:left;">&nbsp;</div>
+			<div style="float:left;">
+				<span class="appTitle1">VisualOozie</span>
+				<span class="appTitle2">to visualize Hadoop Oozie workflow</span>
+				<span class="alphaversion">Alpha Version</span>
+			</div>
+			<div style="width: 2em; float:right;">&nbsp;</div>
+			<div style="float:right;">
+				<span class="appTitle1">&nbsp;</span>
+				<span class="appTitle2">
+					<a class="appTitle2" href="https://groups.google.com/forum/#!forum/visualoozie-user" target="_blank">Forum</a>
+				</span>
+			</div>
+		</div>
+
+		<div>
+			<form id="fileform" name="input" action="api/upload_xml" enctype="multipart/form-data" method="post">
+				<input name="xmlfile" type="file"/>
+				<input id="submitButton" type="button" value="Validate Oozie Workflow XML File"/>
+			</form>
+		</div>
+
+		<hr/>
+		<div><span style="font-weight: bold;">Identified Namespace: </span> <span id="span_identifiedNamespace"></span> </div>
+	</div>
 
 	<div>
 		<span id="errorMessage" class="red"></span>
@@ -78,8 +83,8 @@
 	<div><img id="waiting_image" src="<s:url value="/img/wait.gif"/>" style="display: none;" /></div>
 
 	<div class="colstart">
-		<div id="workflow_diagram" class="col1" style="width: 50%; height: 600px; overflow: auto;"></div>
-		<div id="xml_editor_div" class="col1" style="width: 50%; height: 600px; overflow: auto;">
+		<div id="workflow_diagram" class="col1" style="width: 50%; overflow: auto;"></div>
+		<div id="xml_editor_div" class="col1" style="width: 50%; overflow: auto;">
 		</div>
 	</div>
 
