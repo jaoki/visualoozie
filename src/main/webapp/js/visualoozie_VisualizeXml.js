@@ -34,8 +34,9 @@ $(function() {
 	function drawDiagram(res){
 		weightedNodes = {};
 		var paperWidth = $(document).width() / 2;
-		Joint.paper("workflow_diagram", paperWidth, 2000);
-		var fsa = Joint.dia.fsa;
+		var canvas1 = new wfjs.Canvas("workflow_diagram", paperWidth, 2000);
+//		Joint.paper("workflow_diagram", paperWidth, 2000);
+//		var fsa = Joint.dia.fsa;
 		var unsortedNodes = res.nodes;
 
 		// Set weightedNodes wihtout sortOrder
@@ -64,7 +65,7 @@ $(function() {
 			}
 		}
 
-		var allCircles = [];
+//		var allCircles = [];
 		var yPos = 40;
 		// Generates svg circles
 		for(var i = 0; i < sortedNodeNames.length; i++){
@@ -85,12 +86,15 @@ $(function() {
 				}else{
 					attrs= {};
 				}
-				var circle = fsa.State.create({
-							position: {x: (paperWidth/(sameSortCount + 1) * (j+1)), y: yPos}
-							, label: sortedNodeNames[i + j].name
-							, attrs : attrs
-						});
-				allCircles.push(circle);
+
+				var circle = new wfjs.CircleNode(canvas1, (paperWidth/(sameSortCount + 1) * (j+1)), yPos, sortedNodeNames[i + j].name);
+				circle.show();
+//				var circle = fsa.State.create({
+//							position: {x: (paperWidth/(sameSortCount + 1) * (j+1)), y: yPos}
+//							, label: sortedNodeNames[i + j].name
+//							, attrs : attrs
+//						});
+//				allCircles.push(circle);
 				weightedNodes[sortedNodeNames[i + j].name].circle = circle;
 
 				if(j > 0){
@@ -106,7 +110,8 @@ $(function() {
 		for(var key in weightedNodes){	
 			var node = weightedNodes[key];
 			for(var i = 0; i < node.to.length; i++){
-				node.circle.joint(weightedNodes[node.to[i]].circle, fsa.arrow).registerForever(allCircles);
+				node.circle.connectTo(weightedNodes[node.to[i]].circle);
+//				node.circle.joint(weightedNodes[node.to[i]].circle, fsa.arrow).registerForever(allCircles);
 			}
 		}
 

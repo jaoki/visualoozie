@@ -9,17 +9,13 @@
 
 	<link rel="stylesheet" type="text/css" href='<s:url value="/style/visualoozie.css"/>' />
 
+		<!--
 	<script type="text/javascript" src='<s:url value="/js/joint.all.min.js"/>' ></script>
-
-	<!--
-	<script type="text/javascript" src="/js/raphael.js" ></script>
-	<script type="text/javascript" src="/js/joint.js" ></script>
-	<script type="text/javascript" src="/js/joint.dia.js" ></script>
-	<script type="text/javascript" src="/js/joint.dia.fsa.js" ></script>
-	-->
+		-->
 
 	<script type="text/javascript" src='<s:url value="/js/jquery-1.9.1.min.js"/>' ></script>
 	<script type="text/javascript" src='<s:url value="/js/visualoozie.js"/>' ></script>
+	<script type="text/javascript" src='<s:url value="/js/wfjs/wfjs.js"/>' ></script>
 	<script type="text/javascript">
 		var fromStruts = '<s:url value="/"/>';
 		vo.contextRoot = fromStruts.substring(0, fromStruts.lastIndexOf("/") + 1);
