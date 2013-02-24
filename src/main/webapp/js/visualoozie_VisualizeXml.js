@@ -87,7 +87,7 @@ $(function() {
 			for(var j = 0; j < sameSortCount; j++){
 				var node;
 				// Add some random number to fluctuate x-position
-				var xPos = (editorWidth/(sameSortCount + 1) * (j+1)) + Math.floor((Math.random()*20)+1);
+				var xPos = (editorWidth/(sameSortCount + 1) * (j+1)) + Math.floor((Math.random()*30)+1);
 				if(weightedNodes[sortedNodeNames[i + j].name].type == "KILL"){
 					node = new wfjs.CircleNode(canvas1, xPos, yPos, sortedNodeNames[i + j].name, { stroke: "red", fill: "red" });
 				}else if(weightedNodes[sortedNodeNames[i + j].name].type == "DECISION"){

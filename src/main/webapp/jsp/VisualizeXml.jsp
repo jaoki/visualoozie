@@ -61,13 +61,17 @@
 		</div>
 	</div>
 
-	<div>
+	<div style="float: left;">
 		<form id="fileform" name="input" action="api/upload_xml" enctype="multipart/form-data" method="post">
 			<input name="xmlfile" type="file"/>
 			<input id="submitButton" type="button" value="Validate Oozie Workflow XML File"/>
-			<input id="startOverbutton" type="button" value="Start Over"/>
 		</form>
 	</div>
+	<div style="float: left;">
+		<input id="startOverbutton" type="button" value="Start Over"/>
+	</div>
+
+	<div class="colstart"> </div>
 
 	<hr/>
 	<div><span style="font-weight: bold;">Identified Namespace: </span> <span id="span_identifiedNamespace"></span> </div>
