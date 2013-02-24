@@ -197,6 +197,9 @@ $(function() {
 	}
 
 	$("#submitButton").click(submitButtonClicked);
+	$("#startOverbutton").click(function(){
+		location.reload();
+	});
 	$(window).resize(onWindowResize);
 
 }); // End of JQuery Initialization
