@@ -1,7 +1,6 @@
 package visualoozie.api.action;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.regex.Pattern;
 import javax.xml.bind.JAXBException;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -20,12 +18,11 @@ import org.apache.struts2.convention.annotation.Result;
 import org.xml.sax.SAXParseException;
 
 import visualoozie.page.action.PathConstants;
-import visualoozie.util.XmlLoader;
+import visualoozie.xsd.Workflow01Parser;
+import visualoozie.xsd.Workflow025Parser;
 import visualoozie.xsd.Workflow02Parser;
 import visualoozie.xsd.Workflow03Parser;
 import visualoozie.xsd.Workflow04Parser;
-import visualoozie.xsd.workflow04.ACTION;
-import visualoozie.xsd.workflow04.KILL;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -77,10 +74,16 @@ public class UploadXmlAction extends ActionSupport {
 		result.setIdentifiedNamespace(xmlns);
         List<WorkflowNode> nodes;
         try {
-        	if("uri:oozie:workflow:0.2".equals(xmlns)){
+        	if("uri:oozie:workflow:0.1".equals(xmlns)){
+		        nodes = new Workflow01Parser().parse(rawXml);
+        	}else if("uri:oozie:workflow:0.2".equals(xmlns)){
 		        nodes = new Workflow02Parser().parse(rawXml);
+        	}else if("uri:oozie:workflow:0.2.5".equals(xmlns)){
+		        nodes = new Workflow025Parser().parse(rawXml);
         	}else if("uri:oozie:workflow:0.3".equals(xmlns)){
 		        nodes = new Workflow03Parser().parse(rawXml);
+        	}else if("uri:oozie:workflow:0.4".equals(xmlns)){
+		        nodes = new Workflow04Parser().parse(rawXml);
         	}else{
 		        nodes = new Workflow04Parser().parse(rawXml);
         	}

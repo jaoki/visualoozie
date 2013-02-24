@@ -23,14 +23,11 @@ public class XmlLoader {
     public XmlLoader(){
         try {
             JAXBContext context = JAXBContext.newInstance(
-	        	// TODO do I need to list those classes??
-        		visualoozie.xsd.distcp01.ACTION.class
-        		, visualoozie.xsd.hive02.ACTION.class
+        		visualoozie.xsd.workflow01.WORKFLOWAPP.class
         		, visualoozie.xsd.workflow02.WORKFLOWAPP.class
+        		, visualoozie.xsd.workflow025.WORKFLOWAPP.class
         		, visualoozie.xsd.workflow03.WORKFLOWAPP.class
         		, visualoozie.xsd.workflow04.WORKFLOWAPP.class
-        		, visualoozie.xsd.shell02.ACTION.class
-        		, visualoozie.xsd.shell03.ACTION.class
     		);
             unmarshaller = context.createUnmarshaller();
         } catch (JAXBException e) {
@@ -42,13 +39,24 @@ public class XmlLoader {
         List<StreamSource> sources = new ArrayList<StreamSource>();
 
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/distcp-action-0.1.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/distcp-action-0.2.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/email-action-0.1.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/gms-oozie-sla-0.1.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/hive-action-0.2.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/hive-action-0.3.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/hive-action-0.4.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-sla-0.1.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.1.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.2.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.2.5.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.3.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.4.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.1.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.2.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.3.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/sqoop-action-0.2.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/sqoop-action-0.3.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/sqoop-action-0.4.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/ssh-action-0.1.xsd")));
 
         try {
@@ -60,11 +68,27 @@ public class XmlLoader {
 
     }
 
+    public visualoozie.xsd.workflow01.WORKFLOWAPP loadWorkflow01(String xml) throws JAXBException {
+        ByteArrayInputStream input = new ByteArrayInputStream(xml.getBytes());
+
+        @SuppressWarnings("unchecked")
+        JAXBElement<visualoozie.xsd.workflow01.WORKFLOWAPP> element = (JAXBElement<visualoozie.xsd.workflow01.WORKFLOWAPP>)unmarshaller.unmarshal(input);
+        return element.getValue();
+    }
+
     public visualoozie.xsd.workflow02.WORKFLOWAPP loadWorkflow02(String xml) throws JAXBException {
         ByteArrayInputStream input = new ByteArrayInputStream(xml.getBytes());
 
         @SuppressWarnings("unchecked")
         JAXBElement<visualoozie.xsd.workflow02.WORKFLOWAPP> element = (JAXBElement<visualoozie.xsd.workflow02.WORKFLOWAPP>)unmarshaller.unmarshal(input);
+        return element.getValue();
+    }
+
+    public visualoozie.xsd.workflow025.WORKFLOWAPP loadWorkflow025(String xml) throws JAXBException {
+        ByteArrayInputStream input = new ByteArrayInputStream(xml.getBytes());
+
+        @SuppressWarnings("unchecked")
+        JAXBElement<visualoozie.xsd.workflow025.WORKFLOWAPP> element = (JAXBElement<visualoozie.xsd.workflow025.WORKFLOWAPP>)unmarshaller.unmarshal(input);
         return element.getValue();
     }
 
