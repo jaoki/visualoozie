@@ -73,7 +73,7 @@ $(function() {
 		}
 
 		var yPos = 40;
-		// Generates svg circles
+		// Generates svg nodes
 		for(var i = 0; i < sortedNodeNames.length; i++){
 			// how many same sort order there are?
 			var sameSortCount = 1
@@ -83,9 +83,11 @@ $(function() {
 				}
 			}
 
+
 			for(var j = 0; j < sameSortCount; j++){
 				var node;
-				var xPos = (editorWidth/(sameSortCount + 1) * (j+1));
+				// Add some random number to fluctuate x-position
+				var xPos = (editorWidth/(sameSortCount + 1) * (j+1)) + Math.floor((Math.random()*20)+1);
 				if(weightedNodes[sortedNodeNames[i + j].name].type == "KILL"){
 					node = new wfjs.CircleNode(canvas1, xPos, yPos, sortedNodeNames[i + j].name, { stroke: "red", fill: "red" });
 				}else if(weightedNodes[sortedNodeNames[i + j].name].type == "DECISION"){
@@ -110,7 +112,7 @@ $(function() {
 				}
 			}
 
-			yPos += 80;
+			yPos += 85;
 
 		}
 
