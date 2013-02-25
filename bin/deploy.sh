@@ -10,7 +10,10 @@ echo "****************************************************"
 echo "Checkign local repository"
 echo -e "****************************************************${ENDCOLOR}"
 
-if [[ $(git status -sb) ]]; then echo aaaa; fi
+if [[ $(git status -s) ]]; then 
+	echo -e "${RED} There is uncommited or pushed changes in the local repository."
+	exit -1
+fi
 
 
 
