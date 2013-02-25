@@ -11,11 +11,16 @@ echo "Checkign local repository"
 echo -e "****************************************************${ENDCOLOR}"
 
 if [[ $(git status -s) ]]; then 
-	echo -e "${RED} There is uncommited or pushed changes in the local repository.${ENDCOLOR}"
+	echo -e "${RED}There is uncommited changes in the local repository.${ENDCOLOR}"
+	exit -1
+fi
+
+if [[ $(git status -sb|grep ahead) ]]; then 
+	echo -e "${RED}There is unpushed changes in the local repository.${ENDCOLOR}"
 	exit -1
 else
-	echo -e "The local repository is up-to-date and no changed has been made."
-fi
+
+echo -e "The local repository is up-to-date and no changed has been made."
 
 POM_VERSION=`cat pom.xml |grep "<version>"|head -1|cut -d">" -f2|cut -d"<" -f1`
 echo "pom version ${POM_VERSION} is found"
