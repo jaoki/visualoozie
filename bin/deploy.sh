@@ -1,0 +1,48 @@
+#! /bin/bash -e
+
+GREEN='\e[0;32m'
+RED='\e[0;31m[ERROR] '
+CYAN='\e[0;36m'
+ENDCOLOR='\e[0m'
+
+
+echo -e ${CYAN}
+echo "****************************************************"
+echo "Making a tag"
+echo "****************************************************"
+echo -e ${ENDCOLOR}
+
+POM_VERSION=`cat pom.xml |grep "<version>"|head -1|cut -d">" -f2|cut -d"<" -f1`
+echo "pom version is found ${POM_VERSION}"
+
+LATEST_TAG=`git tag|tail -1`
+
+if git tag |grep -q "${POM_VERSION}"; then
+	echo -e "${RED}${POM_VERSION} already exists"
+	exit -1
+fi
+
+git tag -a ${POM_VERSION} -m "tagging ${POM_VERSION}..."
+
+
+
+
+
+echo -e ${CYAN}
+echo "****************************************************"
+echo "Building mvn project..."
+echo "****************************************************"
+echo -e ${ENDCOLOR}
+
+# mvn clean package
+
+echo -e ${CYAN}
+echo "****************************************************"
+echo "Uploading to cloudbess..."
+echo "****************************************************"
+echo -e ${ENDCOLOR}
+
+# bees app:deploy -a visualoozie/alpha target/visualoozie.war
+
+echo -e "${GREEN}[SUCCESS!]${ENDCOLOR}"
+
