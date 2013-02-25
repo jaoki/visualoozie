@@ -28,7 +28,7 @@ echo "pom version ${POM_VERSION} is found"
 # LATEST_TAG=`git tag|tail -1`
 
 if git tag |grep -q "${POM_VERSION}"; then
-	echo -e "${RED}${POM_VERSION} already exists${ENDCOLOR}"
+	echo -e "${RED}Tag ${POM_VERSION} already exists${ENDCOLOR}"
 	exit -1
 fi
 
