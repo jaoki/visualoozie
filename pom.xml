@@ -136,6 +136,24 @@
     <build>
 		<finalName>${project.artifactId}</finalName>
 
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>visualoozie_version.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>visualoozie_version.properties</exclude>
+				</excludes>
+			</resource>
+		</resources> 
+
+
         <plugins>
 			<plugin>  
                 <groupId>org.apache.maven.plugins</groupId>  
