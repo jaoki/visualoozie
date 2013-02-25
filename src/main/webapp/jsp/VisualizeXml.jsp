@@ -46,7 +46,7 @@
 		<div style="float:left;">
 			<span class="appTitle1">VisualOozie</span>
 			<span class="appTitle2">to visualize Hadoop Oozie workflow</span>
-			<span class="alphaversion"><s:property value="Version" /> Beta Version</span>
+			<span class="alphaversion"><s:property value="Version" /> Alpha Version</span>
 		</div>
 		<div style="width: 2em; float:right;">&nbsp;</div>
 		<div style="float:right;">
