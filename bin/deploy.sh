@@ -17,6 +17,16 @@ else
 	echo -e "The local repository is up-to-date and no changed has been made."
 fi
 
+POM_VERSION=`cat pom.xml |grep "<version>"|head -1|cut -d">" -f2|cut -d"<" -f1`
+echo "pom version ${POM_VERSION} is found"
+
+# LATEST_TAG=`git tag|tail -1`
+
+if git tag |grep -q "${POM_VERSION}"; then
+	echo -e "${RED}${POM_VERSION} already exists${ENDCOLOR}"
+	exit -1
+fi
+
 
 echo -e ${CYAN}
 echo "****************************************************"
@@ -37,16 +47,6 @@ echo -e "${CYAN}"
 echo "****************************************************"
 echo "Making a tag"
 echo -e "****************************************************${ENDCOLOR}"
-
-POM_VERSION=`cat pom.xml |grep "<version>"|head -1|cut -d">" -f2|cut -d"<" -f1`
-echo "pom version ${POM_VERSION} is found"
-
-# LATEST_TAG=`git tag|tail -1`
-
-if git tag |grep -q "${POM_VERSION}"; then
-	echo -e "${RED}${POM_VERSION} already exists${ENDCOLOR}"
-	exit -1
-fi
 
 git tag -a ${POM_VERSION} -m "tagging ${POM_VERSION}..."|true
 echo "Tag ${POM_VERSION} was made"
