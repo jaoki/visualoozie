@@ -18,7 +18,7 @@ fi
 if [[ $(git status -sb|grep ahead) ]]; then 
 	echo -e "${RED}There is unpushed changes in the local repository.${ENDCOLOR}"
 	exit -1
-else
+fi
 
 echo -e "The local repository is up-to-date and no changed has been made."
 
