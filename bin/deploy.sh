@@ -5,15 +5,24 @@ RED='\e[0;31m[ERROR] '
 CYAN='\e[0;36m'
 ENDCOLOR='\e[0m'
 
+echo -e "${CYAN}"
+echo "****************************************************"
+echo "Checkign local repository"
+echo -e "****************************************************${ENDCOLOR}"
 
-echo -e ${CYAN}
+if [[ $(git status -sb) ]]; then echo aaaa; fi
+
+
+
+echo -e "${CYAN}"
 echo "****************************************************"
 echo "Making a tag"
-echo "****************************************************"
-echo -e ${ENDCOLOR}
+echo -e "****************************************************${ENDCOLOR}"
 
 POM_VERSION=`cat pom.xml |grep "<version>"|head -1|cut -d">" -f2|cut -d"<" -f1`
-echo "pom version is found ${POM_VERSION}"
+echo "pom version ${POM_VERSION} is found"
+
+exit -1
 
 LATEST_TAG=`git tag|tail -1`
 
@@ -23,8 +32,7 @@ if git tag |grep -q "${POM_VERSION}"; then
 fi
 
 git tag -a ${POM_VERSION} -m "tagging ${POM_VERSION}..."
-
-
+git push --tags
 
 
 
