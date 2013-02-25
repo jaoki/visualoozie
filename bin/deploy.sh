@@ -18,6 +18,20 @@ else
 fi
 
 
+echo -e ${CYAN}
+echo "****************************************************"
+echo "Building mvn project..."
+echo -e "****************************************************${ENDCOLOR}"
+
+mvn clean package
+
+echo -e ${CYAN}
+echo "****************************************************"
+echo "Uploading to cloudbess..."
+echo -e "****************************************************${ENDCOLOR}"
+
+bees app:deploy -a visualoozie/alpha target/visualoozie.war
+
 
 echo -e "${CYAN}"
 echo "****************************************************"
@@ -27,35 +41,19 @@ echo -e "****************************************************${ENDCOLOR}"
 POM_VERSION=`cat pom.xml |grep "<version>"|head -1|cut -d">" -f2|cut -d"<" -f1`
 echo "pom version ${POM_VERSION} is found"
 
-exit -1
-
-LATEST_TAG=`git tag|tail -1`
+# LATEST_TAG=`git tag|tail -1`
 
 if git tag |grep -q "${POM_VERSION}"; then
-	echo -e "${RED}${POM_VERSION} already exists"
+	echo -e "${RED}${POM_VERSION} already exists${ENDCOLOR}"
 	exit -1
 fi
 
-git tag -a ${POM_VERSION} -m "tagging ${POM_VERSION}..."
-git push --tags
+git tag -a ${POM_VERSION} -m "tagging ${POM_VERSION}..."|true
+echo "Tag ${POM_VERSION} was made"
 
+git push --tags|true
+echo "Tag ${POM_VERSION} was pushed"
 
-
-echo -e ${CYAN}
-echo "****************************************************"
-echo "Building mvn project..."
-echo "****************************************************"
-echo -e ${ENDCOLOR}
-
-# mvn clean package
-
-echo -e ${CYAN}
-echo "****************************************************"
-echo "Uploading to cloudbess..."
-echo "****************************************************"
-echo -e ${ENDCOLOR}
-
-# bees app:deploy -a visualoozie/alpha target/visualoozie.war
 
 echo -e "${GREEN}[SUCCESS!]${ENDCOLOR}"
 
