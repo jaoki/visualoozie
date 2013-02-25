@@ -11,8 +11,10 @@ echo "Checkign local repository"
 echo -e "****************************************************${ENDCOLOR}"
 
 if [[ $(git status -s) ]]; then 
-	echo -e "${RED} There is uncommited or pushed changes in the local repository."
+	echo -e "${RED} There is uncommited or pushed changes in the local repository.${ENDCOLOR}"
 	exit -1
+else
+	echo -e "The local repository is up-to-date and no changed has been made."
 fi
 
 
