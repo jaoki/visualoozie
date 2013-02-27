@@ -16,6 +16,7 @@ import javax.xml.validation.SchemaFactory;
 import org.xml.sax.SAXException;
 
 
+@Deprecated
 public class XmlLoader {
     private Unmarshaller unmarshaller = null;
 
