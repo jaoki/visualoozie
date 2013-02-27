@@ -32,7 +32,7 @@ public class Workflow025Parser {
 	public Workflow025Parser(){
 		
         try {
-            JAXBContext context = JAXBContext.newInstance(visualoozie.xsd.workflow025.WORKFLOWAPP.class);
+            JAXBContext context = JAXBContext.newInstance(WORKFLOWAPP.class);
             unmarshaller = context.createUnmarshaller();
         } catch (JAXBException e) {
             e.printStackTrace();
@@ -50,11 +50,7 @@ public class Workflow025Parser {
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/hive-action-0.3.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/hive-action-0.4.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-sla-0.1.xsd")));
-//        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.1.xsd")));
-//        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.2.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.2.5.xsd")));
-//        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.3.xsd")));
-//        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.4.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.1.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.2.xsd")));
         sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.3.xsd")));
@@ -71,15 +67,11 @@ public class Workflow025Parser {
         }
 
 	}
+	
 	public List<WorkflowNode> parse(String rawXml) throws JAXBException {
-//        XmlLoader loader = new XmlLoader();
-//        WORKFLOWAPP xmldoc = loader.loadWorkflow025(rawXml);
         ByteArrayInputStream input = new ByteArrayInputStream(rawXml.getBytes());
-
         @SuppressWarnings("unchecked")
-//        JAXBElement<WORKFLOWAPP> element = (JAXBElement<WORKFLOWAPP>)unmarshaller.unmarshal(input);
         WORKFLOWAPP xmldoc = ((JAXBElement<WORKFLOWAPP>)unmarshaller.unmarshal(input)).getValue();
-//        return element.getValue();
 		
 		List<WorkflowNode> nodes = new ArrayList<>();
         WorkflowNode node = new WorkflowNode();

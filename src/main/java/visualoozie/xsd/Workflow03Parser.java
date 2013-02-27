@@ -1,12 +1,21 @@
 package visualoozie.xsd;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+
+import org.xml.sax.SAXException;
 
 import visualoozie.api.action.WorkflowNode;
-import visualoozie.util.XmlLoader;
 import visualoozie.xsd.workflow03.ACTION;
 import visualoozie.xsd.workflow03.CASE;
 import visualoozie.xsd.workflow03.DECISION;
@@ -17,9 +26,52 @@ import visualoozie.xsd.workflow03.KILL;
 import visualoozie.xsd.workflow03.WORKFLOWAPP;
 
 public class Workflow03Parser {
+    private Unmarshaller unmarshaller = null;
+
+    // TODO ThreadLocal
+	public Workflow03Parser(){
+		
+        try {
+            JAXBContext context = JAXBContext.newInstance(WORKFLOWAPP.class);
+            unmarshaller = context.createUnmarshaller();
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+
+        SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        ClassLoader classLoader = Workflow025Parser.class.getClassLoader();
+        List<StreamSource> sources = new ArrayList<StreamSource>();
+
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/distcp-action-0.1.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/distcp-action-0.2.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/email-action-0.1.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/gms-oozie-sla-0.1.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/hive-action-0.2.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/hive-action-0.3.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/hive-action-0.4.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-sla-0.1.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/oozie-workflow-0.3.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.1.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.2.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/shell-action-0.3.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/sqoop-action-0.2.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/sqoop-action-0.3.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/sqoop-action-0.4.xsd")));
+        sources.add(new StreamSource(classLoader.getResourceAsStream("oozie/ssh-action-0.1.xsd")));
+
+        try {
+        	Schema schema = sf.newSchema(sources.toArray(new StreamSource[0]));
+            unmarshaller.setSchema(schema);
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
+
+	}
+	
 	public List<WorkflowNode> parse(String rawXml) throws JAXBException {
-        XmlLoader loader = new XmlLoader();
-        WORKFLOWAPP xmldoc = loader.loadWorkflow03(rawXml);
+        ByteArrayInputStream input = new ByteArrayInputStream(rawXml.getBytes());
+        @SuppressWarnings("unchecked")
+        WORKFLOWAPP xmldoc = ((JAXBElement<WORKFLOWAPP>)unmarshaller.unmarshal(input)).getValue();
 		
 		List<WorkflowNode> nodes = new ArrayList<>();
         WorkflowNode node = new WorkflowNode();
