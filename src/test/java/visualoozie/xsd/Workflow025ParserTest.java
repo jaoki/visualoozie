@@ -9,7 +9,7 @@ import org.apache.commons.io.IOUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import visualoozie.api.action.WorkflowNode;
+import visualoozie.api.WorkflowNode;
 
 public class Workflow025ParserTest {
 	

@@ -1,16 +1,25 @@
-package visualoozie.api.action;
+package visualoozie.api;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -25,34 +34,44 @@ import visualoozie.xsd.Workflow03Parser;
 import visualoozie.xsd.Workflow04Parser;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.FormDataParam;
 
-@ParentPackage(PathConstants.PARENT_PACKAGE_JSON_DEFAULT)
-@Namespace(PathConstants.NAMESPACE_API)
-public class UploadXmlAction extends ActionSupport {
+// @ParentPackage(PathConstants.PARENT_PACKAGE_JSON_DEFAULT)
+// @Namespace(PathConstants.NAMESPACE_API)
+@Path(PathConstants.NAMESPACE_API)
+// public class UploadXmlAction extends ActionSupport {
+public class UploadXmlAction{
 
-    private static final long serialVersionUID = 1L;
+//    private static final long serialVersionUID = 1L;
 
-    private File xmlfile;
+//    private File xmlfile;
 
-    private UploadXmlResult result;
     
-    @Override
-    @Action(value="upload_xml", results = {
-            @Result(name = SUCCESS , type = "json" , params = { "root", "result" }
-            )
-        }
-    )
-    public String execute(){
-        result = new UploadXmlResult();
+//    @Override
+//    @Action(value="upload_xml", results = {
+//            @Result(name = SUCCESS , type = "json" , params = { "root", "result" }
+//            )
+//        }
+//    )
+    @POST
+    @Path("upload_xml")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces({ MediaType.APPLICATION_JSON })
+    public UploadXmlResult post(
+    		@FormDataParam("xmlfile") InputStream is,
+    		@FormDataParam("xmlfile") FormDataContentDisposition fileDetail){
+	    UploadXmlResult result = new UploadXmlResult();
 
         String rawXml;
         try {
-            rawXml = FileUtils.readFileToString(xmlfile);
+//            rawXml = FileUtils.readFileToString(is);
+            rawXml = IOUtils.toString(is);
         }catch (IOException e){
             e.printStackTrace();
             result.succeeded = false;
             result.errorMessage = e.getMessage();
-            return SUCCESS;
+            return result;
         }
 
         Scanner scanner = new Scanner(rawXml);
@@ -100,29 +119,30 @@ public class UploadXmlAction extends ActionSupport {
                 e.printStackTrace();
                 result.errorMessage = e.getMessage();
             }
-            return SUCCESS;
+            return result;
         }catch (Exception e) {
             e.printStackTrace();
             result.succeeded = false;
             result.errorMessage = e.getMessage();
-            return SUCCESS;
+            return result;
         }
 
         result.setNodes(nodes);
         result.succeeded = true;
 
-        return SUCCESS;
+        return result;
 
     }
 
 
-    public UploadXmlResult getResult() { return result; }
-    public void setResult(UploadXmlResult result) { this.result = result; }
+//    public UploadXmlResult getResult() { return result; }
+//    public void setResult(UploadXmlResult result) { this.result = result; }
+//
+//    public File getXmlfile() { return xmlfile; }
+//    public void setXmlfile(File xmlfile) { this.xmlfile = xmlfile; }
 
-    public File getXmlfile() { return xmlfile; }
-    public void setXmlfile(File xmlfile) { this.xmlfile = xmlfile; }
-
-    public class UploadXmlResult{
+    @XmlRootElement
+    public static class UploadXmlResult{
         private boolean succeeded;
         private String errorMessage;
         private Integer lineNumber;

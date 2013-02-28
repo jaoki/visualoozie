@@ -1,4 +1,4 @@
-package visualoozie.api.action;
+package visualoozie.api;
 
 public class WorkflowNode {
     public enum NodeType{

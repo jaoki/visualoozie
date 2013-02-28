@@ -15,7 +15,7 @@ import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
 
-import visualoozie.api.action.WorkflowNode;
+import visualoozie.api.WorkflowNode;
 import visualoozie.xsd.workflow025.ACTION;
 import visualoozie.xsd.workflow025.CASE;
 import visualoozie.xsd.workflow025.DECISION;
