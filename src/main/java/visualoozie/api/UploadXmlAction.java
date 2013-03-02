@@ -1,6 +1,10 @@
+/**
+ * Copyright (c) 2013, Yahoo! Inc.  All rights reserved.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms
+ */
+
 package visualoozie.api;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,7 +14,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -18,62 +21,32 @@ import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
 import org.xml.sax.SAXParseException;
 
-import visualoozie.page.action.PathConstants;
 import visualoozie.xsd.Workflow01Parser;
 import visualoozie.xsd.Workflow025Parser;
 import visualoozie.xsd.Workflow02Parser;
 import visualoozie.xsd.Workflow03Parser;
 import visualoozie.xsd.Workflow04Parser;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
-// @ParentPackage(PathConstants.PARENT_PACKAGE_JSON_DEFAULT)
-// @Namespace(PathConstants.NAMESPACE_API)
-//@Path(PathConstants.NAMESPACE_API)
 @Path("/upload_xml")
-// public class UploadXmlAction extends ActionSupport {
 public class UploadXmlAction{
 
-//    private static final long serialVersionUID = 1L;
-
-//    private File xmlfile;
-
-    
-//    @Override
-//    @Action(value="upload_xml", results = {
-//            @Result(name = SUCCESS , type = "json" , params = { "root", "result" }
-//            )
-//        }
-//    )
-	
-//    @Path("upload_xml")
-//    @Produces({ MediaType.APPLICATION_JSON })
-//    @Path("/upload_xml")
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-//    @GET
     @Produces({ MediaType.APPLICATION_JSON })
     public UploadXmlResult post(
     		@FormDataParam("xmlfile") InputStream is,
     		@FormDataParam("xmlfile") FormDataContentDisposition fileDetail){
-//    public UploadXmlResult post(){
 	    UploadXmlResult result = new UploadXmlResult();
 
         String rawXml;
         try {
-//            rawXml = FileUtils.readFileToString(is);
             rawXml = IOUtils.toString(is);
-//            rawXml = "";
         }catch (IOException e){
             e.printStackTrace();
             result.succeeded = false;
@@ -140,13 +113,6 @@ public class UploadXmlAction{
         return result;
 
     }
-
-
-//    public UploadXmlResult getResult() { return result; }
-//    public void setResult(UploadXmlResult result) { this.result = result; }
-//
-//    public File getXmlfile() { return xmlfile; }
-//    public void setXmlfile(File xmlfile) { this.xmlfile = xmlfile; }
 
     @XmlRootElement
     public static class UploadXmlResult{
