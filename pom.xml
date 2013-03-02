@@ -37,11 +37,13 @@
             <scope>test</scope>
         </dependency>
 
+		<!--
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-dojo-plugin</artifactId>
             <version>${struts2.version}</version>
 		</dependency>
+		-->
 
 		<dependency>
 			<groupId>org.apache.struts</groupId>
@@ -200,6 +202,7 @@
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.21</version>
                 <configuration>
+					<!--
                     <scanIntervalSeconds>10</scanIntervalSeconds>
     				<reload>manual</reload>
                     <scanTargets>
@@ -208,6 +211,7 @@
                         <scanTarget>src/main/resources/struts.xml</scanTarget>
                         <scanTarget>src/main/resources/example.xml</scanTarget>
                     </scanTargets>
+					-->
 
 					<connectors>
 						<!--

@@ -39,7 +39,8 @@ import com.sun.jersey.multipart.FormDataParam;
 
 // @ParentPackage(PathConstants.PARENT_PACKAGE_JSON_DEFAULT)
 // @Namespace(PathConstants.NAMESPACE_API)
-@Path(PathConstants.NAMESPACE_API)
+//@Path(PathConstants.NAMESPACE_API)
+@Path("/upload_xml")
 // public class UploadXmlAction extends ActionSupport {
 public class UploadXmlAction{
 
@@ -54,19 +55,25 @@ public class UploadXmlAction{
 //            )
 //        }
 //    )
+	
+//    @Path("upload_xml")
+//    @Produces({ MediaType.APPLICATION_JSON })
+//    @Path("/upload_xml")
     @POST
-    @Path("upload_xml")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+//    @GET
     @Produces({ MediaType.APPLICATION_JSON })
     public UploadXmlResult post(
     		@FormDataParam("xmlfile") InputStream is,
     		@FormDataParam("xmlfile") FormDataContentDisposition fileDetail){
+//    public UploadXmlResult post(){
 	    UploadXmlResult result = new UploadXmlResult();
 
         String rawXml;
         try {
 //            rawXml = FileUtils.readFileToString(is);
             rawXml = IOUtils.toString(is);
+//            rawXml = "";
         }catch (IOException e){
             e.printStackTrace();
             result.succeeded = false;

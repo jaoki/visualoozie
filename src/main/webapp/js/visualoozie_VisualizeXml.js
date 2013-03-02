@@ -9,9 +9,9 @@ $(function() {
 
 		var formData = new FormData($("#fileform")[0]);
 		$.ajax({
-//			url: vo.contextRoot + "api/upload_xml"
-			url: "/api/upload_xml"
+			url: vo.contextRoot + "api/upload_xml"
 			, type: 'POST'
+			, dataType: 'json'
 			, data: formData
 			, cache: false
 			, contentType: false
