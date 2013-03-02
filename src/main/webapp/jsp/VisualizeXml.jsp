@@ -82,7 +82,7 @@
 
 	<div class="colstart">
 		<div id="xml_editor_div" class="col1" style="width: 50%; overflow: auto;">
-			<textarea id="xml_textarea"></textarea>
+			<textarea id="xml_textarea" style="width: 100%; height: 300px;"></textarea>
 			<input id="textSubmitButton" type="button" value="Validate Workflow XML"/>
 		</div>
 		<div id="workflow_diagram" class="col1" style="width: 50%; overflow: auto;"></div>

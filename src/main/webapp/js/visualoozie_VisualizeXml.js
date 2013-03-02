@@ -38,7 +38,7 @@ $(function() {
 	};
 
 	var textSubmitButtonClicked = function(){
-		$("#xml_editor_div").html("");
+//		$("#xml_editor_div").html("");
 		$("#workflow_diagram").html("");
 		$("#xml_editor_pre").html("");
 		$("#errorMessage").html("");
@@ -51,19 +51,22 @@ $(function() {
 			, dataType: 'json'
 			, data: {xmltext: $("#xml_textarea").val()}
 			, cache: false
+			, contentType: "application/x-www-form-urlencoded"
 //			, contentType: false
 //			, processData: false
-		}).done(function(jqXHR, textStatus){
-			var res = $.parseJSON(jqXHR.responseText);
-			drawXmlEditor(res.xml, res.lineNumber, res.columnNumber);
-			$("#span_identifiedNamespace").html(res.identifiedNamespace);
+			, complete : function(jqXHR, textStatus){
+				var res = $.parseJSON(jqXHR.responseText);
+				drawXmlEditor(res.xml, res.lineNumber, res.columnNumber);
+				$("#span_identifiedNamespace").html(res.identifiedNamespace);
 
-			if(!res.succeeded){
-				$("#errorMessage").html(res.errorMessage);
-				return;
+				if(!res.succeeded){
+					$("#errorMessage").html(res.errorMessage);
+					return;
+				}
+				$("#xml_editor_div").html("");
+				$("#waiting_image").hide();
+				drawDiagram(res);
 			}
-			$("#waiting_image").hide();
-			drawDiagram(res);
 
 		});
 	};
@@ -246,7 +249,7 @@ $("#xml_textarea").val("<workflow-app xmlns='uri:oozie:workflow:0.2' name='demo-
 + "    </action>\n"
 + "\n"
 + "    <fork name='fork-node'>\n"
-+ "        <ok to='join-node'/>\n"
++ "        <path start='join-node'/>\n"
 + "        <path start='streaming-node'/>\n"
 + "    </fork>\n"
 + "\n"

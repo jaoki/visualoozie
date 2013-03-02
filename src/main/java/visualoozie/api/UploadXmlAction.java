@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -39,22 +40,50 @@ public class UploadXmlAction{
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces({ MediaType.APPLICATION_JSON })
-    public UploadXmlResult post(
+    public UploadXmlResult postFile(
     		@FormDataParam("xmlfile") InputStream is,
     		@FormDataParam("xmlfile") FormDataContentDisposition fileDetail){
-	    UploadXmlResult result = new UploadXmlResult();
 
         String rawXml;
         try {
             rawXml = IOUtils.toString(is);
         }catch (IOException e){
+		    UploadXmlResult result = new UploadXmlResult();
             e.printStackTrace();
             result.succeeded = false;
             result.errorMessage = e.getMessage();
             return result;
         }
 
-        Scanner scanner = new Scanner(rawXml);
+        return generateResult(rawXml);
+
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+//    @Consumes(MediaType.TEXT_HTML)
+    @Produces({ MediaType.APPLICATION_JSON })
+    public UploadXmlResult postText( @FormParam("xmltext") String rawXml ){
+
+//        String rawXml;
+//        try {
+//            rawXml = IOUtils.toString(is);
+//        }catch (IOException e){
+//		    UploadXmlResult result = new UploadXmlResult();
+//            e.printStackTrace();
+//            result.succeeded = false;
+//            result.errorMessage = e.getMessage();
+//            return result;
+//        }
+
+        return generateResult(rawXml);
+
+    }
+
+	private UploadXmlResult generateResult(String rawXml) {
+		UploadXmlResult result = new UploadXmlResult();
+
+		Scanner scanner = new Scanner(rawXml);
         List<String> lines = new ArrayList<>();
         while (scanner.hasNextLine()){
             String line = scanner.nextLine();
@@ -109,10 +138,8 @@ public class UploadXmlAction{
 
         result.setNodes(nodes);
         result.succeeded = true;
-
         return result;
-
-    }
+	}
 
     @XmlRootElement
     public static class UploadXmlResult{
