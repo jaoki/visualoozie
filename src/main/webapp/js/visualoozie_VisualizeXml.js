@@ -1,6 +1,11 @@
+/**
+ * Copyright (c) 2013, Yahoo! Inc.  All rights reserved.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms
+ */
+
 $(function() {
 
-	var submitButtonClicked = function(){
+	var fileSubmitButtonClicked = function(){
 		$("#xml_editor_div").html("");
 		$("#workflow_diagram").html("");
 		$("#xml_editor_pre").html("");
@@ -29,6 +34,37 @@ $(function() {
 				drawDiagram(res);
 
 			}
+		});
+	};
+
+	var textSubmitButtonClicked = function(){
+		$("#xml_editor_div").html("");
+		$("#workflow_diagram").html("");
+		$("#xml_editor_pre").html("");
+		$("#errorMessage").html("");
+		$("#waiting_image").show();
+
+//		var formData = new FormData($("#fileform")[0]);
+		$.ajax({
+			url: vo.contextRoot + "api/upload_xml"
+			, type: 'POST'
+			, dataType: 'json'
+			, data: {xmltext: $("#xml_textarea").val()}
+			, cache: false
+//			, contentType: false
+//			, processData: false
+		}).done(function(jqXHR, textStatus){
+			var res = $.parseJSON(jqXHR.responseText);
+			drawXmlEditor(res.xml, res.lineNumber, res.columnNumber);
+			$("#span_identifiedNamespace").html(res.identifiedNamespace);
+
+			if(!res.succeeded){
+				$("#errorMessage").html(res.errorMessage);
+				return;
+			}
+			$("#waiting_image").hide();
+			drawDiagram(res);
+
 		});
 	};
 
@@ -197,7 +233,130 @@ $(function() {
 		$("#xml_editor_div").html(editor);
 	}
 
-	$("#submitButton").click(submitButtonClicked);
+$("#xml_textarea").val("<workflow-app xmlns='uri:oozie:workflow:0.2' name='demo-wf'>\n"
++ "\n"
++ "    <start to='cleanup-node'/>\n"
++ "\n"
++ "    <action name='cleanup-node'>\n"
++ "        <fs>\n"
++ "            <delete path='${nameNode}/user/${wf:user()}/${examplesRoot}/output-data/demo'/>\n"
++ "        </fs>\n"
++ "        <ok to='fork-node'/>\n"
++ "        <error to='fail'/>\n"
++ "    </action>\n"
++ "\n"
++ "    <fork name='fork-node'>\n"
++ "        <ok to='join-node'/>\n"
++ "        <path start='streaming-node'/>\n"
++ "    </fork>\n"
++ "\n"
++ "    <action name='streaming-node'>\n"
++ "        <map-reduce>\n"
++ "            <job-tracker>${jobTracker}</job-tracker>\n"
++ "            <name-node>${nameNode}</name-node>\n"
++ "            <prepare>\n"
++ "                <delete path='${nameNode}/user/${wf:user()}/${examplesRoot}/output-data/demo/streaming-node'/>\n"
++ "            </prepare>\n"
++ "            <streaming>\n"
++ "                <mapper>/bin/cat</mapper>\n"
++ "                <reducer>/usr/bin/wc</reducer>\n"
++ "            </streaming>\n"
++ "            <configuration>\n"
++ "                <property>\n"
++ "                    <name>mapred.job.queue.name</name>\n"
++ "                    <value>${queueName}</value>\n"
++ "                </property>\n"
++ "\n"
++ "                <property>\n"
++ "                    <name>mapred.input.dir</name>\n"
++ "                    <value>/user/${wf:user()}/${examplesRoot}/input-data/text</value>\n"
++ "                </property>\n"
++ "                <property>\n"
++ "                    <name>mapred.output.dir</name>\n"
++ "                    <value>/user/${wf:user()}/${examplesRoot}/output-data/demo/streaming-node</value>\n"
++ "                </property>\n"
++ "            </configuration>\n"
++ "        </map-reduce>\n"
++ "        <ok to='join-node'/>\n"
++ "        <error to='fail'/>\n"
++ "    </action>\n"
++ "\n"
++ "    <join name='join-node' to='mr-node'/>\n"
++ "    \n"
++ "    \n"
++ "    <action name='mr-node'>\n"
++ "        <map-reduce>\n"
++ "            <job-tracker>${jobTracker}</job-tracker>\n"
++ "            <name-node>${nameNode}</name-node>\n"
++ "            <prepare>\n"
++ "                <delete path='${nameNode}/user/${wf:user()}/${examplesRoot}/output-data/demo/mr-node'/>\n"
++ "            </prepare>\n"
++ "            <configuration>\n"
++ "                <property>\n"
++ "                    <name>mapred.job.queue.name</name>\n"
++ "                    <value>${queueName}</value>\n"
++ "                </property>\n"
++ "\n"
++ "                <property>\n"
++ "                    <name>mapred.mapper.class</name>\n"
++ "                    <value>org.apache.oozie.example.DemoMapper</value>\n"
++ "                </property>\n"
++ "                <property>\n"
++ "                    <name>mapred.mapoutput.key.class</name>\n"
++ "                    <value>org.apache.hadoop.io.Text</value>\n"
++ "                </property>\n"
++ "                <property>\n"
++ "                    <name>mapred.mapoutput.value.class</name>\n"
++ "                    <value>org.apache.hadoop.io.IntWritable</value>\n"
++ "                </property>\n"
++ "                <property>\n"
++ "                    <name>mapred.reducer.class</name>\n"
++ "                    <value>org.apache.oozie.example.DemoReducer</value>\n"
++ "                </property>\n"
++ "                <property>\n"
++ "                    <name>mapred.map.tasks</name>\n"
++ "                    <value>1</value>\n"
++ "                </property>\n"
++ "                <property>\n"
++ "                    <name>mapred.input.dir</name>\n"
++ "                    <value>/user/${wf:user()}/${examplesRoot}/output-data/demo/pig-node,/user/${wf:user()}/${examplesRoot}/output-data/demo/streaming-node</value>\n"
++ "                </property>\n"
++ "                <property>\n"
++ "                    <name>mapred.output.dir</name>\n"
++ "                    <value>/user/${wf:user()}/${examplesRoot}/output-data/demo/mr-node</value>\n"
++ "                </property>\n"
++ "            </configuration>\n"
++ "        </map-reduce>\n"
++ "        <ok to='decision-node'/>\n"
++ "        <error to='fail'/>\n"
++ "    </action>\n"
++ "\n"
++ "    <decision name='decision-node'>\n"
++ "        <switch>\n"
++ "            <case to='hdfs-node'>${fs:exists(concat(concat(concat(concat(concat(nameNode, \'/user/\'), wf:user()), \'/\'), examplesRoot), \'/output-data/demo/mr-node\')) == 'true'}</case>\n"
++ "            <default to='end'/>\n"
++ "        </switch>\n"
++ "    </decision>\n"
++ "\n"
++ "    <action name='hdfs-node'>\n"
++ "        <fs>\n"
++ "            <move source='${nameNode}/user/${wf:user()}/${examplesRoot}/output-data/demo/mr-node'\n"
++ "                  target='/user/${wf:user()}/${examplesRoot}/output-data/demo/final-data'/>\n"
++ "        </fs>\n"
++ "        <ok to='end'/>\n"
++ "        <error to='fail'/>\n"
++ "    </action>\n"
++ "\n"
++ "    <kill name='fail'>\n"
++ "        <message>Demo workflow failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>\n"
++ "    </kill>\n"
++ "\n"
++ "    <end name='end'/>\n"
++ "\n"
++ "</workflow-app>");
+	
+	$("#fileSubmitButton").click(fileSubmitButtonClicked);
+	$("#textSubmitButton").click(textSubmitButtonClicked);
 	$("#startOverbutton").click(function(){
 		location.reload();
 	});
