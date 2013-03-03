@@ -66,8 +66,6 @@
 		<form id="fileform" name="input" action="api/upload_xml" enctype="multipart/form-data" method="post">
 			<input name="xmlfile" type="file"/>
 			<input id="fileSubmitButton" type="button" value="Validate Workflow XML File"/>
-			<a href="https://github.com/yahoo/oozie/wiki/Oozie-WF-use-cases" target="_blank" title="Hadoop Oozie workflow.xml example">Example1</a>
-			<a href="http://svn.apache.org/viewvc/oozie/trunk/examples/src/main/apps/demo/workflow.xml?view=markup" target="_blank" title="Hadoop Oozie workflow.xml example">Example2</a>
 		</form>
 	</div>
 	<div style="float: left;">
