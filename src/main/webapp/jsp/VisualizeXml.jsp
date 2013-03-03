@@ -1,4 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+ Copyright (c) 2013, Yahoo! Inc.  All rights reserved.
+ Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms
+-->
+
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -82,8 +87,8 @@
 
 	<div class="colstart">
 		<div id="xml_editor_div" class="col1" style="width: 50%; overflow: auto;">
-			<textarea id="xml_textarea" style="width: 100%; height: 300px;"></textarea>
 			<input id="textSubmitButton" type="button" value="Validate Workflow XML"/>
+			<textarea id="xml_textarea" style="width: 100%; height: 300px;"></textarea>
 		</div>
 		<div id="workflow_diagram" class="col1" style="width: 50%; overflow: auto;"></div>
 	</div>

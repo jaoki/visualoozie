@@ -5,6 +5,20 @@
 
 $(function() {
 
+	var onApiUploadXmlCompleted = function(jqXHR, textStatus){
+		var res = $.parseJSON(jqXHR.responseText);
+		drawXmlEditor(res.xml, res.lineNumber, res.columnNumber);
+		$("#span_identifiedNamespace").html(res.identifiedNamespace);
+
+		if(!res.succeeded){
+			$("#errorMessage").html(res.errorMessage);
+			return;
+		}
+		$("#waiting_image").hide();
+		drawDiagram(res);
+
+	};
+
 	var fileSubmitButtonClicked = function(){
 		$("#xml_editor_div").html("");
 		$("#workflow_diagram").html("");
@@ -21,19 +35,7 @@ $(function() {
 			, cache: false
 			, contentType: false
 			, processData: false
-			, complete: function(jqXHR, textStatus){
-				var res = $.parseJSON(jqXHR.responseText);
-				drawXmlEditor(res.xml, res.lineNumber, res.columnNumber);
-				$("#span_identifiedNamespace").html(res.identifiedNamespace);
-
-				if(!res.succeeded){
-					$("#errorMessage").html(res.errorMessage);
-					return;
-				}
-				$("#waiting_image").hide();
-				drawDiagram(res);
-
-			}
+			, complete: onApiUploadXmlCompleted
 		});
 	};
 
@@ -54,19 +56,7 @@ $(function() {
 			, contentType: "application/x-www-form-urlencoded"
 //			, contentType: false
 //			, processData: false
-			, complete : function(jqXHR, textStatus){
-				var res = $.parseJSON(jqXHR.responseText);
-				drawXmlEditor(res.xml, res.lineNumber, res.columnNumber);
-				$("#span_identifiedNamespace").html(res.identifiedNamespace);
-
-				if(!res.succeeded){
-					$("#errorMessage").html(res.errorMessage);
-					return;
-				}
-				$("#xml_editor_div").html("");
-				$("#waiting_image").hide();
-				drawDiagram(res);
-			}
+			, complete : onApiUploadXmlCompleted
 
 		});
 	};
