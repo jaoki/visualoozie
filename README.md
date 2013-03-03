@@ -1,13 +1,17 @@
-visualoozie
+> Copyright (c) 2013, Yahoo! Inc.  All rights reserved.
+> Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms
+
+
+VisualOozie
 ===========
 
-visualoozie
+Main Page
 
 http://localhost/visualoozie/visualize_xml
 
-How to Deploy to cloudbees
+How to compile
 ===========
 
 mvn clean package 
-bees app:deploy -a visualoozie/alpha target/visualoozie.war
+
 
