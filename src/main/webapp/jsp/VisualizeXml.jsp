@@ -45,7 +45,7 @@
 <body>
 
 
-	<!--------------- Top Menu ------------------------>
+	<!--------------- Title ------------------------>
 	<div class="blueBar">
 		<div style="width: 2em; float:left;">&nbsp;</div>
 		<div style="float:left;">
@@ -62,14 +62,28 @@
 		</div>
 	</div>
 
-	<div style="float: left;">
-		<form id="fileform" name="input" action="api/upload_xml" enctype="multipart/form-data" method="post">
-			<input name="xmlfile" type="file"/>
-			<input id="fileSubmitButton" type="button" value="Validate Workflow XML File"/>
-		</form>
-	</div>
-	<div style="float: left;">
-		<input id="startOverbutton" type="button" value="Start Over"/>
+
+	<!--------------- Menu ------------------------>
+	<div id="menu_div">
+		<div id="file_upload_div" class="menu_group" style="float: left;">
+			<form id="fileform" name="input" action="api/upload_xml" enctype="multipart/form-data" method="post">
+				<input name="xmlfile" type="file" style="width: 25em; "/>
+				<input id="fileSubmitButton" type="button" value="Validate Workflow XML File"/>
+			</form>
+		</div>
+
+		<div style="float: right;">
+			<img src="<s:url value="/img/double_down_arrow.png"/>" style="cursor: pointer;"/>
+		</div>
+
+		<div id="text_upload_div" class="menu_group" style="vertical-align:middle; " >
+			<textarea id="xml_textarea" style="width: 25em; height: 200px;"></textarea>
+			<input id="textSubmitButton" type="button" value="Validate Workflow XML"/>
+		</div>
+
+		<div class="menu_group">
+			<input id="startOverbutton" type="button" value="Start Over"/>
+		</div>
 	</div>
 
 	<div class="colstart"> </div>
@@ -85,8 +99,6 @@
 
 	<div class="colstart">
 		<div id="xml_editor_div" class="col1" style="width: 50%; overflow: auto;">
-			<input id="textSubmitButton" type="button" value="Validate Workflow XML"/>
-			<textarea id="xml_textarea" style="width: 100%; height: 300px;"></textarea>
 		</div>
 		<div id="workflow_diagram" class="col1" style="width: 50%; overflow: auto;"></div>
 	</div>

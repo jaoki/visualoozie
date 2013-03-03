@@ -51,40 +51,6 @@ div.col1{
 	float: left;
 }
 
-/* --- XML Editor ----------------- */
-#xml_editor_div .tagstart{
-	color: green;
-}
-
-#xml_editor_div .tagend{
-	color: green;
-}
-
-#xml_editor_div .elementcontent{
-	color: purple;
-}
-
-#xml_editor_div .line_num_column{
-	background: #E0E0E0;
-	text-align: right;
-}
-
-#xml_editor_div .error{
-	background: pink;
-    font-weight: bold;
-}
-
-#xml_editor_div table{
-	border-width: 1px;
-}
-
-#xml_editor_div td{
-	border-bottom-width: 0px;
-	border-top-width: 0px;
-	font-family: monospace;
-	white-space: nowrap;
-}
-
 /* --- Title ----------------- */
 .blueBar{
 	background-color: #3B5998; 
@@ -122,67 +88,51 @@ div.col1{
 }
 
 
-/* ---------------------------- TODO REMOVE THE FOLLOWING?? ?? ?  */
+/* --- Menu ----------------- */
 
-
-table.layout{
-	border-style: solid;
-	border-collapse: collapse;
-
-	/* uncomment this for debug layout 
-	border-color: gray;
-	*/
-
-	border-width: 0px;
-	padding: 0px;
-	margin: 0px;
-	width: 100%;
-	height: 100%;
+.menu_group{
+	clear:both;
+	background-color: #366793;
+	margin: 2px;
+	border: solid 1px;
+	border-radius: 5px;
+	padding: 2px;
+	width: 80%;
+/*	float: left; */
 }
 
-td.layout{
-	border-style: solid;
-	border-collapse: collapse;
+/* --- XML Editor ----------------- */
 
-	/* uncomment this for debug layout 
-	border-color: gray;
-	*/
-
-	border-width: 0px;
-	padding: 0px;
-	margin: 0px;
+#xml_editor_div .tagstart{
+	color: green;
 }
 
-/* Appliation Title -------------------------------------- */
-.searchbox{
-	background-color: white;
-	color: black;
+#xml_editor_div .tagend{
+	color: green;
 }
 
-.searchbox_nocriteria{
-	background-color: white;
-	color: gray;
+#xml_editor_div .elementcontent{
+	color: purple;
 }
 
-.searchbox_notfound{
-	background-color: crimson;
-	color: white;
+#xml_editor_div .line_num_column{
+	background: #E0E0E0;
+	text-align: right;
 }
 
-/* Main Area -------------------------------------- */
-.main_area{
-	width: 100%;
-	position: relative;
-	top: 46px;
+#xml_editor_div .error{
+	background: pink;
+    font-weight: bold;
 }
 
-/* Ads -------------------------------------- */
-.ads_area{
-	position: fixed;
-	top: 46px;
-	right: 0;
-	width: 120px;
-	z-index: 2;
+#xml_editor_div table{
+	border-width: 1px;
 }
 
+#xml_editor_div td{
+	border-bottom-width: 0px;
+	border-top-width: 0px;
+	font-family: monospace;
+	white-space: nowrap;
+}
 
