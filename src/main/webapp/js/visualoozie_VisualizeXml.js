@@ -19,12 +19,21 @@ $(function() {
 
 	};
 
-	var fileSubmitButtonClicked = function(){
+	function submitPreparation(){
 		$("#xml_editor_div").html("");
 		$("#workflow_diagram").html("");
 		$("#xml_editor_pre").html("");
 		$("#errorMessage").html("");
 		$("#waiting_image").show();
+		collapseMenu();
+	}
+
+	var fileSubmitButtonClicked = function(){
+		if($("#xmlfile").val() == ""){
+			$("#errorMessage").html("Select a workflow.xml to upload");
+			return;
+		}
+		submitPreparation();
 
 		var formData = new FormData($("#fileform")[0]);
 		$.ajax({
@@ -40,11 +49,7 @@ $(function() {
 	};
 
 	var textSubmitButtonClicked = function(){
-//		$("#xml_editor_div").html("");
-		$("#workflow_diagram").html("");
-		$("#xml_editor_pre").html("");
-		$("#errorMessage").html("");
-		$("#waiting_image").show();
+		submitPreparation();
 
 //		var formData = new FormData($("#fileform")[0]);
 		$.ajax({
@@ -226,7 +231,9 @@ $(function() {
 		$("#xml_editor_div").html(editor);
 	}
 
-$("#xml_textarea").val("<workflow-app xmlns='uri:oozie:workflow:0.2' name='demo-wf'>\n"
+$("#xml_textarea").val(
+"<!-- This is a VisualOozie example. Click Validate -->\n"
++ "<workflow-app xmlns='uri:oozie:workflow:0.2' name='demo-wf'>\n"
 + "\n"
 + "    <start to='cleanup-node'/>\n"
 + "\n"
@@ -354,6 +361,25 @@ $("#xml_textarea").val("<workflow-app xmlns='uri:oozie:workflow:0.2' name='demo-
 		location.reload();
 	});
 	$(window).resize(onWindowResize);
+
+	var menuExpanded = true;
+	function collapseMenu(){
+		$("#menu_div").animate({
+			height: "3em",
+		}, 200 );
+		$("#expand_img").removeClass("flip");
+		menuExpanded = false;
+	}
+
+	$("#expand_img").click(function(){
+		if(menuExpanded){
+			collapseMenu();
+		}else{
+			$("#menu_div").css("height", "");
+			$("#expand_img").addClass("flip");
+			menuExpanded = true;
+		}
+	});
 
 }); // End of JQuery Initialization
 

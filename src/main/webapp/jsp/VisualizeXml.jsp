@@ -64,25 +64,25 @@
 
 
 	<!--------------- Menu ------------------------>
-	<div id="menu_div">
+	<div id="menu_div" style="overflow: hidden;">
 		<div id="file_upload_div" class="menu_group" style="float: left;">
 			<form id="fileform" name="input" action="api/upload_xml" enctype="multipart/form-data" method="post">
-				<input name="xmlfile" type="file" style="width: 25em; "/>
-				<input id="fileSubmitButton" type="button" value="Validate Workflow XML File"/>
+				<input id="xmlfile" name="xmlfile" type="file" class="first_col" style="border-color: white; border: 1px solid;"/>
+				<input id="fileSubmitButton" type="button" value="Validate Workflow File" />
 			</form>
 		</div>
 
-		<div style="float: right;">
-			<img src="<s:url value="/img/double_down_arrow.png"/>" style="cursor: pointer;"/>
+		<div style="float: left;">
+			<img id="expand_img" src="<s:url value="/img/double_down_arrow.png"/>" class="flip" style="cursor: pointer;"/>
 		</div>
 
 		<div id="text_upload_div" class="menu_group" style="vertical-align:middle; " >
-			<textarea id="xml_textarea" style="width: 25em; height: 200px;"></textarea>
+			<textarea id="xml_textarea" class="first_col" style="height: 200px;"></textarea>
 			<input id="textSubmitButton" type="button" value="Validate Workflow XML"/>
 		</div>
 
 		<div class="menu_group">
-			<input id="startOverbutton" type="button" value="Start Over"/>
+			<input id="startOverbutton" type="button" value="Start Over" class="first_col" />
 		</div>
 	</div>
 
