@@ -109,7 +109,7 @@ $(function() {
 
 		var yPos = 40;
 		// Generates svg nodes
-		for(var i = 0; i < sortedNodeNames.length; i++){
+		for(var i = 0; i < sortedNodeNames.length; ){
 			// how many same sort order there are?
 			var sameSortCount = 1
 			for(; i + sameSortCount < sortedNodeNames.length ;sameSortCount++){
@@ -120,9 +120,9 @@ $(function() {
 
 
 			for(var j = 0; j < sameSortCount; j++){
+				var xPos = (editorWidth/(sameSortCount + 1) * (j+1)) + Math.floor((Math.random()*30)+1); // Add some random number to fluctuate x-position
+
 				var node;
-				// Add some random number to fluctuate x-position
-				var xPos = (editorWidth/(sameSortCount + 1) * (j+1)) + Math.floor((Math.random()*30)+1);
 				if(weightedNodes[sortedNodeNames[i + j].name].type == "KILL"){
 					node = new wfjs.CircleNode(canvas1, xPos, yPos, sortedNodeNames[i + j].name, { stroke: "red", fill: "red" });
 				}else if(weightedNodes[sortedNodeNames[i + j].name].type == "DECISION"){
@@ -134,7 +134,7 @@ $(function() {
 				}
 
 
-				// TODO fix this
+				// TODO fix this (CircleNode has show() but DiamondNode does not)
 				if(node.show !== undefined)
 					node.show();
 
@@ -142,10 +142,9 @@ $(function() {
 
 				weightedNodes[sortedNodeNames[i + j].name].node = node;
 
-				if(j > 0){
-					i++;
-				}
 			}
+
+			i = i + sameSortCount;
 
 			yPos += 85;
 
